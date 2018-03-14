@@ -1,29 +1,113 @@
 %----------------------------------------------------------------------------
 %\chapter{\LaTeX-eszközök}\label{sect:LatexTools}
 %----------------------------------------------------------------------------
-\section{A szerkesztéshez használatos, Windows alapú eszközök}
+\section{Általános leírás}
 %----------------------------------------------------------------------------
-Ez a sablon Windows operációs rendszer alatt készült TeXnicCenter 1 Beta 7.01 szerkesztõvel. A TeXnicCenter egy \LaTeX-szerkesztõprogram számtalan hasznos -- és ráadásul jól mûködõ -- szolgáltatással (\figref{TexnicCenter} ábra). A szoftver ingyenesen letölthetõ a\\\url{http://www.texniccenter.org/} címrõl.
+A megvalósítani kívánt játék egy körökre osztott stratégiai játék, mely során egy harctéren különböző fajú karakterekkel harcolnak a játékosok.
+A karakterek a játék előtt meghatározott felszerelést visznek magukkal, melyeket felhasználhatják a harc során. Körönként egy karakter egyet lép, majd egy kisorsolt felszerelést felhasznál. A játék addig tart, amíg már csak egy játékos karaktere(i) marad(nak) életben.
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=150mm, keepaspectratio]{figures/TeXnicCenter.png}
-\caption{A TeXnicCenter Windows alapú \LaTeX-szerkesztõ.} 
-\label{fig:TexnicCenter}
-\end{figure}
-
-Egy másik használható Windows alapú szerkesztõprogram a LEd (LaTeX Editor,\\\url{http://www.latexeditor.org/}), a TeXnicCenter azonban stabilabb, gyorsabb, és jobban használható.
 
 %----------------------------------------------------------------------------
-\section{A dokumentum lefordítása Windows alatt}
+\section{A játék menete}
 %----------------------------------------------------------------------------
-A TeXnicCenter és a LEd kizárólag szerkesztõprogram (bár az utóbbiban DVI-nézegetõ is van), így a dokumentum fordításához szükséges eszközöket nem tartalmazza. Windows alatt alapvetõen két lehetõség közül érdemes választani: MiKTeX (\url{http://miktex.org/}) és TeXLive (\url{http://www.tug.org/texlive/}) programcsomag. Az utóbbi mûködik Mac OS X, GNU/Linux alatt és Unix-származékokon is. A MiKTeX egy alapcsomag telepítése után mindig letölti a használt funkciókhoz szükséges, de lokálisan hiányzó \TeX-csomagokat, míg a TeXLive DVD ISO verzóban férhetõ hozzá. Ez a dokumentum TeXLive 2008 programcsomag segítségével fordult, amelynek DVD ISO verziója a megadott oldalról letölthetõ. A sablon lefordításához a disztribúcióban szereplõ \verb+magyar.ldf+ fájlt a \verb+http://www.math.bme.hu/latex/+ változatra kell cserélni, vagy az utóbbi változatot be kell másolni a projekt-könyvtárba (ahogy ezt meg is tettük a sablonban) különben anomáliák tapasztalhatók a dokumentumban (pl. az ábra- és táblázat-aláírások formátuma nem a beállított lesz, vagy bizonyos oldalakon megjelenik alapételmezésben egy fejléc). A TeXLive 2008-at még nem kell külön telepíteni a gépre, elegendõ DVD-rõl (vagy az ISO fájlból közvetlenül, pl. DaemonTools-szal) használni. 
+\begin{enumerate}
+	\item Egyik játékos elindítja a Servert, a másik (többi) kliensként csatlakozik.
+	\item Server játékos beállítja a játék paramétereit.
+	\begin{itemize}\label{StartParams}
+		\item Maximális játékos szám, maximális karakter száma játékosonként.
+		\item Maximális pályaméret(szélesség és magasság).
+		\item Használható karakter fajok
+		\begin{itemize}
+			\item Azok számai fajonként
+			\item Azok szintjei
+		\end{itemize}
+	\end{itemize}
+	\item Játékosok kiválasztják a használandó karaktereket, majd beállítják azok felszereléseit, jelzik, ha készen vannak.
+	\item Ha mindenki készen áll, akkor a szerver legenerálja a pályát. A generált pályára a játékosok elhelyezik a karaktereket. Ha ez megtörténik indul a harc.
+\end{enumerate}
 
-A \TeX-eszközöket tartalmazó programcsomag binárisainak elérési útját minden esetben be kell állítani a szerkesztõprogramban, például TeXnicCenter esetén legegyszerûbben a \verb+Build / Define output profiles...+ menüponttal elõhívott dialógusablakban a \verb+Wizard...+ gombra kattintva tehetjük ezt meg.
-
-A PDF-\LaTeX~használata esetén a generált dokumentum közvetlenül PDF-formátumban áll rendelkezésre. Amennyiben a PDF-fájl egy PDF-nézõben (pl. Adobe Acrobat Reader vagy Foxit PDF Reader) meg van nyitva, akkor a fájlleírót a PDF-nézõ program tipikusan lefoglalja. Ilyen esetben a dokumentum újrafordítása hibaüzenettel kilép. Ha bezárjuk és újra megnyitjuk a PDF dokumentumot, akkor pedig a PDF-nézõk többsége az elsõ oldalon nyitja meg a dokumentumot, nem a legutóbb olvasott oldalon. Ezzel szemben például az egyszerû és ingyenes \textcolor{blue}{Sumatra PDF} nevû program képes arra, hogy a megnyitott dokumentum megváltozását detektálja, és frissítse a nézetet az aktuális oldal megtartásával.
 
 %----------------------------------------------------------------------------
-\section{Eszközök Linuxhoz}
+\section{A harc menete}
 %----------------------------------------------------------------------------
-Linux operációs rendszer alatt is rengeteg szerkesztõprogram van, pl. a KDE alapú Kile jól használható. Ez ingyenesen letölthetõ, vagy éppenséggel az adott Linux-disztribúció eleve tartalmazza, ahogyan a dokumentum fordításához szükséges csomagokat is. Az Ubuntu Linux disztribúciók alatt például legtöbbször a \verb+texlive-base+ csomag telepítésével használhatók a \LaTeX-eszközök.
+\begin{enumerate}
+\item A szerver felállít egy sorrendet a játékosok között. A karakter fajokon végighaladva következnek a játékosok
+
+\newcommand{\owntabnr}{4cm}
+\newcommand{\colwid}{\textwidth-\owntabnr)/6}
+\begin{tabular}{ |p{(\colwid}|p{(\colwid}|p{(\colwid}|p{(\colwid}|p{(\colwid}|p{(\colwid}|  }
+	\hline
+	\multicolumn{6}{|c|}{Példa} \\
+	\hline
+	\multicolumn{2}{|c|}{Lovag}& \multicolumn{2}{|c|}{Íjász} & \multicolumn{2}{|c|}{Mágus} \\
+	\hline
+	1. játékos lovagjai & 2. játékos lovagjai & 1. játékos lovagjai & 2. játékos lovagjai  & 1. játékos mágusa & 2. játékos mágusa \\
+	\hline
+\end{tabular}
+\item A sorra kerülő karakter a 8 szomszédos mező egyikére lép, majd a rendszer a beállított felszerelések közül kisorsol egyet, melyet a játék felhasznál. (támadásnál a támadott ellenfelet is ki kell választani)
+\item A játék addig tart, amíg már csak egy játékos karaktere(i) marad(nak) életben.
+\end{enumerate}
+
+
+%----------------------------------------------------------------------------
+\section{A menürendszer}
+%----------------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------------
+\section{A játéktér}
+%----------------------------------------------------------------------------
+\begin{itemize}
+	\item A harctér egy Descartes-féle derékszögű koordináta rendszer, melyben az elemek pozíciója csak egész szám lehet. ($x,y \epsilon Z  $)
+	\item A harcteret a servert futtató játékos szoftvere generálja, az általa beállított \hyperref[StartParams]{\textit{paramétereknek}} megfelelően.
+	\begin{itemize}
+		\item Egy játékmező lehet érinthető/nem érinthető.
+		\item Egy összefüggő területre (maximális N mezőre) egy dedikált játékos maximum k karaktert rakhat.
+	\end{itemize}
+	\item A harctéren egy mezőn, egyszerre csak egy karakter állhat.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------
+\section{Karakter}
+%----------------------------------------------------------------------------
+\begin{itemize}
+	\item Egy karakter egy harc alatt maximum 6 felszerelést (egy fajtából akár többet is) választhat magának.
+	\item A játék elején megadott karakter szint meghatározza a választható felszereléseket.
+	\item A felszerelések értékei változóak, a karakterekhez tartozó összértékek a játék elején megadott paraméterekkel korlátozhatóak.
+	\item A karaktereknek fajai vannak, melyek a következőek:	
+	\begin{itemize}
+		\item Lovag
+		\item Íjász
+		\item Mágus
+	\end{itemize} 
+\end{itemize}
+
+
+
+%----------------------------------------------------------------------------
+\section{Felszerelés}
+%----------------------------------------------------------------------------
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{center}
+%\begin{tabular}[]
+%	\centering
+%	\label{my-label}
+%	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{lllll}
+			Név           & Faj     & Minimum Szint & Felhasznált érték & Leírás                                                                 \\ \hline
+			Fa kard       & Bármelyik & 1             & 1                 & Egy szomszédos ellenfelet támad 1 erősséggel.                          \\
+			Fa pajzs      & Bármelyik & 1             & 1                 & Megvéd az 1 erősségű támadások ellen.                                  \\
+			Vas kard      & Lovag     &               & 2                 & Egy szomszédos ellenfelet támad 2 erősséggel.                          \\
+			Pörgő fa kard & Lovag     &               & 2                 & Az összes szomszédos ellenfelet támadja 1 erősséggel.                  \\
+			Tőr           & Lovag     &               & 2                 & Ismét léphet egyet, majd egy szomszédos ellenfelet támad 1 erősséggel. \\
+			&           &               &                   &                                                                        \\
+			&           &               &                   &                                                                        \\
+			&           &               &                   &                                                                        \\
+			&           &               &                   &                                                                        \\
+			&           &               &                   &                                                                       
+		\end{tabular}%
+%	}
+%\end{tabular}
+\end{center}
