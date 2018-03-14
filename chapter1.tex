@@ -88,26 +88,17 @@ A karakterek a játék előtt meghatározott felszerelést visznek magukkal, mel
 %----------------------------------------------------------------------------
 \section{Felszerelés}
 %----------------------------------------------------------------------------
-% Please add the following required packages to your document preamble:
-% \usepackage{graphicx}
-\begin{center}
-%\begin{tabular}[]
-%	\centering
-%	\label{my-label}
-%	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{lllll}
-			Név           & Faj     & Minimum Szint & Felhasznált érték & Leírás                                                                 \\ \hline
-			Fa kard       & Bármelyik & 1             & 1                 & Egy szomszédos ellenfelet támad 1 erősséggel.                          \\
-			Fa pajzs      & Bármelyik & 1             & 1                 & Megvéd az 1 erősségű támadások ellen.                                  \\
-			Vas kard      & Lovag     &               & 2                 & Egy szomszédos ellenfelet támad 2 erősséggel.                          \\
-			Pörgő fa kard & Lovag     &               & 2                 & Az összes szomszédos ellenfelet támadja 1 erősséggel.                  \\
-			Tőr           & Lovag     &               & 2                 & Ismét léphet egyet, majd egy szomszédos ellenfelet támad 1 erősséggel. \\
-			&           &               &                   &                                                                        \\
-			&           &               &                   &                                                                        \\
-			&           &               &                   &                                                                        \\
-			&           &               &                   &                                                                        \\
-			&           &               &                   &                                                                       
-		\end{tabular}%
-%	}
-%\end{tabular}
-\end{center}
+
+\begin{longtabu} to \textwidth {X[2l]|X[1.5l]|X[1.2c]|X[1.3c]|X[5l]}
+	\rowfont[c]{\small}Név           & Faj     & Minimum Szint & Felhasznált érték & Leírás                                                                 \\ \hline \endhead
+	Fa kard       & Bármelyik & 1             & 1                 & Egy szomszédos ellenfelet támad 1 erősséggel.                          \\
+	Fa pajzs      & Bármelyik & 1             & 1                 & Megvéd az 1 erősségű támadások ellen.                                  \\
+	Vas kard      & Lovag     &               & 2                 & Egy szomszédos ellenfelet támad 2 erősséggel.                          \\
+	Pörgő fa kard & Lovag     &               & 2                 & Az összes szomszédos ellenfelet támadja 1 erősséggel.                  \\
+	Tőr           & Lovag     &               & 2                 & Ismét léphet egyet, majd egy szomszédos ellenfelet támad 1 erősséggel. \\
+	Vas pajzs& Lovag          &               & 2                  &  Megvéd a 2 erősségű támadások ellen.                                                                  \\
+	Helytállás pengéje& Lovag          &               &  2                 & Egy szomszédos ellenfelet támad 1 erősséggel és megvéd az 1 erősségű támadások ellen.                                                                        \\
+	&           &               &                   &                                                                        \\
+	&           &               &                   &                                                                        \\
+	&           &               &                   &   
+\end{longtabu}
