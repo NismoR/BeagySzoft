@@ -93,26 +93,26 @@ A menüben a játékos elindíthat egy szervert, illetve kliensként csatlakozha
 {\renewcommand{\arraystretch}{1.3}% for the vertical padding
 \setstretch{0.9}
 
-\begin{longtabu} to \textwidth {X[2l]|X[1.5l]|X[1.2c]|X[1.3c]|X[5l]}
-	\rowfont[c]{\small\setstretch{0.8}}Név           & Faj     & Minimum Szint & Felhasznált érték & Leírás                                                                 \\ \hline \hline \endhead
-	Fa kard       & Bármelyik & 1             & 1                 & Egy szomszédos ellenfelet támad 1 erősséggel.                          \\ \hline
-	Fa pajzs      & Bármelyik & 1             & 1                 & Megvéd az 1 erősségű támadások ellen.                                  \\ \hline
-	Vas kard      & Lovag     &               & 2                 & Egy szomszédos ellenfelet támad 2 erősséggel.                          \\ \hline
-	Pörgő fa kard & Lovag     &               & 2                 & Az összes szomszédos ellenfelet támadja 1 erősséggel.                  \\ \hline
-	Tőr           & Lovag     &               & 2                 & Ismét lép egyet, majd egy szomszédos ellenfelet támad 1 erősséggel. \\ \hline
-	Vas pajzs& Lovag          &               & 2                  &  Megvéd a 2 erősségű támadások ellen.                                                                  \\ \hline
-	Helytállás pengéje& Lovag          &               &  2                 & Egy szomszédos ellenfelet támad 1 erősséggel és megvéd az 1 erősségű támadások ellen.                                                                        \\ \hline
-	Pörgő vas kard&  Lovag         &               &   2                &  Az összes szomszédos ellenfelet támadja 2 erősséggel.                                                                       \\ \hline
-	Penge & Lovag          &               &  2                 &    Ismét lép egyet, majd egy szomszédos ellenfelet támad 2 erősséggel.                                                                     \\ \hline
-	Helytállás kardja&   Lovag        &               &      3             &  Egy szomszédos ellenfelet támad 1 erősséggel és megvéd a 2 erősségű támadások ellen.  \\ \hline
-	Rövid íj&Íjász &               &  2                 & Egy maximum 3 mezőnyire lévő ellenfelet támad 1 erősséggel. Nem tud lőni, ha egy szomszédos mezőn ellenfél található. \\ \hline
-	Könnyű páncélzat& Íjász &               &                1   & Megvéd az 1 erősségű támadások ellen 3 körig. Pajzzsal használva a 2 erejűektől is véd.   \\ \hline
-	Hosszú íj&Íjász &               &  2                 & Egy maximum 3 mezőnyire lévő ellenfelet támad 2 erősséggel. Nem tud lőni, ha egy szomszédos mezőn ellenfél található. \\ \hline
-	Könnyű páncélzat& Íjász &               &                1   & Megvéd az 1 erősségű támadások ellen 5 körig. Pajzzsal használva a 2 erejűektől is véd.   \\ \hline
-	Csizma& Íjász &               &                  3 & Ismét lép egyet, majd újrasorsol egy felszerelést  \\ \hline
-	Fagyasztó kristályok& Mágus&               &    1               & Egy maximum 2 mezőnyire lévő ellenfelet kiválasztva, az kimarad 2 körből. \\ \hline
-	Tűzgolyó& Mágus &               &  2                 &Egy maximum 4 mezőnyire lévő ellenfelet támad 1 erősséggel.  \\ \hline
-	Villámcsapás& Mágus &               &  1                 &  Egy maximum 3 mezőnyire lévő ellenfelet és annak egy szomszédját támadja 1 erősséggel. \\\hline
-	Tűzvihar& Mágus &               &  3                 & Egy maximum 6 mező távolságra lévő mezőt és annak környezetét támadja 1 erősséggel. \\ \hline
-	Meteor& Mágus &               &  3                 & Egy maximum 6 mező távolságra lévő mezőt 2, és annak környezetét támadja 1 erősséggel.  \\ \hline 
+\begin{longtabu} to \textwidth {X[2l]|X[1.5l]|X[1.3c]|X[5l]}
+	\rowfont[c]{\small\setstretch{0.7}}Név           & Faj      & Felhasznált érték & Leírás                                                                 \\  \hline \endhead
+	Fa kard       & Bármelyik & 1                 & Egy szomszédos ellenfelet támad 1 erősséggel.                          \\ \hline
+	Fa pajzs      & Bármelyik & 1                 & Megvéd az 1 erősségű támadások ellen.                                  \\ \hline
+	Vas kard      & Lovag     & 2                 & Egy szomszédos ellenfelet támad 2 erősséggel.                          \\ \hline
+	Pörgő fa kard & Lovag     & 2                 & Az összes szomszédos ellenfelet támadja 1 erősséggel.                  \\ \hline
+	Tőr           & Lovag     & 2                 & Ismét lép egyet, majd egy szomszédos ellenfelet támad 1 erősséggel. \\ \hline
+	Vas pajzs& Lovag          & 2                  &  Megvéd a 2 erősségű támadások ellen.                                                                  \\ \hline
+	Helytállás pengéje& Lovag          &  2                 & Egy szomszédos ellenfelet támad 1 erősséggel és megvéd az 1 erősségű támadások ellen.                                                                        \\ \hline
+	Pörgő vas kard&  Lovag         &   2                &  Az összes szomszédos ellenfelet támadja 2 erősséggel.                                                                       \\ \hline
+	Penge & Lovag          &  2                 &    Ismét lép egyet, majd egy szomszédos ellenfelet támad 2 erősséggel.                                                                     \\ \hline
+	Helytállás kardja&   Lovag        &      3             &  Egy szomszédos ellenfelet támad 1 erősséggel és megvéd a 2 erősségű támadások ellen.  \\ \hline
+	Rövid íj&Íjász &  2                 & Egy maximum 3 mezőnyire lévő ellenfelet támad 1 erősséggel. Nem tud lőni, ha egy szomszédos mezőn ellenfél található. \\ \hline
+	Könnyű páncélzat& Íjász &                1   & Megvéd az 1 erősségű támadások ellen 3 körig. Pajzzsal használva a 2 erejűektől is véd.   \\ \hline
+	Hosszú íj&Íjász &  2                 & Egy maximum 3 mezőnyire lévő ellenfelet támad 2 erősséggel. Nem tud lőni, ha egy szomszédos mezőn ellenfél található. \\ \hline
+	Könnyű páncélzat& Íjász &                1   & Megvéd az 1 erősségű támadások ellen 5 körig. Pajzzsal használva a 2 erejűektől is véd.   \\ \hline
+	Csizma& Íjász &                  3 & Ismét lép egyet, majd újrasorsol egy felszerelést  \\ \hline
+	Fagyasztó kristályok& Mágus&    1               & Egy maximum 2 mezőnyire lévő ellenfelet kiválasztva, az kimarad 2 körből. \\ \hline
+	Tűzgolyó& Mágus &  2                 &Egy maximum 4 mezőnyire lévő ellenfelet támad 1 erősséggel.  \\ \hline
+	Villámcsapás& Mágus &  1                 &  Egy maximum 3 mezőnyire lévő ellenfelet és annak egy szomszédját támadja 1 erősséggel. \\\hline
+	Tűzvihar& Mágus &  3                 & Egy maximum 6 mező távolságra lévő mezőt és annak környezetét támadja 1 erősséggel. \\ \hline
+	Meteor& Mágus &  3                 & Egy maximum 6 mező távolságra lévő mezőt 2, és annak környezetét támadja 1 erősséggel.  \\ \hline 
 \end{longtabu}
