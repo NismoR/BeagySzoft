@@ -21,6 +21,8 @@
 \usepackage{setspace}  % Ettol a tablazatok, abrak, labjegyzetek maradnak 1-es sorkozzel!
 \usepackage[hang]{caption}
 \usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{titletoc}
 
 \usepackage{graphicx}
 \usepackage{epstopdf}
@@ -59,11 +61,19 @@
 \setlength{\parskip}{0pt}    % magyar nyelvû dokumentumokban jellemzõ
 
 \marginsize{35mm}{25mm}{15mm}{15mm} % anysize package
-\setcounter{secnumdepth}{0}
+\setcounter{secnumdepth}{1}
 \sectionfont{\large\upshape\bfseries}
-\setcounter{secnumdepth}{2}
+\setcounter{secnumdepth}{1}
 \singlespacing
 \frenchspacing
+
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{}{0pt}{\Huge}
+\renewcommand\thesection{\arabic{section}}
+
+\titlecontents{chapter}
+[0em]{\addvspace{10pt}\bfseries}
+{}{}{\titlerule*[1000pc]{.}\contentspage}
 
 %--------------------------------------------------------------------------------------
 %	Setup hyperref package
@@ -160,8 +170,8 @@ aboveskip=10pt}
 %--------------------------------------------------------------------------------------
 \begin{document}
 \singlespacing
-\include{guideline}
-\include{project}
+%\include{guideline}
+%\include{project}
 
 \pagenumbering{arabic}
 \onehalfspacing
