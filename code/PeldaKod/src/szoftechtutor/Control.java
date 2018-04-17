@@ -12,7 +12,9 @@ import java.awt.Point;
  * @author Predi
  */
 class Control {
+
 	private GUI gui;
+	private Network net = null;
 
 	Control() {
 	}
@@ -28,6 +30,7 @@ class Control {
 	}
 
 	void sendClick(Point p) {
+		gui.addPoint(p); // for drawing locally
 	}
 
 	void clickReceived(Point p) {

@@ -20,5 +20,4 @@ public class Main {
 		GUI g = new GUI(c);
 		c.setGUI(g);
 	}
-
 }
