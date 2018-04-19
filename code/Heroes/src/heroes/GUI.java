@@ -7,6 +7,7 @@ package heroes;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -37,6 +38,7 @@ public class GUI extends JPanel {
 	private boolean TESTING = true;
 	
 	private int WARRIOR_DRAW_RADIUS = 35;
+	private int ARCHER_DRAW_MARGIN = 6;
 
 	GUI(Control c) {
 		arr_background = new int[TABLE_SIZE_X][TABLE_SIZE_Y];
@@ -122,6 +124,29 @@ public class GUI extends JPanel {
 				WARRIOR_DRAW_RADIUS);
 	}
 	
+	private void draw_archer(Graphics g, int off_x, int off_y){
+		g.setColor(Color.black);	
+		Polygon p = new Polygon();		
+		p.addPoint(off_x+FIELD_WIDTH/2, off_y+ARCHER_DRAW_MARGIN);
+		p.addPoint(off_x+ARCHER_DRAW_MARGIN, off_y+FIELD_HEIGHT-ARCHER_DRAW_MARGIN);
+		p.addPoint(off_x+FIELD_WIDTH-ARCHER_DRAW_MARGIN, off_y+FIELD_HEIGHT-ARCHER_DRAW_MARGIN);	    
+	    g.fillPolygon(p);
+	}
+
+	private void draw_character(Graphics g, int off_x, int off_y, int char_id){
+		switch (char_id) {
+		case 0:
+			draw_warrior(g, off_x, off_y);			
+			break;
+		case 1:
+			draw_archer(g, off_x, off_y);	
+			break;
+
+		default:
+			break;
+		}
+	}
+	
 	private void draw_one_square(Graphics g, int i, int j){
 		int off_x = TABLE_OFFSET_X + i*FIELD_WIDTH;
 		int off_y = TABLE_OFFSET_Y + j*FIELD_HEIGHT;
@@ -135,8 +160,7 @@ public class GUI extends JPanel {
 		g.fillRect(off_x+STROKE_WIDTH, off_y+STROKE_WIDTH,
 				FIELD_WIDTH-2*STROKE_WIDTH, FIELD_HEIGHT-2*STROKE_WIDTH);
 		//Draw player
-		draw_warrior(g, off_x, off_y);
-
+		draw_character(g, off_x, off_y,arr_char[i][j]);
 	}
 
 	@Override
