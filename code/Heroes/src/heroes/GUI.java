@@ -37,8 +37,9 @@ public class GUI extends JPanel {
 	private int arr_char[][] = null;
 	private boolean TESTING = true;
 	
-	private int WARRIOR_DRAW_RADIUS = 35;
-	private int ARCHER_DRAW_MARGIN = 6;
+	private int WARRIOR_DRAW_RADIUS = 30;
+	private int ARCHER_DRAW_MARGIN = 15;
+	private int MAGE_DRAW_MARGIN = 30;
 
 	GUI(Control c) {
 		arr_background = new int[TABLE_SIZE_X][TABLE_SIZE_Y];
@@ -49,7 +50,7 @@ public class GUI extends JPanel {
 			for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
 					arr_background[i][j]=r.nextInt(4);
-					arr_char[i][j]=r.nextInt(3);
+					arr_char[i][j]=r.nextInt(4);
 				}
 			}
 		}
@@ -118,6 +119,12 @@ public class GUI extends JPanel {
 		  g.fillOval(x,y,r,r);
 		}
 	
+	private void drawCenteredSquare(Graphics g, int x, int y, int r) {
+		  x = x-(r/2);
+		  y = y-(r/2);
+		  g.fillRect(x,y,r,r);
+		}
+	
 	private void draw_warrior(Graphics g, int off_x, int off_y){
 		g.setColor(Color.black);
 		drawCenteredCircle(g,off_x+FIELD_WIDTH/2, off_y+FIELD_HEIGHT/2, 
@@ -132,6 +139,12 @@ public class GUI extends JPanel {
 		p.addPoint(off_x+FIELD_WIDTH-ARCHER_DRAW_MARGIN, off_y+FIELD_HEIGHT-ARCHER_DRAW_MARGIN);	    
 	    g.fillPolygon(p);
 	}
+	
+	private void draw_mage(Graphics g, int off_x, int off_y){
+		g.setColor(Color.black);
+		drawCenteredSquare(g,off_x+FIELD_WIDTH/2, off_y+FIELD_HEIGHT/2, 
+				MAGE_DRAW_MARGIN);
+	}
 
 	private void draw_character(Graphics g, int off_x, int off_y, int char_id){
 		switch (char_id) {
@@ -140,6 +153,9 @@ public class GUI extends JPanel {
 			break;
 		case 1:
 			draw_archer(g, off_x, off_y);	
+			break;
+		case 2:
+			draw_mage(g, off_x, off_y);	
 			break;
 
 		default:
