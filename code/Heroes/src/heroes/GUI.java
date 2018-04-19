@@ -50,7 +50,7 @@ public class GUI extends JPanel {
 			for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
 					arr_background[i][j]=r.nextInt(4);
-					arr_char[i][j]=r.nextInt(4);
+					arr_char[i][j]=r.nextInt(4+3)-3;
 				}
 			}
 		}
@@ -106,10 +106,25 @@ public class GUI extends JPanel {
 			g.setColor(Color.orange);
 			break;
 		case 3:
-			g.setColor(Color.red);
+			g.setColor(Color.green);
 			break;
 		default:
 			break;
+		}
+	}
+	
+
+	private void set_color_according_to_char(Graphics g, int char_id){
+		if(char_id>0){
+			g.setColor(Color.red);			
+		}
+		else{
+			if(char_id<0){
+				g.setColor(Color.blue);			
+			}
+			else{
+				g.setColor(Color.black);				
+			}
 		}
 	}
 	
@@ -126,13 +141,11 @@ public class GUI extends JPanel {
 		}
 	
 	private void draw_warrior(Graphics g, int off_x, int off_y){
-		g.setColor(Color.black);
 		drawCenteredCircle(g,off_x+FIELD_WIDTH/2, off_y+FIELD_HEIGHT/2, 
 				WARRIOR_DRAW_RADIUS);
 	}
 	
 	private void draw_archer(Graphics g, int off_x, int off_y){
-		g.setColor(Color.black);	
 		Polygon p = new Polygon();		
 		p.addPoint(off_x+FIELD_WIDTH/2, off_y+ARCHER_DRAW_MARGIN);
 		p.addPoint(off_x+ARCHER_DRAW_MARGIN, off_y+FIELD_HEIGHT-ARCHER_DRAW_MARGIN);
@@ -141,20 +154,19 @@ public class GUI extends JPanel {
 	}
 	
 	private void draw_mage(Graphics g, int off_x, int off_y){
-		g.setColor(Color.black);
 		drawCenteredSquare(g,off_x+FIELD_WIDTH/2, off_y+FIELD_HEIGHT/2, 
 				MAGE_DRAW_MARGIN);
 	}
 
 	private void draw_character(Graphics g, int off_x, int off_y, int char_id){
 		switch (char_id) {
-		case 0:
+		case 1:
 			draw_warrior(g, off_x, off_y);			
 			break;
-		case 1:
+		case 2:
 			draw_archer(g, off_x, off_y);	
 			break;
-		case 2:
+		case 3:
 			draw_mage(g, off_x, off_y);	
 			break;
 
@@ -176,7 +188,9 @@ public class GUI extends JPanel {
 		g.fillRect(off_x+STROKE_WIDTH, off_y+STROKE_WIDTH,
 				FIELD_WIDTH-2*STROKE_WIDTH, FIELD_HEIGHT-2*STROKE_WIDTH);
 		//Draw player
-		draw_character(g, off_x, off_y,arr_char[i][j]);
+		int char_id = arr_char[i][j];
+		set_color_according_to_char(g,char_id);
+		draw_character(g, off_x, off_y,Math.abs(char_id));
 	}
 
 	@Override
