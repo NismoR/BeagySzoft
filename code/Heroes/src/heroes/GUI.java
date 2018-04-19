@@ -35,6 +35,8 @@ public class GUI extends JPanel {
 	private int arr_background[][] = null;
 	private int arr_char[][] = null;
 	private boolean TESTING = true;
+	
+	private int WARRIOR_DRAW_RADIUS = 35;
 
 	GUI(Control c) {
 		arr_background = new int[TABLE_SIZE_X][TABLE_SIZE_Y];
@@ -108,6 +110,18 @@ public class GUI extends JPanel {
 		}
 	}
 	
+	private void drawCenteredCircle(Graphics g, int x, int y, int r) {
+		  x = x-(r/2);
+		  y = y-(r/2);
+		  g.fillOval(x,y,r,r);
+		}
+	
+	private void draw_warrior(Graphics g, int off_x, int off_y){
+		g.setColor(Color.black);
+		drawCenteredCircle(g,off_x+FIELD_WIDTH/2, off_y+FIELD_HEIGHT/2, 
+				WARRIOR_DRAW_RADIUS);
+	}
+	
 	private void draw_one_square(Graphics g, int i, int j){
 		int off_x = TABLE_OFFSET_X + i*FIELD_WIDTH;
 		int off_y = TABLE_OFFSET_Y + j*FIELD_HEIGHT;
@@ -120,6 +134,8 @@ public class GUI extends JPanel {
 		set_color_according_to_bg(g,arr_background[i][j]);
 		g.fillRect(off_x+STROKE_WIDTH, off_y+STROKE_WIDTH,
 				FIELD_WIDTH-2*STROKE_WIDTH, FIELD_HEIGHT-2*STROKE_WIDTH);
+		//Draw player
+		draw_warrior(g, off_x, off_y);
 
 	}
 
