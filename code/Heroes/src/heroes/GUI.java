@@ -26,7 +26,7 @@ import javax.swing.WindowConstants;
  *
  * @author ABence
  */
-public class GUI extends JFrame {
+public class GUI extends JFrame implements IGameState{
 
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
@@ -39,6 +39,8 @@ public class GUI extends JFrame {
 	private int arr_background[][] = null;
 	private int arr_char[][] = null;
 	private boolean TESTING = true;
+	
+	private GameState gui_gs;
 	
 	private int WARRIOR_DRAW_RADIUS = 30;
 	private int ARCHER_DRAW_MARGIN = 15;
@@ -67,6 +69,7 @@ public class GUI extends JFrame {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setLayout(null);
+		gui_gs = new GameState();
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -223,20 +226,43 @@ public class GUI extends JFrame {
 			draw_character(g, off_x, off_y,Math.abs(char_id));
 		}
 		
+		private void draw_steppables(Graphics g) {
+			for (int i = 0; i < TABLE_SIZE_X; i++) {
+				for (int j = 0; j < TABLE_SIZE_Y; j++) {
+					int off_x = TABLE_OFFSET_X + i*FIELD_WIDTH;
+					int off_y = TABLE_OFFSET_Y + j*FIELD_HEIGHT;
+					if(gui_gs.steppable[i][j]){
+						g.setColor(Color.blue);
+						g.fillRect(off_x, off_y, FIELD_WIDTH, FIELD_HEIGHT);						
+					}
+				}
+			}
+		}
+		
 		@Override
 		public void paintComponent(Graphics g) {
 			g.setColor(Color.lightGray);
 			g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 			g.setColor(Color.black);
 			g.setFont(new Font("Times New Roman", Font.BOLD, 24));
-			g.fillRect(TABLE_OFFSET_X-STROKE_WIDTH, TABLE_OFFSET_Y-STROKE_WIDTH, 
+			/*g.fillRect(TABLE_OFFSET_X-STROKE_WIDTH, TABLE_OFFSET_Y-STROKE_WIDTH, 
 					TABLE_SIZE_X*FIELD_WIDTH+2*STROKE_WIDTH, 
-					TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);
-			for (int i = 0; i < TABLE_SIZE_X; i++) {
+					TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);*/
+			draw_steppables(g);
+			/*for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
 					draw_one_square(g,i,j);
 				}
-			}
+			}*/
 		}
+	}
+
+
+
+	@Override
+	public void onNewGameState(GameState gs) {
+		// TODO Auto-generated method stub
+		gui_gs.copy(gs);
+		gamePanel.repaint();
 	}
 }

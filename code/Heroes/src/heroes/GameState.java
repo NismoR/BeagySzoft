@@ -1,6 +1,7 @@
 package heroes;
 
 import java.io.Serializable;
+import java.util.Random;
 
 public class GameState implements Serializable{
 
@@ -26,6 +27,8 @@ public class GameState implements Serializable{
 	public boolean[][] steppable;
 	public FieldType[][] board_bg;
 	
+	private static float perc_if_valid_field = 0.9f;
+	
 	public GameState(){
 		time = 0;
 		turn = GameTurn.NOT_STARTED;
@@ -35,6 +38,22 @@ public class GameState implements Serializable{
 			for(int j = 0; j < board_size; j++){
 				board_bg[i][j] = FieldType.NOT_AVAILABLE;
 				steppable[i][j] = false;
+			}
+		}
+	}
+	
+	public void init_map(){
+		Random r = new Random();
+		for (int i = 0; i < board_size; i++) {
+			for (int j = 0; j < board_size; j++) {
+				if(r.nextFloat() < perc_if_valid_field){
+					board_bg[i][j] = FieldType.FREE;
+					steppable[i][j] = true;					
+				}
+				else{
+					board_bg[i][j] = FieldType.NOT_AVAILABLE;
+					steppable[i][j] = false;					
+				}
 			}
 		}
 	}
