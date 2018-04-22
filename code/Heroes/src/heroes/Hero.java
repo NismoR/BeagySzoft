@@ -1,6 +1,13 @@
 package heroes;
 
 public abstract class Hero {
+	
+	public enum HeroType {
+		WARRIOR,
+		ARCHER,
+		MAGE
+	}
+	
 	private HeroType type;
 	private int player_id;
 	
