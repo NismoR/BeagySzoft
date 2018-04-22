@@ -8,10 +8,15 @@ public abstract class Hero {
 		MAGE
 	}
 	
-	private HeroType type;
-	private int player_id;
+	public enum PlayerID {
+		CLIENT,
+		SERVER
+	}
 	
-	public Hero(HeroType type, int player_id){
+	private HeroType type;
+	private PlayerID player_id;
+	
+	public Hero(HeroType type, PlayerID player_id){
 		this.type = type;
 		this.player_id = player_id;
 	}
@@ -20,7 +25,7 @@ public abstract class Hero {
 		return this.type;
 	}
 	
-	public int get_player_id(){
+	public PlayerID get_player_id(){
 		return this.player_id;
 	}
 }
