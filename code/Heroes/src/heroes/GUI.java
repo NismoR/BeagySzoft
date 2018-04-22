@@ -27,7 +27,7 @@ public class GUI extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
-	private final int WINDOW_WIDTH = 950, WINDOW_HEIGHT = 650;
+	private final int WINDOW_WIDTH = 900, WINDOW_HEIGHT = 650;
 	private final int FIELD_WIDTH = 60, FIELD_HEIGHT = 60;
 	private final int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
 	private final int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
