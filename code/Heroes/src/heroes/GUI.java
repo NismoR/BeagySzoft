@@ -232,7 +232,18 @@ public class GUI extends JFrame implements IGameState{
 					int off_x = TABLE_OFFSET_X + i*FIELD_WIDTH;
 					int off_y = TABLE_OFFSET_Y + j*FIELD_HEIGHT;
 					if(gui_gs.steppable[i][j]){
-						g.setColor(Color.blue);
+						switch (gui_gs.board_bg[i][j]) {
+						case START_CLIENT:
+							g.setColor(Color.blue);							
+							break;
+						case START_SERVER:
+							g.setColor(Color.red);							
+							break;
+
+						default:
+							g.setColor(Color.black);
+							break;
+						}
 						g.fillRect(off_x, off_y, FIELD_WIDTH, FIELD_HEIGHT);						
 					}
 				}

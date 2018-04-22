@@ -26,6 +26,7 @@ class Control {
 	private void generateBoard(){
 		gs.turn = GameTurn.INITING_MAP;
 		gs.init_map();
+		gs.set_starting_positions(NR_OF_HEROES);
 		gs.turn = GameTurn.PLAYER_CLIENT;		
 	}
 
@@ -39,7 +40,7 @@ class Control {
 	}
 
 	void startServer() {
-		generateBoard();	
+		generateBoard();
 		gui.onNewGameState(gs);		
 	}
 
