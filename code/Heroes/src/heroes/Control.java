@@ -8,6 +8,7 @@ package heroes;
 import java.awt.Point;
 
 import heroes.GameState.GameTurn;
+import heroes.Hero.PlayerID;
 
 /**
  *
@@ -20,6 +21,10 @@ class Control {
 
 	Control() {
 		gs = new GameState();
+		Warrior wc = new Warrior(PlayerID.CLIENT);
+		Warrior ws = new Warrior(PlayerID.SERVER);
+		gs.add_hero(ws);
+		gs.add_hero(wc);
 		generateBoard();		
 	}
 	
@@ -27,6 +32,7 @@ class Control {
 		gs.turn = GameTurn.INITING_MAP;
 		gs.init_map();
 		gs.set_starting_positions(NR_OF_HEROES);
+		gs.set_heroes_starting_positions();
 		gs.turn = GameTurn.PLAYER_CLIENT;		
 	}
 

@@ -239,14 +239,27 @@ public class GUI extends JFrame implements IGameState{
 						case START_SERVER:
 							g.setColor(Color.red);							
 							break;
+						case OCCUPIED_C:
+						case OCCUPIED_S:
+							g.setColor(Color.darkGray);							
+							break;
 
 						default:
-							g.setColor(Color.black);
+							g.setColor(Color.gray);
 							break;
 						}
 						g.fillRect(off_x, off_y, FIELD_WIDTH, FIELD_HEIGHT);						
 					}
 				}
+			}
+		}
+		
+		private void draw_heroes(Graphics g){
+			for(Hero h : gui_gs.heroes){
+				int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_WIDTH;
+				int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_HEIGHT;
+				g.setColor(Color.red);
+				draw_warrior(g, off_x,  off_y);
 			}
 		}
 		
@@ -260,6 +273,7 @@ public class GUI extends JFrame implements IGameState{
 					TABLE_SIZE_X*FIELD_WIDTH+2*STROKE_WIDTH, 
 					TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);*/
 			draw_steppables(g);
+			draw_heroes(g);
 			/*for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
 					draw_one_square(g,i,j);

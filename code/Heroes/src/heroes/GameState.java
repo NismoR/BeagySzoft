@@ -1,7 +1,11 @@
 package heroes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import heroes.Hero.PlayerID;
 
 public class GameState implements Serializable{
 
@@ -17,6 +21,8 @@ public class GameState implements Serializable{
 		FREE,
 		START_CLIENT,
 		START_SERVER,
+		OCCUPIED_C,
+		OCCUPIED_S,
 		ATTACKABLE,
 		CURRENT
 	}
@@ -28,10 +34,12 @@ public class GameState implements Serializable{
 	public GameTurn turn;
 	public boolean[][] steppable;
 	public FieldType[][] board_bg;
+	public List<Hero> heroes;
 	
 	private static float perc_if_valid_field = 0.9f;
 	
 	public GameState(){
+		heroes = new ArrayList<Hero>();
 		time = 0;
 		turn = GameTurn.NOT_STARTED;
 		board_bg = new FieldType[board_size][board_size];
@@ -115,9 +123,43 @@ public class GameState implements Serializable{
 		}
 	}
 	
+	public void add_hero(Hero hero){
+		heroes.add(hero);
+	}
+	
+	public void set_heroes_starting_positions(){
+		for (int i = 0; i < board_size; i++) {
+			for (int j = 0; j < board_size; j++) {
+				if(board_bg[i][j] == FieldType.START_CLIENT){
+					for(Hero h : this.heroes){
+						if(h.get_x()<0){
+							if(h.get_player_id() == PlayerID.CLIENT){
+								h.set_coordinates(i, j);
+								board_bg[i][j] = FieldType.OCCUPIED_C;
+							}
+						}
+					}
+				}
+				if(board_bg[i][j] == FieldType.START_SERVER){
+					for(Hero h : this.heroes){
+						if(h.get_x()<0){
+							if(h.get_player_id() == PlayerID.SERVER){
+								h.set_coordinates(i, j);	
+								board_bg[i][j] = FieldType.OCCUPIED_S;							
+							}
+						}
+					}
+				}
+				
+								
+			}
+		}
+	}
+	
 	public void copy(GameState gs){
 		time = gs.time;
 		turn = gs.turn;
+		heroes = new ArrayList<Hero>(gs.heroes);
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
 				board_bg[i][j] = gs.board_bg[i][j];
