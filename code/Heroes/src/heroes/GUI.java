@@ -7,11 +7,14 @@ package heroes;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -23,7 +26,7 @@ import javax.swing.WindowConstants;
  *
  * @author ABence
  */
-public class GUI extends JPanel {
+public class GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
@@ -32,7 +35,7 @@ public class GUI extends JPanel {
 	private final int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
 	private final int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
 	private final int STROKE_WIDTH = 3;
-	private JFrame j;
+	private JPanel p;
 	private int arr_background[][] = null;
 	private int arr_char[][] = null;
 	private boolean TESTING = true;
@@ -40,8 +43,12 @@ public class GUI extends JPanel {
 	private int WARRIOR_DRAW_RADIUS = 30;
 	private int ARCHER_DRAW_MARGIN = 15;
 	private int MAGE_DRAW_MARGIN = 30;
+	
+
+	private GamePanel gamePanel;
 
 	GUI(Control c) {
+		super("Heroes");
 		arr_background = new int[TABLE_SIZE_X][TABLE_SIZE_Y];
 		arr_char = new int[TABLE_SIZE_X][TABLE_SIZE_Y];
 		
@@ -56,11 +63,10 @@ public class GUI extends JPanel {
 		}
 		
 		
-		j = new JFrame("Heroes");
 		ctrl = c;
-		j.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		j.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		j.setLayout(null);
+		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setLayout(null);
 
 		JMenuBar menuBar = new JMenuBar();
 
@@ -84,48 +90,13 @@ public class GUI extends JPanel {
 		menuItem.addActionListener(new MenuListener());
 		menuBar.add(menuItem);
 
-		j.setJMenuBar(menuBar);
-		j.setContentPane(this);
-		j.setVisible(true);
-		repaint();
-	}
+		setJMenuBar(menuBar);
+		setVisible(true);
 
-	public JFrame getJ() {
-		return j;
-	}
-	
-	private void set_color_according_to_bg(Graphics g, int bg_id){
-		switch (bg_id) {
-		case 0:
-			g.setColor(Color.magenta);
-			break;
-		case 1:
-			g.setColor(Color.cyan);
-			break;
-		case 2:
-			g.setColor(Color.orange);
-			break;
-		case 3:
-			g.setColor(Color.green);
-			break;
-		default:
-			break;
-		}
-	}
-	
-
-	private void set_color_according_to_char(Graphics g, int char_id){
-		if(char_id>0){
-			g.setColor(Color.red);			
-		}
-		else{
-			if(char_id<0){
-				g.setColor(Color.blue);			
-			}
-			else{
-				g.setColor(Color.black);				
-			}
-		}
+		gamePanel = new GamePanel();
+		gamePanel.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+		//gamePanel.setBorder(BorderFactory.createTitledBorder("Game"));
+		add(gamePanel);
 	}
 	
 	private void drawCenteredCircle(Graphics g, int x, int y, int r) {
@@ -174,40 +145,8 @@ public class GUI extends JPanel {
 			break;
 		}
 	}
+
 	
-	private void draw_one_square(Graphics g, int i, int j){
-		int off_x = TABLE_OFFSET_X + i*FIELD_WIDTH;
-		int off_y = TABLE_OFFSET_Y + j*FIELD_HEIGHT;
-		
-
-		// Draw border of square
-		g.setColor(Color.black);
-		g.fillRect(off_x, off_y, FIELD_WIDTH, FIELD_HEIGHT);
-		// Draw background of square
-		set_color_according_to_bg(g,arr_background[i][j]);
-		g.fillRect(off_x+STROKE_WIDTH, off_y+STROKE_WIDTH,
-				FIELD_WIDTH-2*STROKE_WIDTH, FIELD_HEIGHT-2*STROKE_WIDTH);
-		//Draw player
-		int char_id = arr_char[i][j];
-		set_color_according_to_char(g,char_id);
-		draw_character(g, off_x, off_y,Math.abs(char_id));
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		g.setColor(Color.lightGray);
-		g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-		g.setColor(Color.black);
-		g.setFont(new Font("Times New Roman", Font.BOLD, 24));
-		g.fillRect(TABLE_OFFSET_X-STROKE_WIDTH, TABLE_OFFSET_Y-STROKE_WIDTH, 
-				TABLE_SIZE_X*FIELD_WIDTH+2*STROKE_WIDTH, 
-				TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);
-		for (int i = 0; i < TABLE_SIZE_X; i++) {
-			for (int j = 0; j < TABLE_SIZE_Y; j++) {
-				draw_one_square(g,i,j);
-			}
-		}
-	}
 
 	private class MenuListener implements ActionListener {
 
@@ -222,6 +161,81 @@ public class GUI extends JPanel {
 			}
 			if (e.getActionCommand().equals("Client")) {
 				ctrl.startClient();
+			}
+		}
+	}
+	
+	
+	
+	private class GamePanel extends JPanel {
+
+		private static final long serialVersionUID = 1L;
+
+		private void set_color_according_to_bg(Graphics g, int bg_id){
+			switch (bg_id) {
+			case 0:
+				g.setColor(Color.magenta);
+				break;
+			case 1:
+				g.setColor(Color.cyan);
+				break;
+			case 2:
+				g.setColor(Color.orange);
+				break;
+			case 3:
+				g.setColor(Color.green);
+				break;
+			default:
+				break;
+			}
+		}
+		
+
+		private void set_color_according_to_char(Graphics g, int char_id){
+			if(char_id>0){
+				g.setColor(Color.red);			
+			}
+			else{
+				if(char_id<0){
+					g.setColor(Color.blue);			
+				}
+				else{
+					g.setColor(Color.black);				
+				}
+			}
+		}
+		
+		private void draw_one_square(Graphics g, int i, int j){
+			int off_x = TABLE_OFFSET_X + i*FIELD_WIDTH;
+			int off_y = TABLE_OFFSET_Y + j*FIELD_HEIGHT;
+			
+
+			// Draw border of square
+			g.setColor(Color.black);
+			g.fillRect(off_x, off_y, FIELD_WIDTH, FIELD_HEIGHT);
+			// Draw background of square
+			set_color_according_to_bg(g,arr_background[i][j]);
+			g.fillRect(off_x+STROKE_WIDTH, off_y+STROKE_WIDTH,
+					FIELD_WIDTH-2*STROKE_WIDTH, FIELD_HEIGHT-2*STROKE_WIDTH);
+			//Draw player
+			int char_id = arr_char[i][j];
+			set_color_according_to_char(g,char_id);
+			draw_character(g, off_x, off_y,Math.abs(char_id));
+		}
+		
+		@Override
+		public void paintComponent(Graphics g) {
+			g.setColor(Color.lightGray);
+			g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+			g.setColor(Color.black);
+			g.setFont(new Font("Times New Roman", Font.BOLD, 24));
+			g.fillRect(TABLE_OFFSET_X-STROKE_WIDTH, TABLE_OFFSET_Y-STROKE_WIDTH, 
+					TABLE_SIZE_X*FIELD_WIDTH+2*STROKE_WIDTH, 
+					TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);
+			for (int i = 0; i < TABLE_SIZE_X; i++) {
+				for (int j = 0; j < TABLE_SIZE_Y; j++) {
+					draw_one_square(g,i,j);
+				}
 			}
 		}
 	}
