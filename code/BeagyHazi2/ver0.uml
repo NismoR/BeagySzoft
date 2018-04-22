@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ActionLanguage="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.omg.org/spec/ALF/20120827/ActionLanguage-Profile pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ">
+  <uml:Model xmi:id="_OftDAEYMEei5lvX6cC3ELw" name="GUI">
+    <packagedElement xmi:type="uml:Class" xmi:id="_RM9TcEYMEei5lvX6cC3ELw" name="GUI">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_olHQMEYNEei5lvX6cC3ELw" name="ctrl" type="_SaVFgEYMEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ptZG4EYNEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ptoXcEYNEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_n-lJwEYPEei5lvX6cC3ELw" name="control" type="_SaVFgEYMEei5lvX6cC3ELw" association="_n-WgQEYPEei5lvX6cC3ELw"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_goKAsEYNEei5lvX6cC3ELw" name="refreshBoard"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_SaVFgEYMEei5lvX6cC3ELw" name="Control">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_sREkkEYNEei5lvX6cC3ELw" name="gui" type="_RM9TcEYMEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tGlQQEYNEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tGw2cEYNEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_DEQogEYOEei5lvX6cC3ELw" name="net" type="_V_wUEEYMEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PZsUIEYOEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PaFVsEYOEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_ZUGHwEYOEei5lvX6cC3ELw" name="startServer"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_c-0tEEYOEei5lvX6cC3ELw" name="startClient"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_f8di4EYOEei5lvX6cC3ELw" name="setGUI">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_YK5fgEYYEei5lvX6cC3ELw" name="g" type="_RM9TcEYMEei5lvX6cC3ELw"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_wWFcsEYOEei5lvX6cC3ELw" name="sendClick">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_bqhoEEYYEei5lvX6cC3ELw" name="p" type="_fKT-IEYXEei5lvX6cC3ELw"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_5T9WoEYOEei5lvX6cC3ELw" name="newGame"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Model" xmi:id="_UFm7kEYMEei5lvX6cC3ELw" name="Main">
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_x0CTUEYMEei5lvX6cC3ELw" name="&lt;&lt;instantiates>>" client="_UFm7kEYMEei5lvX6cC3ELw" supplier="_RM9TcEYMEei5lvX6cC3ELw"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_0b9-4EYMEei5lvX6cC3ELw" name="&lt;&lt;instantiates>>" client="_UFm7kEYMEei5lvX6cC3ELw" supplier="_SaVFgEYMEei5lvX6cC3ELw"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_V_wUEEYMEei5lvX6cC3ELw" name="Network">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_S8yAYEYOEei5lvX6cC3ELw" name="ctrl" type="_SaVFgEYMEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UJm_4EYOEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UJ6h4EYOEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_NHjc8EYPEei5lvX6cC3ELw" name="connect">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_OSuggEYYEei5lvX6cC3ELw" name="ip" type="_A1hUgEYYEei5lvX6cC3ELw"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_OmF3gEYPEei5lvX6cC3ELw" name="disconnect"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_PricoEYPEei5lvX6cC3ELw" name="send">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_Sam74EYYEei5lvX6cC3ELw" name="gs" type="_i4-BMEYXEei5lvX6cC3ELw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_Xky_QEYMEei5lvX6cC3ELw" name="SerialClient">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_T25p0EYPEei5lvX6cC3ELw" name="socket" type="_WF4wQEYXEei5lvX6cC3ELw">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_UoQ1UEYPEei5lvX6cC3ELw">
+          <body>socket: Socket[1]</body>
+        </ownedComment>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_YdVv0EYXEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_YdoqwEYXEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_mwlL8EYXEei5lvX6cC3ELw" name="in" type="_bSO5UEYXEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oG9wEEYXEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oHX_wEYXEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_omp8wEYXEei5lvX6cC3ELw" name="out" type="_c0AOEEYXEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qJZh4EYXEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_qKREkEYXEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <nestedClassifier xmi:type="uml:Class" xmi:id="_r3jFwEYXEei5lvX6cC3ELw" name="SerialClient">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_r3jFwUYXEei5lvX6cC3ELw" name="socket" type="_WF4wQEYXEei5lvX6cC3ELw">
+          <ownedComment xmi:type="uml:Comment" xmi:id="_r3jFwkYXEei5lvX6cC3ELw">
+            <body>socket: Socket[1]</body>
+          </ownedComment>
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_r3jFw0YXEei5lvX6cC3ELw" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_r3jFxEYXEei5lvX6cC3ELw" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_r3jFxUYXEei5lvX6cC3ELw" name="in" type="_bSO5UEYXEei5lvX6cC3ELw">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_r3jFxkYXEei5lvX6cC3ELw" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_r3jFx0YXEei5lvX6cC3ELw" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="_r3jFyEYXEei5lvX6cC3ELw" name="out" type="_c0AOEEYXEei5lvX6cC3ELw">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_r3jFyUYXEei5lvX6cC3ELw" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_r3jFykYXEei5lvX6cC3ELw" value="1"/>
+        </ownedAttribute>
+      </nestedClassifier>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_aRUP4EYMEei5lvX6cC3ELw" name="SerialServer">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_vqxfwEYXEei5lvX6cC3ELw" name="serverSocket" type="_z47iQEYXEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_2Jhr4EYXEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_2J9JsEYXEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_5NLqIEYXEei5lvX6cC3ELw" name="clientSocket" type="_WF4wQEYXEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6p-_UEYXEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6qXZ0EYXEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_7WticEYXEei5lvX6cC3ELw" name="in" type="_bSO5UEYXEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8gGzcEYXEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8gd_0EYXEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_9kclUEYXEei5lvX6cC3ELw" name="out" type="_c0AOEEYXEei5lvX6cC3ELw">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-2s3YEYXEei5lvX6cC3ELw" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-3MmoEYXEei5lvX6cC3ELw" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_n-WgQEYPEei5lvX6cC3ELw" memberEnd="_n-lJwEYPEei5lvX6cC3ELw _n-mX4EYPEei5lvX6cC3ELw">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_n-fqMEYPEei5lvX6cC3ELw" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_n-hfYEYPEei5lvX6cC3ELw" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_n-mX4EYPEei5lvX6cC3ELw" name="gui" type="_RM9TcEYMEei5lvX6cC3ELw" association="_n-WgQEYPEei5lvX6cC3ELw"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_WF4wQEYXEei5lvX6cC3ELw" name="Socket"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_bSO5UEYXEei5lvX6cC3ELw" name="ObjectInputStream"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_c0AOEEYXEei5lvX6cC3ELw" name="ObjectOutputStream"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_fKT-IEYXEei5lvX6cC3ELw" name="Point"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_i4-BMEYXEei5lvX6cC3ELw" name="GameState"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_z47iQEYXEei5lvX6cC3ELw" name="ServerSocket"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_A1hUgEYYEei5lvX6cC3ELw" name="EString"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_lpM3sEYYEei5lvX6cC3ELw" client="_Xky_QEYMEei5lvX6cC3ELw" supplier="_V_wUEEYMEei5lvX6cC3ELw"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_mWsP0EYYEei5lvX6cC3ELw" client="_9kclUEYXEei5lvX6cC3ELw" supplier="_V_wUEEYMEei5lvX6cC3ELw"/>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_fLfOYEYNEei5lvX6cC3ELw">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_fLhqoEYNEei5lvX6cC3ELw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+    </profileApplication>
+  </uml:Model>
+  <ActionLanguage:TextualRepresentation xmi:id="_UoSDcEYPEei5lvX6cC3ELw" base_Comment="_UoQ1UEYPEei5lvX6cC3ELw" language="org.eclipse.papyrus.uml.textedit.property.xtext.UmlProperty"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_r3mJEEYXEei5lvX6cC3ELw" base_Comment="_r3jFwkYXEei5lvX6cC3ELw" language="org.eclipse.papyrus.uml.textedit.property.xtext.UmlProperty"/>
+  <ActionLanguage:TextualRepresentation xmi:id="_x8ZkIEYXEei5lvX6cC3ELw" language="org.eclipse.papyrus.uml.textedit.property.xtext.UmlProperty"/>
+</xmi:XMI>
