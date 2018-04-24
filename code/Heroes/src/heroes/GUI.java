@@ -44,9 +44,11 @@ public class GUI extends JFrame implements IGameState{
 	
 	private int ARCHER_DRAW_MARGIN = 15;
 	private int MAGE_DRAW_MARGIN = 30;
-	
-	private static Color col_hero_client = new Color(0xFF0096);	
-	private static Color col_hero_server = new Color(0xF9600FF);
+
+	private static Color col_bg = new Color(0xF5F2DC);
+	private static Color col_field_bg = new Color(0x7A797A);
+	private static Color col_hero_client = new Color(0xFF5729);	
+	private static Color col_hero_server = new Color(0x009494);
 	
 	private GamePanel gamePanel;
 
@@ -213,12 +215,12 @@ public class GUI extends JFrame implements IGameState{
 							g.setColor(Color.red);							
 							break;
 						case OCCUPIED_C:
-						case OCCUPIED_S:
-							g.setColor(Color.darkGray);							
+						case OCCUPIED_S:	
+							g.setColor(col_field_bg.darker());							
 							break;
 
 						default:
-							g.setColor(Color.gray);
+							g.setColor(col_field_bg);
 							break;
 						}
 						g.fillRect(off_x, off_y, FIELD_WIDTH, FIELD_HEIGHT);						
@@ -249,7 +251,7 @@ public class GUI extends JFrame implements IGameState{
 		
 		@Override
 		public void paintComponent(Graphics g) {
-			g.setColor(Color.lightGray);
+			g.setColor(col_bg);
 			g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 			g.setColor(Color.black);
 			g.setFont(new Font("Times New Roman", Font.BOLD, 24));
