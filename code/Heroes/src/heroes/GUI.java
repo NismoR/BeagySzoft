@@ -45,7 +45,9 @@ public class GUI extends JFrame implements IGameState{
 	private int ARCHER_DRAW_MARGIN = 15;
 	private int MAGE_DRAW_MARGIN = 30;
 	
-
+	private static Color col_hero_client = new Color(0xFF0096);	
+	private static Color col_hero_server = new Color(0xF9600FF);
+	
 	private GamePanel gamePanel;
 
 	GUI(Control c) {
@@ -229,7 +231,18 @@ public class GUI extends JFrame implements IGameState{
 			for(Hero h : gui_gs.heroes){
 				int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_WIDTH;
 				int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_HEIGHT;
-				g.setColor(Color.red);
+				switch (h.get_player_id()) {
+				case CLIENT:
+					g.setColor(col_hero_client);					
+					break;
+				case SERVER:
+					g.setColor(col_hero_server);					
+					break;
+
+				default:
+					g.setColor(Color.black);
+					break;
+				}
 				h.draw(g, off_x,  off_y);
 			}
 		}
