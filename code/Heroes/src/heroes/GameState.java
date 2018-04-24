@@ -36,6 +36,8 @@ public class GameState implements Serializable{
 	public FieldType[][] board_bg;
 	public List<Hero> heroes;
 	
+	private int current_hero_id = 0;
+	
 	private static float perc_if_valid_field = 0.9f;
 	
 	public GameState(){
@@ -51,6 +53,18 @@ public class GameState implements Serializable{
 			}
 		}
 	}
+	
+	public Hero get_current_hero(){
+		return heroes.get(current_hero_id);
+	}
+		 
+    public void step_to_next_hero(){
+	    current_hero_id++;
+	    if(current_hero_id >= heroes.size()){
+	           current_hero_id=0;
+	   }
+    }
+
 	
 	public void init_map(){
 		Random r = new Random();
