@@ -11,6 +11,8 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -26,7 +28,7 @@ import javax.swing.WindowConstants;
  *
  * @author ABence
  */
-public class GUI extends JFrame implements IGameState{
+public class GUI extends JFrame implements IGameState, MouseListener{
 
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
@@ -54,6 +56,7 @@ public class GUI extends JFrame implements IGameState{
 
 	GUI(Control c) {
 		super("Heroes");
+		this.addMouseListener(this);
 		arr_background = new int[TABLE_SIZE_X][TABLE_SIZE_Y];
 		arr_char = new int[TABLE_SIZE_X][TABLE_SIZE_Y];
 		
@@ -275,5 +278,43 @@ public class GUI extends JFrame implements IGameState{
 		// TODO Auto-generated method stub
 		gui_gs.copy(gs);
 		gamePanel.repaint();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {	
+
+		int x = (e.getX() - TABLE_OFFSET_X - 10 + FIELD_WIDTH) / FIELD_WIDTH -1;
+		if(x <0 || x>= TABLE_SIZE_X){
+			return;
+		}
+		int y = (e.getY() - TABLE_OFFSET_Y - 54 + FIELD_HEIGHT) / FIELD_HEIGHT -1;	
+		if(y <0 || y>= TABLE_SIZE_Y){
+			return;
+		}
+		System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
 	}
 }
