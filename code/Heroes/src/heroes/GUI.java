@@ -31,8 +31,8 @@ public class GUI extends JFrame implements IGameState{
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
 	private final int WINDOW_WIDTH = 950, WINDOW_HEIGHT = 650;
-	private final int FIELD_WIDTH = 60, FIELD_HEIGHT = 60;
-	private final int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
+	public static int FIELD_WIDTH = 60, FIELD_HEIGHT = 60;
+	public static int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
 	private final int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
 	private final int STROKE_WIDTH = 3;
 	private JPanel p;
@@ -42,7 +42,6 @@ public class GUI extends JFrame implements IGameState{
 	
 	private GameState gui_gs;
 	
-	private int WARRIOR_DRAW_RADIUS = 30;
 	private int ARCHER_DRAW_MARGIN = 15;
 	private int MAGE_DRAW_MARGIN = 30;
 	
@@ -102,22 +101,11 @@ public class GUI extends JFrame implements IGameState{
 		add(gamePanel);
 	}
 	
-	private void drawCenteredCircle(Graphics g, int x, int y, int r) {
-		  x = x-(r/2);
-		  y = y-(r/2);
-		  g.fillOval(x,y,r,r);
-		}
-	
 	private void drawCenteredSquare(Graphics g, int x, int y, int r) {
 		  x = x-(r/2);
 		  y = y-(r/2);
 		  g.fillRect(x,y,r,r);
 		}
-	
-	private void draw_warrior(Graphics g, int off_x, int off_y){
-		drawCenteredCircle(g,off_x+FIELD_WIDTH/2, off_y+FIELD_HEIGHT/2, 
-				WARRIOR_DRAW_RADIUS);
-	}
 	
 	private void draw_archer(Graphics g, int off_x, int off_y){
 		Polygon p = new Polygon();		
@@ -130,23 +118,6 @@ public class GUI extends JFrame implements IGameState{
 	private void draw_mage(Graphics g, int off_x, int off_y){
 		drawCenteredSquare(g,off_x+FIELD_WIDTH/2, off_y+FIELD_HEIGHT/2, 
 				MAGE_DRAW_MARGIN);
-	}
-
-	private void draw_character(Graphics g, int off_x, int off_y, int char_id){
-		switch (char_id) {
-		case 1:
-			draw_warrior(g, off_x, off_y);			
-			break;
-		case 2:
-			draw_archer(g, off_x, off_y);	
-			break;
-		case 3:
-			draw_mage(g, off_x, off_y);	
-			break;
-
-		default:
-			break;
-		}
 	}
 
 	
@@ -223,7 +194,7 @@ public class GUI extends JFrame implements IGameState{
 			//Draw player
 			int char_id = arr_char[i][j];
 			set_color_according_to_char(g,char_id);
-			draw_character(g, off_x, off_y,Math.abs(char_id));
+			//draw_character(g, off_x, off_y,Math.abs(char_id));
 		}
 		
 		private void draw_steppables(Graphics g) {
@@ -259,7 +230,7 @@ public class GUI extends JFrame implements IGameState{
 				int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_WIDTH;
 				int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_HEIGHT;
 				g.setColor(Color.red);
-				draw_warrior(g, off_x,  off_y);
+				h.draw(g, off_x,  off_y);
 			}
 		}
 		

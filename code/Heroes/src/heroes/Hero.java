@@ -1,5 +1,7 @@
 package heroes;
 
+import java.awt.Graphics;
+
 public abstract class Hero {
 	
 	public enum HeroType {
@@ -43,4 +45,6 @@ public abstract class Hero {
 		this.x=x;
 		this.y=y;
 	}
+
+	abstract void draw(Graphics g, int off_x, int off_y);
 }
