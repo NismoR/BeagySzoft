@@ -21,7 +21,7 @@ public class GameState implements Serializable{
 		FREE,
 		START_CLIENT,
 		START_SERVER,
-		OCCUPIED_C,
+		OCCUPIED_C,//TODO delete
 		OCCUPIED_S,
 		ATTACKABLE,
 		CURRENT,
@@ -195,6 +195,19 @@ public class GameState implements Serializable{
 		if(valid_field[x][y]){
 			Hero h = get_current_hero();
 			if(has_stepable){
+				if(board_bg[x][y] == FieldType.STEPABLE){
+					board_bg[h.get_x()][h.get_y()] = FieldType.FREE;	
+					if(h.get_player_id()==PlayerID.CLIENT){
+						board_bg[x][y] = FieldType.OCCUPIED_C;						
+					}
+					else{
+						board_bg[x][y] = FieldType.OCCUPIED_S;
+					}
+					h.set_coordinates(x, y);
+					heroes.set(current_hero_id, h);
+					
+					return;
+				}
 				clear_stepables(h.get_x(),h.get_y());
 			}
 			if(Math.abs(h.get_x()-x)>1){
