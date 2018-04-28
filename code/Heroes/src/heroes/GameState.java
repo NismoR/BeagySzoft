@@ -171,10 +171,32 @@ public class GameState implements Serializable{
 			}
 		}
 	}
+	void clear_stepables(int curr_x, int curr_y){
+		for(int i = -1; i < 2; i++){
+			int x=curr_x+i;
+			if(x<0 || x>= board_size){
+				continue;
+			}
+			for(int j = -1; j < 2; j++){
+				int y=curr_y+j;
+				if(y<0 || y>= board_size){
+					continue;
+				}
+				if(board_bg[x][y] == FieldType.STEPABLE){
+					board_bg[x][y] = FieldType.FREE;
+					has_stepable = false;
+					return;
+				}
+			}
+		}		
+	}
 	
 	void check_if_stepable(int x, int y){
 		if(valid_field[x][y]){
 			Hero h = get_current_hero();
+			if(has_stepable){
+				clear_stepables(h.get_x(),h.get_y());
+			}
 			if(Math.abs(h.get_x()-x)>1){
 				return;
 			}
