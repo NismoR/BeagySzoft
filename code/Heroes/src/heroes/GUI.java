@@ -49,6 +49,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 
 	private static Color col_bg = new Color(0xF5F2DC);
 	private static Color col_field_bg = new Color(0x7A797A);
+	private static Color col_current_hero_mark= new Color(0xF0CA4D);
 	private static Color col_hero_client = new Color(0xFF5729);	
 	private static Color col_hero_server = new Color(0x009494);
 	
@@ -252,6 +253,15 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			}
 		}
 		
+		private void draw_current_hero_mark(Graphics g){
+			Hero h = gui_gs.get_current_hero();
+			int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_WIDTH;
+			int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_HEIGHT;
+			g.setColor(col_current_hero_mark);
+			g.drawRect(off_x, off_y, FIELD_WIDTH-1, FIELD_HEIGHT-1);
+			g.drawRect(off_x+1, off_y+1, FIELD_WIDTH-3, FIELD_HEIGHT-3);
+		}
+		
 		@Override
 		public void paintComponent(Graphics g) {
 			g.setColor(col_bg);
@@ -263,6 +273,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);*/
 			draw_steppables(g);
 			draw_heroes(g);
+			draw_current_hero_mark(g);
 			/*for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
 					draw_one_square(g,i,j);
