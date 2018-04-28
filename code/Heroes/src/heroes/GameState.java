@@ -32,7 +32,7 @@ public class GameState implements Serializable{
 	private int board_size = 8;
 	public int time;
 	public GameTurn turn;
-	public boolean[][] steppable;
+	public boolean[][] valid_field;
 	public FieldType[][] board_bg;
 	public List<Hero> heroes;
 	
@@ -45,11 +45,11 @@ public class GameState implements Serializable{
 		time = 0;
 		turn = GameTurn.NOT_STARTED;
 		board_bg = new FieldType[board_size][board_size];
-		steppable = new boolean[board_size][board_size];
+		valid_field = new boolean[board_size][board_size];
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
 				board_bg[i][j] = FieldType.NOT_AVAILABLE;
-				steppable[i][j] = false;
+				valid_field[i][j] = false;
 			}
 		}
 	}
@@ -72,11 +72,11 @@ public class GameState implements Serializable{
 			for (int j = 0; j < board_size; j++) {
 				if(r.nextFloat() < perc_if_valid_field){
 					board_bg[i][j] = FieldType.FREE;
-					steppable[i][j] = true;					
+					valid_field[i][j] = true;					
 				}
 				else{
 					board_bg[i][j] = FieldType.NOT_AVAILABLE;
-					steppable[i][j] = false;					
+					valid_field[i][j] = false;					
 				}
 			}
 		}
@@ -177,7 +177,7 @@ public class GameState implements Serializable{
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
 				board_bg[i][j] = gs.board_bg[i][j];
-				steppable[i][j] = gs.steppable[i][j];
+				valid_field[i][j] = gs.valid_field[i][j];
 			}
 		}
 	}

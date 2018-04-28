@@ -209,7 +209,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
 					int off_x = TABLE_OFFSET_X + i*FIELD_WIDTH;
 					int off_y = TABLE_OFFSET_Y + j*FIELD_HEIGHT;
-					if(gui_gs.steppable[i][j]){
+					if(gui_gs.valid_field[i][j]){
 						switch (gui_gs.board_bg[i][j]) {
 						case START_CLIENT:
 							g.setColor(Color.blue);							
