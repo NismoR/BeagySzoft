@@ -225,6 +225,7 @@ public class GameState implements Serializable{
 		time = gs.time;
 		turn = gs.turn;
 		heroes = new ArrayList<Hero>(gs.heroes);
+		current_hero_id = gs.current_hero_id;
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
 				board_bg[i][j] = gs.board_bg[i][j];
