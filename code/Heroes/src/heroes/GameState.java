@@ -191,6 +191,13 @@ public class GameState implements Serializable{
 		}		
 	}
 	
+	boolean check_if_not_occupied(int x, int y){
+		if(board_bg[x][y] != FieldType.FREE){
+			return false;
+		}
+		return true;
+	}
+	
 	boolean check_if_stepable_and_step(int x, int y){
 		if(valid_field[x][y]){
 			Hero h = get_current_hero();
@@ -215,8 +222,10 @@ public class GameState implements Serializable{
 			if(Math.abs(h.get_y()-y)>1){
 				return false;
 			}
-			board_bg[x][y] = FieldType.STEPABLE;
-			has_stepable = true;
+			if(check_if_not_occupied(x,y)){
+				board_bg[x][y] = FieldType.STEPABLE;
+				has_stepable = true;
+			}
 		}
 		return false;
 	}
