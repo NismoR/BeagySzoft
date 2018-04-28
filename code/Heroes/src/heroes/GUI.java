@@ -327,5 +327,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			return;
 		}
 		System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
+		
+
+		ctrl.onNewClick(x, y);
 	}
 }

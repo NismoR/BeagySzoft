@@ -14,7 +14,7 @@ import heroes.Hero.PlayerID;
  *
  * @author ABence
  */
-class Control {
+class Control implements IClick{
 	private static int NR_OF_HEROES = 1;
 	private GUI gui;
 	private GameState gs;
@@ -57,5 +57,12 @@ class Control {
 	}
 
 	void clickReceived(Point p) {
+	}
+
+	@Override
+	public void onNewClick(int x, int y) {
+		// TODO Auto-generated method stub
+		//gs.check_if_stepable(x, y);
+		gui.onNewGameState(gs);			
 	}
 }
