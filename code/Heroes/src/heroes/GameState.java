@@ -24,7 +24,8 @@ public class GameState implements Serializable{
 		OCCUPIED_C,
 		OCCUPIED_S,
 		ATTACKABLE,
-		CURRENT
+		CURRENT,
+		STEPABLE
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -37,6 +38,7 @@ public class GameState implements Serializable{
 	public List<Hero> heroes;
 	
 	private int current_hero_id = 0;
+	private boolean has_stepable = false;
 	
 	private static float perc_if_valid_field = 0.9f;
 	
@@ -167,6 +169,20 @@ public class GameState implements Serializable{
 				
 								
 			}
+		}
+	}
+	
+	void check_if_stepable(int x, int y){
+		if(valid_field[x][y]){
+			Hero h = get_current_hero();
+			if(Math.abs(h.get_x()-x)>1){
+				return;
+			}
+			if(Math.abs(h.get_y()-y)>1){
+				return;
+			}
+			board_bg[x][y] = FieldType.STEPABLE;
+			has_stepable = true;
 		}
 	}
 	

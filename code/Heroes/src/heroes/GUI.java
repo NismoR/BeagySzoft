@@ -222,6 +222,9 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 						case OCCUPIED_S:	
 							g.setColor(col_field_bg.darker());							
 							break;
+						case STEPABLE:
+							g.setColor(Color.blue.darker());							
+							break;
 
 						default:
 							g.setColor(col_field_bg);

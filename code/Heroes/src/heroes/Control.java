@@ -62,7 +62,7 @@ class Control implements IClick{
 	@Override
 	public void onNewClick(int x, int y) {
 		// TODO Auto-generated method stub
-		//gs.check_if_stepable(x, y);
+		gs.check_if_stepable(x, y);
 		gui.onNewGameState(gs);			
 	}
 }
