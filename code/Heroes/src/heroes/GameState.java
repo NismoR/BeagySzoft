@@ -191,7 +191,7 @@ public class GameState implements Serializable{
 		}		
 	}
 	
-	void check_if_stepable(int x, int y){
+	boolean check_if_stepable_and_step(int x, int y){
 		if(valid_field[x][y]){
 			Hero h = get_current_hero();
 			if(has_stepable){
@@ -204,21 +204,21 @@ public class GameState implements Serializable{
 						board_bg[x][y] = FieldType.OCCUPIED_S;
 					}
 					h.set_coordinates(x, y);
-					heroes.set(current_hero_id, h);
-					
-					return;
+					heroes.set(current_hero_id, h);					
+					return true;
 				}
 				clear_stepables(h.get_x(),h.get_y());
 			}
 			if(Math.abs(h.get_x()-x)>1){
-				return;
+				return false;
 			}
 			if(Math.abs(h.get_y()-y)>1){
-				return;
+				return false;
 			}
 			board_bg[x][y] = FieldType.STEPABLE;
 			has_stepable = true;
 		}
+		return false;
 	}
 	
 	public void copy(GameState gs){
