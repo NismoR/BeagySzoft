@@ -33,7 +33,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
 	private final int WINDOW_WIDTH = 950, WINDOW_HEIGHT = 650;
-	public static int FIELD_WIDTH = 60, FIELD_HEIGHT = 60;
+	public static int FIELD_SIZE = 60;
 	public static int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
 	private final int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
 	private final int STROKE_WIDTH = 3;
@@ -117,14 +117,14 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	
 	private void draw_archer(Graphics g, int off_x, int off_y){
 		Polygon p = new Polygon();		
-		p.addPoint(off_x+FIELD_WIDTH/2, off_y+ARCHER_DRAW_MARGIN);
-		p.addPoint(off_x+ARCHER_DRAW_MARGIN, off_y+FIELD_HEIGHT-ARCHER_DRAW_MARGIN);
-		p.addPoint(off_x+FIELD_WIDTH-ARCHER_DRAW_MARGIN, off_y+FIELD_HEIGHT-ARCHER_DRAW_MARGIN);	    
+		p.addPoint(off_x+FIELD_SIZE/2, off_y+ARCHER_DRAW_MARGIN);
+		p.addPoint(off_x+ARCHER_DRAW_MARGIN, off_y+FIELD_SIZE-ARCHER_DRAW_MARGIN);
+		p.addPoint(off_x+FIELD_SIZE-ARCHER_DRAW_MARGIN, off_y+FIELD_SIZE-ARCHER_DRAW_MARGIN);	    
 	    g.fillPolygon(p);
 	}
 	
 	private void draw_mage(Graphics g, int off_x, int off_y){
-		drawCenteredSquare(g,off_x+FIELD_WIDTH/2, off_y+FIELD_HEIGHT/2, 
+		drawCenteredSquare(g,off_x+FIELD_SIZE/2, off_y+FIELD_SIZE/2, 
 				MAGE_DRAW_MARGIN);
 	}
 
@@ -188,17 +188,17 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		}
 		
 		private void draw_one_square(Graphics g, int i, int j){
-			int off_x = TABLE_OFFSET_X + i*FIELD_WIDTH;
-			int off_y = TABLE_OFFSET_Y + j*FIELD_HEIGHT;
+			int off_x = TABLE_OFFSET_X + i*FIELD_SIZE;
+			int off_y = TABLE_OFFSET_Y + j*FIELD_SIZE;
 			
 
 			// Draw border of square
 			g.setColor(Color.black);
-			g.fillRect(off_x, off_y, FIELD_WIDTH, FIELD_HEIGHT);
+			g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
 			// Draw background of square
 			set_color_according_to_bg(g,arr_background[i][j]);
 			g.fillRect(off_x+STROKE_WIDTH, off_y+STROKE_WIDTH,
-					FIELD_WIDTH-2*STROKE_WIDTH, FIELD_HEIGHT-2*STROKE_WIDTH);
+					FIELD_SIZE-2*STROKE_WIDTH, FIELD_SIZE-2*STROKE_WIDTH);
 			//Draw player
 			int char_id = arr_char[i][j];
 			set_color_according_to_char(g,char_id);
@@ -208,8 +208,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		private void draw_steppables(Graphics g) {
 			for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
-					int off_x = TABLE_OFFSET_X + i*FIELD_WIDTH;
-					int off_y = TABLE_OFFSET_Y + j*FIELD_HEIGHT;
+					int off_x = TABLE_OFFSET_X + i*FIELD_SIZE;
+					int off_y = TABLE_OFFSET_Y + j*FIELD_SIZE;
 					if(gui_gs.valid_field[i][j]){
 						switch (gui_gs.board_bg[i][j]) {
 						case START_CLIENT:
@@ -233,7 +233,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 							g.setColor(col_field_bg);
 							break;
 						}
-						g.fillRect(off_x, off_y, FIELD_WIDTH, FIELD_HEIGHT);						
+						g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);						
 					}
 				}
 			}
@@ -274,17 +274,17 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		}
 		
 		protected void draw_defense(Graphics g, Hero h){
-			int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_WIDTH;
-			int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_HEIGHT;			
-			int size = GUI.FIELD_WIDTH/4;
+			int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_SIZE;
+			int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;			
+			int size = GUI.FIELD_SIZE/4;
 			switch (h.get_current_defense()) {
 			case 2:
-				draw_small_triangle(g, off_x+GUI.FIELD_HEIGHT, off_y, size, 1);
-				draw_small_triangle(g, off_x, off_y+GUI.FIELD_WIDTH, size, 3);
+				draw_small_triangle(g, off_x+GUI.FIELD_SIZE, off_y, size, 1);
+				draw_small_triangle(g, off_x, off_y+GUI.FIELD_SIZE, size, 3);
 				/*FALLTHRU*/
 			case 1:	
 				draw_small_triangle(g, off_x, off_y, size, 0);
-				draw_small_triangle(g, off_x+GUI.FIELD_HEIGHT, off_y+GUI.FIELD_WIDTH, size, 2);
+				draw_small_triangle(g, off_x+GUI.FIELD_SIZE, off_y+GUI.FIELD_SIZE, size, 2);
 				break;
 			default:
 				break;
@@ -293,8 +293,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		
 		private void draw_heroes(Graphics g){
 			for(Hero h : gui_gs.heroes){
-				int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_WIDTH;
-				int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_HEIGHT;
+				int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_SIZE;
+				int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;
 				switch (h.get_player_id()) {
 				case CLIENT:
 					g.setColor(col_hero_client);					
@@ -314,11 +314,11 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		
 		private void draw_current_hero_mark(Graphics g){
 			Hero h = gui_gs.get_current_hero();
-			int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_WIDTH;
-			int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_HEIGHT;
+			int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_SIZE;
+			int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;
 			g.setColor(col_current_hero_mark);
-			g.drawRect(off_x, off_y, FIELD_WIDTH-1, FIELD_HEIGHT-1);
-			g.drawRect(off_x+1, off_y+1, FIELD_WIDTH-3, FIELD_HEIGHT-3);
+			g.drawRect(off_x, off_y, FIELD_SIZE-1, FIELD_SIZE-1);
+			g.drawRect(off_x+1, off_y+1, FIELD_SIZE-3, FIELD_SIZE-3);
 		}
 		
 		@Override
@@ -377,11 +377,11 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {	
 
-		int x = (e.getX() - TABLE_OFFSET_X - 10 + FIELD_WIDTH) / FIELD_WIDTH -1;
+		int x = (e.getX() - TABLE_OFFSET_X - 10 + FIELD_SIZE) / FIELD_SIZE -1;
 		if(x <0 || x>= TABLE_SIZE_X){
 			return;
 		}
-		int y = (e.getY() - TABLE_OFFSET_Y - 54 + FIELD_HEIGHT) / FIELD_HEIGHT -1;	
+		int y = (e.getY() - TABLE_OFFSET_Y - 54 + FIELD_SIZE) / FIELD_SIZE -1;	
 		if(y <0 || y>= TABLE_SIZE_Y){
 			return;
 		}

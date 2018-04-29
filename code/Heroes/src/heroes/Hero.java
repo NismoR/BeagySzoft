@@ -121,6 +121,6 @@ public abstract class Hero {
 			num = e.get_type_in_int();
 		}*/
 		g.setColor(Color.black);
-		g.drawString(Integer.toString(last_rolled_id), off_x+GUI.FIELD_WIDTH/2-5, off_y+GUI.FIELD_HEIGHT/2+7);
+		g.drawString(Integer.toString(last_rolled_id), off_x+GUI.FIELD_SIZE/2-5, off_y+GUI.FIELD_SIZE/2+7);
 	}
 }

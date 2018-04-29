@@ -19,7 +19,7 @@ public class Warrior extends Hero{
 	
 	@Override
 	void draw(Graphics g, int off_x, int off_y) {
-		drawCenteredCircle(g,off_x+GUI.FIELD_WIDTH/2, off_y+GUI.FIELD_HEIGHT/2, 
+		drawCenteredCircle(g,off_x+GUI.FIELD_SIZE/2, off_y+GUI.FIELD_SIZE/2, 
 				WARRIOR_DRAW_RADIUS);
 		draw_eq(g, off_x, off_y);
 	}
