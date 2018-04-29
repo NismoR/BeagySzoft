@@ -23,6 +23,17 @@ public abstract class Equipment {
 		return eq_type;
 	}
 	
+	public int get_type_in_int(){
+		switch (eq_type) {
+		case WOODEN_SWORD:			
+			return 1;
+		case WOODEN_SHIELD:			
+			return 2;
+		default:		
+			return 0;
+		}
+	}
+	
 	public String get_name(){
 		return eq_name;
 	}

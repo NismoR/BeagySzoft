@@ -207,14 +207,12 @@ public class GameState implements Serializable{
 	}
 	
 	int roll(){
-		Random r = new Random();
 		Hero h = get_current_hero();
-		int eq_index = r.nextInt(h.get_max_eq_nr());
-		Equipment e = h.get_equip(eq_index);
-		if(e==null){
+		boolean eq_valid=h.roll();
+		if(!eq_valid){
 			return 0;
 		}
-		EqType et = e.get_type();
+		EqType et = h.get_last_rolled_equip().get_type();
 		switch (et) {
 		case WOODEN_SWORD:
 			set_attackables(h);

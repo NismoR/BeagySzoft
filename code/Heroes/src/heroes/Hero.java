@@ -1,10 +1,14 @@
 package heroes;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import heroes.equipments.Equipment;
+import heroes.equipments.Equipment.EqType;
+import heroes.equipments.WoodenShield;
 
 public abstract class Hero {
 	
@@ -26,6 +30,7 @@ public abstract class Hero {
 	private List<Equipment> equips;
 	
 	private int x=-1,y=-1;
+	private int last_rolled_id=-1;
 	
 	public Hero(HeroType type, PlayerID player_id){
 		equips = new ArrayList<Equipment>();
@@ -68,6 +73,10 @@ public abstract class Hero {
 		return equips.get(index);
 	}
 	
+	public Equipment get_last_rolled_equip(){
+		return get_equip(last_rolled_id);
+	}
+	
 	public List<Equipment> get_equips(){
 		return equips;
 	}
@@ -76,6 +85,25 @@ public abstract class Hero {
 		this.x=x;
 		this.y=y;
 	}
+	
+	public boolean roll(){
+		Random r = new Random();
+		last_rolled_id = r.nextInt(MAX_EQUIPMENT_NR);
+		if(last_rolled_id<0 || last_rolled_id>=equips.size()){
+			return false;
+		}
+		return true;
+	}
 
 	abstract void draw(Graphics g, int off_x, int off_y);
+	
+	protected void draw_eq(Graphics g, int off_x, int off_y){
+		/*Equipment e = get_last_rolled_equip();
+		int num = 0;
+		if(e!=null){
+			num = e.get_type_in_int();
+		}*/
+		g.setColor(Color.black);
+		g.drawString(Integer.toString(last_rolled_id), off_x+GUI.FIELD_WIDTH/2-5, off_y+GUI.FIELD_HEIGHT/2+7);
+	}
 }
