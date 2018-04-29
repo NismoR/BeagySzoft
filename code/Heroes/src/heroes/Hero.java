@@ -111,6 +111,13 @@ public abstract class Hero {
 		}
 		return true;
 	}
+	
+	public boolean defense(Equipment attacked_with){
+		if(current_defense<attacked_with.get_attack_value()){
+			return true;
+		}
+		return false;
+	}
 
 	abstract void draw(Graphics g, int off_x, int off_y);
 	
