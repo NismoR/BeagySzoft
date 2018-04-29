@@ -239,6 +239,58 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			}
 		}
 		
+		private void draw_small_triangle(Graphics g, int x, int y, int size, int rot_clckwise_90){
+			Polygon p = new Polygon();
+			switch (rot_clckwise_90) {
+			case 0:
+				p.addPoint(x+size, y);
+				p.addPoint(x, y+size);
+				p.addPoint(x, y);    
+			    g.fillPolygon(p);
+				break;
+			case 1:
+				p.addPoint(x-size, y);
+				p.addPoint(x, y+size);
+				p.addPoint(x, y);    
+			    g.fillPolygon(p);
+				break;
+			case 2:
+				p.addPoint(x-size, y);
+				p.addPoint(x, y-size);
+				p.addPoint(x, y);    
+			    g.fillPolygon(p);
+				break;
+			case 3:
+				p.addPoint(x+size, y);
+				p.addPoint(x, y-size);
+				p.addPoint(x, y);    
+			    g.fillPolygon(p);
+				break;
+
+			default:
+				break;
+			}
+			
+		}
+		
+		protected void draw_defense(Graphics g, Hero h){
+			int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_WIDTH;
+			int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_HEIGHT;			
+			int size = GUI.FIELD_WIDTH/4;
+			switch (h.get_current_defense()) {
+			case 2:
+				draw_small_triangle(g, off_x+GUI.FIELD_HEIGHT, off_y, size, 1);
+				draw_small_triangle(g, off_x, off_y+GUI.FIELD_WIDTH, size, 3);
+				/*FALLTHRU*/
+			case 1:	
+				draw_small_triangle(g, off_x, off_y, size, 0);
+				draw_small_triangle(g, off_x+GUI.FIELD_HEIGHT, off_y+GUI.FIELD_WIDTH, size, 2);
+				break;
+			default:
+				break;
+			}
+		}
+		
 		private void draw_heroes(Graphics g){
 			for(Hero h : gui_gs.heroes){
 				int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_WIDTH;
@@ -255,6 +307,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					g.setColor(Color.black);
 					break;
 				}
+				draw_defense(g,h);
 				h.draw(g, off_x,  off_y);
 			}
 		}

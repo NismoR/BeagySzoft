@@ -60,6 +60,10 @@ public abstract class Hero {
 		return MAX_EQUIPMENT_NR;
 	}
 	
+	public int get_current_defense(){
+		return current_defense;
+	}
+	
 	public boolean add_equip(Equipment e){
 		if(equips.size()>=MAX_EQUIPMENT_NR){
 			return false;
@@ -109,56 +113,6 @@ public abstract class Hero {
 	}
 
 	abstract void draw(Graphics g, int off_x, int off_y);
-	
-	private void draw_small_triangle(Graphics g, int x, int y, int size, int rot_clckwise_90){
-		Polygon p = new Polygon();
-		switch (rot_clckwise_90) {
-		case 0:
-			p.addPoint(x+size, y);
-			p.addPoint(x, y+size);
-			p.addPoint(x, y);    
-		    g.fillPolygon(p);
-			break;
-		case 1:
-			p.addPoint(x-size, y);
-			p.addPoint(x, y+size);
-			p.addPoint(x, y);    
-		    g.fillPolygon(p);
-			break;
-		case 2:
-			p.addPoint(x-size, y);
-			p.addPoint(x, y-size);
-			p.addPoint(x, y);    
-		    g.fillPolygon(p);
-			break;
-		case 3:
-			p.addPoint(x+size, y);
-			p.addPoint(x, y-size);
-			p.addPoint(x, y);    
-		    g.fillPolygon(p);
-			break;
-
-		default:
-			break;
-		}
-		
-	}
-	
-	protected void draw_defense(Graphics g, int off_x, int off_y){
-		int size = GUI.FIELD_WIDTH/4;
-		switch (current_defense) {
-		case 2:
-			draw_small_triangle(g, off_x+GUI.FIELD_HEIGHT, off_y, size, 1);
-			draw_small_triangle(g, off_x, off_y+GUI.FIELD_WIDTH, size, 3);
-			/*FALLTHRU*/
-		case 1:	
-			draw_small_triangle(g, off_x, off_y, size, 0);
-			draw_small_triangle(g, off_x+GUI.FIELD_HEIGHT, off_y+GUI.FIELD_WIDTH, size, 2);
-			break;
-		default:
-			break;
-		}
-	}
 	
 	protected void draw_eq(Graphics g, int off_x, int off_y){
 		/*Equipment e = get_last_rolled_equip();
