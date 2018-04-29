@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -323,6 +325,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		
 		@Override
 		public void paintComponent(Graphics g) {
+			Instant start = Instant.now();
+			long startTime = System.nanoTime();
 			g.setColor(col_bg);
 			g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 			g.setColor(Color.black);
@@ -338,6 +342,15 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					draw_one_square(g,i,j);
 				}
 			}*/
+			Instant end = Instant.now();
+			Duration diff = Duration.between(start, end);
+			long diff_in_nano = System.nanoTime() - startTime;
+			if(diff.toMillis()>10){
+				System.out.println("Time taken: "+ diff.toMillis() +" milliseconds");
+			}
+			else{
+				System.out.println("Time taken: "+ diff_in_nano +" nanoseconds");				
+			}
 		}
 	}
 
