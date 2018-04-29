@@ -2,6 +2,7 @@ package heroes;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -31,6 +32,7 @@ public abstract class Hero {
 	
 	private int x=-1,y=-1;
 	private int last_rolled_id=-1;
+	private int current_defense=0;
 	
 	public Hero(HeroType type, PlayerID player_id){
 		equips = new ArrayList<Equipment>();
@@ -96,6 +98,56 @@ public abstract class Hero {
 	}
 
 	abstract void draw(Graphics g, int off_x, int off_y);
+	
+	private void draw_small_triangle(Graphics g, int x, int y, int size, int rot_clckwise_90){
+		Polygon p = new Polygon();
+		switch (rot_clckwise_90) {
+		case 0:
+			p.addPoint(x+size, y);
+			p.addPoint(x, y+size);
+			p.addPoint(x, y);    
+		    g.fillPolygon(p);
+			break;
+		case 1:
+			p.addPoint(x-size, y);
+			p.addPoint(x, y+size);
+			p.addPoint(x, y);    
+		    g.fillPolygon(p);
+			break;
+		case 2:
+			p.addPoint(x-size, y);
+			p.addPoint(x, y-size);
+			p.addPoint(x, y);    
+		    g.fillPolygon(p);
+			break;
+		case 3:
+			p.addPoint(x+size, y);
+			p.addPoint(x, y-size);
+			p.addPoint(x, y);    
+		    g.fillPolygon(p);
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+	
+	protected void draw_defense(Graphics g, int off_x, int off_y){
+		int size = GUI.FIELD_WIDTH/4;
+		switch (current_defense) {
+		case 2:
+			draw_small_triangle(g, off_x+GUI.FIELD_HEIGHT, off_y, size, 1);
+			draw_small_triangle(g, off_x, off_y+GUI.FIELD_WIDTH, size, 3);
+			/*FALLTHRU*/
+		case 1:	
+			draw_small_triangle(g, off_x, off_y, size, 0);
+			draw_small_triangle(g, off_x+GUI.FIELD_HEIGHT, off_y+GUI.FIELD_WIDTH, size, 2);
+			break;
+		default:
+			break;
+		}
+	}
 	
 	protected void draw_eq(Graphics g, int off_x, int off_y){
 		/*Equipment e = get_last_rolled_equip();
