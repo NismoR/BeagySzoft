@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import heroes.Hero.PlayerID;
+import heroes.equipments.Equipment;
+import heroes.equipments.Equipment.EqType;
 
 public class GameState implements Serializable{
 
@@ -39,6 +41,7 @@ public class GameState implements Serializable{
 	
 	private int current_hero_id = 0;
 	private boolean has_stepable = false;
+	private boolean has_attackable = false;
 	
 	private static float perc_if_valid_field = 0.9f;
 	
@@ -171,6 +174,61 @@ public class GameState implements Serializable{
 			}
 		}
 	}
+	
+	void set_attackables(Hero h){
+		int cent_x = h.get_x();
+		int cent_y = h.get_y();
+		PlayerID own_id = h.get_player_id();
+		
+		for(int i = -1; i < 2; i++){
+			int x=cent_x+i;
+			if(x<0 || x>= board_size){
+				continue;
+			}
+			for(int j = -1; j < 2; j++){
+				int y=cent_y+j;
+				if(y<0 || y>= board_size){
+					continue;
+				}
+				if(own_id == PlayerID.CLIENT){
+					if(board_bg[x][y] == FieldType.OCCUPIED_S){
+						board_bg[x][y] = FieldType.ATTACKABLE;
+						has_attackable = true;
+					}
+				}
+				else{
+					if(board_bg[x][y] == FieldType.OCCUPIED_C){
+						board_bg[x][y] = FieldType.ATTACKABLE;
+						has_attackable = true;
+					}
+				}
+			}
+		}	
+	}
+	
+	int roll(){
+		Random r = new Random();
+		Hero h = get_current_hero();
+		int eq_index = r.nextInt(h.get_max_eq_nr());
+		Equipment e = h.get_equip(eq_index);
+		if(e==null){
+			return 0;
+		}
+		EqType et = e.get_type();
+		switch (et) {
+		case WOODEN_SWORD:
+			set_attackables(h);
+			return 1;
+		case WOODEN_SHIELD:
+			
+			return 2;
+
+		default:
+			break;
+		}
+		return 0;
+	}
+	
 	void clear_stepables(int curr_x, int curr_y){
 		for(int i = -1; i < 2; i++){
 			int x=curr_x+i;

@@ -9,6 +9,8 @@ import java.awt.Point;
 
 import heroes.GameState.GameTurn;
 import heroes.Hero.PlayerID;
+import heroes.equipments.WoodenShield;
+import heroes.equipments.WoodenSword;
 
 /**
  *
@@ -21,8 +23,16 @@ class Control implements IClick{
 
 	Control() {
 		gs = new GameState();
+		WoodenSword eq_wsw = new WoodenSword();
+		WoodenShield eq_wsh = new WoodenShield();
 		Warrior wc = new Warrior(PlayerID.CLIENT);
 		Warrior ws = new Warrior(PlayerID.SERVER);
+		wc.add_equip(eq_wsw);
+		wc.add_equip(eq_wsw);
+		wc.add_equip(eq_wsh);
+		ws.add_equip(eq_wsw);
+		ws.add_equip(eq_wsw);
+		ws.add_equip(eq_wsh);
 		gs.add_hero(ws);
 		gs.add_hero(wc);
 		generateBoard();		
@@ -63,6 +73,7 @@ class Control implements IClick{
 	public void onNewClick(int x, int y) {
 		// TODO Auto-generated method stub
 		if(gs.check_if_stepable_and_step(x, y)){
+			gs.roll();
 			gs.step_to_next_hero();
 		}
 		gui.onNewGameState(gs);			

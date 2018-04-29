@@ -225,6 +225,9 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 						case STEPABLE:
 							g.setColor(Color.blue.darker());							
 							break;
+						case ATTACKABLE:
+							g.setColor(Color.red);							
+							break;
 
 						default:
 							g.setColor(col_field_bg);
@@ -329,7 +332,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		if(y <0 || y>= TABLE_SIZE_Y){
 			return;
 		}
-		System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
+		//System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
 		
 
 		ctrl.onNewClick(x, y);
