@@ -78,6 +78,13 @@ public abstract class Hero {
 	public Equipment get_last_rolled_equip(){
 		return get_equip(last_rolled_id);
 	}
+	public EqType get_last_rolled_equip_type(){
+		Equipment e = get_last_rolled_equip();
+		if(e==null){
+			return null;
+		}
+		return e.get_type();
+	}
 	
 	public List<Equipment> get_equips(){
 		return equips;
