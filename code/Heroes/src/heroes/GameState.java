@@ -175,6 +175,10 @@ public class GameState implements Serializable{
 		}
 	}
 	
+	boolean if_has_attackable(){
+		return has_attackable;
+	}
+	
 	void set_attackables(Hero h){
 		int cent_x = h.get_x();
 		int cent_y = h.get_y();
@@ -245,6 +249,14 @@ public class GameState implements Serializable{
 				}
 			}
 		}		
+	}
+	boolean check_if_attackable(int x, int y){
+		if(valid_field[x][y]){
+			if(board_bg[x][y] == FieldType.ATTACKABLE){
+				return true;
+			}			
+		}
+		return false;		
 	}
 	
 	boolean check_if_not_occupied(int x, int y){

@@ -72,9 +72,21 @@ class Control implements IClick{
 	@Override
 	public void onNewClick(int x, int y) {
 		// TODO Auto-generated method stub
-		if(gs.check_if_stepable_and_step(x, y)){
-			gs.roll();
-			gs.step_to_next_hero();
+		if(gs.if_has_attackable()){
+			if(gs.check_if_attackable(x,y)){
+				System.out.println("ATTACKABLE");
+			}
+			else{
+				System.out.println("NOT ATTACKABLE");				
+			}
+		}
+		else{
+			if(gs.check_if_stepable_and_step(x, y)){
+				gs.roll();
+				if(!gs.if_has_attackable()){
+					gs.step_to_next_hero();
+				}
+			}
 		}
 		gui.onNewGameState(gs);			
 	}
