@@ -98,8 +98,12 @@ public abstract class Hero {
 	public boolean roll(){
 		Random r = new Random();
 		last_rolled_id = r.nextInt(MAX_EQUIPMENT_NR);
+		current_defense = 0;
 		if(last_rolled_id<0 || last_rolled_id>=equips.size()){
 			return false;
+		}
+		if(get_last_rolled_equip_type() == EqType.WOODEN_SHIELD){
+			current_defense=1;
 		}
 		return true;
 	}
