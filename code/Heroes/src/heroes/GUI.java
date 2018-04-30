@@ -350,10 +350,10 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			Duration diff = Duration.between(start, end);
 			long diff_in_nano = System.nanoTime() - startTime;
 			if(diff.toMillis()>10){
-				System.out.println("Time taken: "+ diff.toMillis() +" milliseconds");
+				//System.out.println("Time taken: "+ diff.toMillis() +" milliseconds");
 			}
 			else{
-				System.out.println("Time taken: "+ diff_in_nano +" nanoseconds");				
+				//System.out.println("Time taken: "+ diff_in_nano +" nanoseconds");				
 			}
 		}
 	}
