@@ -22,7 +22,9 @@ import heroes.equipments.WoodenSword;
 import heroes.equipments.warrior.BladeOfRes;
 import heroes.equipments.warrior.IronShield;
 import heroes.equipments.warrior.IronSword;
+import heroes.equipments.warrior.IronSwordOfFury;
 import heroes.equipments.warrior.SwordOfRes;
+import heroes.equipments.warrior.WoodenSwordOfFury;
 
 /**
  *
@@ -72,6 +74,12 @@ class Control implements IClick{
 					break;
 				case SWORD_OF_RES:
 					w.add_equip(new SwordOfRes());
+					break;
+				case WOODEN_SWORD_OF_FURY:
+					w.add_equip(new WoodenSwordOfFury());
+					break;
+				case IRON_SWORD_OF_FURY:
+					w.add_equip(new IronSwordOfFury());
 					break;
 
 				default:
