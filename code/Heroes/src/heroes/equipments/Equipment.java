@@ -5,7 +5,8 @@ import heroes.Hero.HeroType;
 public abstract class Equipment {
 	public enum EqType {
 		WOODEN_SWORD,
-		WOODEN_SHIELD
+		WOODEN_SHIELD,
+		IRON_SWORD
 	}
 	private EqType eq_type;
 	private String eq_name;
@@ -33,6 +34,8 @@ public abstract class Equipment {
 			return 1;
 		case WOODEN_SHIELD:			
 			return 2;
+		case IRON_SWORD:			
+			return 3;
 		default:		
 			return 0;
 		}
