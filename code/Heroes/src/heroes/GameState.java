@@ -43,6 +43,7 @@ public class GameState implements Serializable{
 	private int current_hero_id = 0;
 	private boolean has_stepable = false;
 	private boolean has_attackable = false;
+	private PlayerID winner=null;
 	
 	private static float perc_if_valid_field = 0.9f;
 	
@@ -299,6 +300,29 @@ public class GameState implements Serializable{
 		return false;
 	}
 	
+	boolean check_if_game_finished(){
+		int n_of_cli_heroes = 0;
+		for(Hero h: heroes){
+			if(h.get_player_id()==PlayerID.CLIENT){
+				n_of_cli_heroes++;
+			}
+		}
+		if(n_of_cli_heroes==0){
+			winner = PlayerID.SERVER;
+			System.out.println("========= SERVER WON THE GAME ========");
+		}
+		if(n_of_cli_heroes==heroes.size()){
+			winner = PlayerID.CLIENT;
+			System.out.println("========= CLIENT WON THE GAME ========");
+		}
+		
+		return winner!=null;
+	}
+	
+	boolean if_game_finished(){
+		return winner!=null;
+	}
+	
 	boolean check_and_refresh_if_dying(){
 		boolean should_refresh = false;
 		ListIterator<Hero> iter = heroes.listIterator();
@@ -311,6 +335,9 @@ public class GameState implements Serializable{
 				}
 				//System.out.println("decreasing health");
 			}
+		}
+		if(should_refresh){
+			check_if_game_finished();
 		}
 		return should_refresh;
 	}
