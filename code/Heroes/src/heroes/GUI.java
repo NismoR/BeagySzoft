@@ -97,6 +97,14 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		return new Color(col.getRed(), col.getGreen(), col.getBlue(), alpha);
 	}
 	
+	private int get_x_offset(int x){
+		return TABLE_OFFSET_X + x*FIELD_SIZE;
+	}
+	
+	private int get_y_offset(int y){
+		return TABLE_OFFSET_Y + y*FIELD_SIZE;
+	}
+	
 
 	
 
@@ -127,8 +135,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
 					if(gui_gs.valid_field[i][j]){
-						int off_x = TABLE_OFFSET_X + i*FIELD_SIZE;
-						int off_y = TABLE_OFFSET_Y + j*FIELD_SIZE;
+						int off_x = get_x_offset(i);
+						int off_y = get_y_offset(j);
 						g.setColor(col_field_bg);
 						g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);	
 					}					
@@ -140,8 +148,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			List<Click> start_pos=gui_gs.start_pos;
 			if(start_pos!=null){
 				for(Click c:start_pos){
-					int off_x = TABLE_OFFSET_X + c.x*FIELD_SIZE;
-					int off_y = TABLE_OFFSET_Y + c.y*FIELD_SIZE;
+					int off_x = get_x_offset(c.x);
+					int off_y = get_y_offset(c.y);
 					switch (c.playerID) {
 					case CLIENT:
 						g.setColor(col_start_client);
@@ -161,8 +169,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		private void draw_steppable(Graphics g) {
 			Click st = gui_gs.steppable;
 			if(st!=null){
-				int off_x = TABLE_OFFSET_X + st.x*FIELD_SIZE;
-				int off_y = TABLE_OFFSET_Y + st.y*FIELD_SIZE;
+				int off_x = get_x_offset(st.x);
+				int off_y = get_y_offset(st.y);
 				g.setColor(Color.blue.darker());
 				g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);					
 			}
@@ -203,8 +211,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		}
 		
 		protected void draw_defense(Graphics g, Hero h){
-			int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_SIZE;
-			int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;			
+			int off_x = get_x_offset(h.get_x());
+			int off_y = get_y_offset(h.get_y());			
 			int size = GUI.FIELD_SIZE/4;
 			switch (h.get_current_defense()) {
 			case 2:
@@ -223,8 +231,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		private void draw_heroes(Graphics g){
 			for(Hero h : gui_gs.heroes){
 				if(h.get_health() % 6 >2){
-					int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_SIZE;
-					int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;
+					int off_x = get_x_offset(h.get_x());
+					int off_y = get_y_offset(h.get_y());
 					g.setColor(col_field_bg.darker());	
 					if(h.get_attackable()){
 						g.setColor(Color.red);	
@@ -250,8 +258,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		
 		private void draw_current_hero_mark(Graphics g){
 			Hero h = gui_gs.get_current_hero();
-			int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_SIZE;
-			int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;
+			int off_x = get_x_offset(h.get_x());
+			int off_y = get_y_offset(h.get_y());
 			g.setColor(col_current_hero_mark);
 			g.drawRect(off_x, off_y, FIELD_SIZE-1, FIELD_SIZE-1);
 			g.drawRect(off_x+1, off_y+1, FIELD_SIZE-3, FIELD_SIZE-3);
