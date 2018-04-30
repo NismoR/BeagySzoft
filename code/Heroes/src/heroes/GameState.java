@@ -97,6 +97,74 @@ public class GameState implements Serializable{
 		}
 	}
 	
+	public void set_starting_positions2(int nr_of_cli_heroes, int nr_of_ser_heroes){
+		int x=0;
+		int y=0;
+		while(nr_of_cli_heroes>0){
+			System.out.println("StartC x: "+x +" y: "+y);
+			if (x < 0)
+				x=0;
+			if (y < 0)
+				y=0;
+			if (x > board_size-1)
+				x=board_size-1;
+			if (y > board_size-1)
+				y=board_size-1;
+			
+			if(board_bg[x][y] == FieldType.FREE){
+				board_bg[x][y]=FieldType.START_CLIENT;
+				nr_of_cli_heroes--;
+			}
+
+			Random r = new Random();
+			if(r.nextFloat() < 0.5f){
+				x++;
+			}
+			if(r.nextFloat() < 0.1f){
+				x--;
+			}
+			if(r.nextFloat() < 0.5f){
+				y++;
+			}
+			if(r.nextFloat() < 0.1f){
+				y--;
+			}			
+		}
+		x=board_size-1;
+		y=board_size-1;
+
+		while(nr_of_ser_heroes>0){
+			System.out.println("StartS x: "+x +" y: "+y);
+			if (x < 0)
+				x=0;
+			if (y < 0)
+				y=0;
+			if (x > board_size-1)
+				x=board_size-1;
+			if (y > board_size-1)
+				y=board_size-1;
+			
+			if(board_bg[x][y] == FieldType.FREE){
+				board_bg[x][y]=FieldType.START_SERVER;
+				nr_of_ser_heroes--;
+			}
+
+			Random r = new Random();
+			if(r.nextFloat() < 0.5f){
+				x--;
+			}
+			if(r.nextFloat() < 0.1f){
+				x++;
+			}
+			if(r.nextFloat() < 0.5f){
+				y--;
+			}
+			if(r.nextFloat() < 0.1f){
+				y++;
+			}			
+		}
+	}
+	
 	//TODO can be overloaded
 	public void set_starting_positions(int nr_of_heroes){
 		boolean waiting_for_good_roll = true;
