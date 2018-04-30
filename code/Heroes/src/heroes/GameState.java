@@ -23,10 +23,7 @@ public class GameState implements Serializable{
 		NOT_AVAILABLE,
 		FREE,
 		START_CLIENT,
-		START_SERVER,
-		OCCUPIED_C,//TODO delete
-		OCCUPIED_S,
-		CURRENT
+		START_SERVER
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -167,7 +164,6 @@ public class GameState implements Serializable{
 						if(h.get_x()<0){
 							if(h.get_player_id() == PlayerID.CLIENT){
 								h.set_coordinates(i, j);
-								board_bg[i][j] = FieldType.OCCUPIED_C;
 							}
 						}
 					}
@@ -176,8 +172,7 @@ public class GameState implements Serializable{
 					for(Hero h : this.heroes){
 						if(h.get_x()<0){
 							if(h.get_player_id() == PlayerID.SERVER){
-								h.set_coordinates(i, j);	
-								board_bg[i][j] = FieldType.OCCUPIED_S;							
+								h.set_coordinates(i, j);							
 							}
 						}
 					}
