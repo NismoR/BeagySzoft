@@ -4,12 +4,18 @@ import heroes.Hero.HeroType;
 
 public abstract class Equipment {
 	public enum EqType {
-		WOODEN_SWORD,
-		WOODEN_SHIELD,
-		IRON_SWORD,
-		IRON_SHIELD,
-		BLADE_OF_RES,
-		SWORD_OF_RES
+		NONE			(0),
+		WOODEN_SWORD	(1),
+		WOODEN_SHIELD	(2),
+		IRON_SWORD		(3),
+		IRON_SHIELD		(4),
+		BLADE_OF_RES	(5),
+		SWORD_OF_RES	(6);
+		
+		public final int id;
+		private EqType(int id) {
+			this.id=id;
+		}
 	}
 	private EqType eq_type;
 	private String eq_name;
@@ -32,22 +38,7 @@ public abstract class Equipment {
 	}
 	
 	public int get_type_in_int(){
-		switch (eq_type) {
-		case WOODEN_SWORD:			
-			return 1;
-		case WOODEN_SHIELD:			
-			return 2;
-		case IRON_SWORD:			
-			return 3;
-		case IRON_SHIELD:			
-			return 4;
-		case BLADE_OF_RES:			
-			return 5;
-		case SWORD_OF_RES:			
-			return 6;
-		default:		
-			return 0;
-		}
+		return eq_type.id;
 	}
 	
 	public String get_name(){
