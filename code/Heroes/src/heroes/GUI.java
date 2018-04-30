@@ -30,13 +30,10 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
-	private final int WINDOW_WIDTH = 950, WINDOW_HEIGHT = 650;
+	private int WINDOW_WIDTH = 950, WINDOW_HEIGHT = 650;
 	public static int FIELD_SIZE = 60;
 	public static int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
-	private final int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
-	private int arr_background[][] = null;
-	private int arr_char[][] = null;
-	private boolean TESTING = true;
+	private int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
 	
 	private GameState gui_gs;
 
@@ -53,18 +50,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	GUI(Control c) {
 		super("Heroes");
 		this.addMouseListener(this);
-		arr_background = new int[TABLE_SIZE_X][TABLE_SIZE_Y];
-		arr_char = new int[TABLE_SIZE_X][TABLE_SIZE_Y];
 		
-		if(TESTING){
-			Random r = new Random();
-			for (int i = 0; i < TABLE_SIZE_X; i++) {
-				for (int j = 0; j < TABLE_SIZE_Y; j++) {
-					arr_background[i][j]=r.nextInt(4);
-					arr_char[i][j]=r.nextInt(4+3)-3;
-				}
-			}
-		}
 		
 		
 		ctrl = c;
@@ -282,19 +268,11 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 			g.setColor(Color.black);
 			g.setFont(new Font("Times New Roman", Font.BOLD, 24));
-			/*g.fillRect(TABLE_OFFSET_X-STROKE_WIDTH, TABLE_OFFSET_Y-STROKE_WIDTH, 
-					TABLE_SIZE_X*FIELD_WIDTH+2*STROKE_WIDTH, 
-					TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);*/
 			draw_valid_fields(g);
 			draw_steppables(g);
 			draw_steppable(g);
 			//draw_heroes(g);
 			draw_current_hero_mark(g);
-			/*for (int i = 0; i < TABLE_SIZE_X; i++) {
-				for (int j = 0; j < TABLE_SIZE_Y; j++) {
-					draw_one_square(g,i,j);
-				}
-			}*/
 			Instant end = Instant.now();
 			Duration diff = Duration.between(start, end);
 			long diff_in_nano = System.nanoTime() - startTime;
