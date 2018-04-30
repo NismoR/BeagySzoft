@@ -10,16 +10,16 @@ public abstract class Equipment {
 	private EqType eq_type;
 	private String eq_name;
 	private int value;
-	private int attack_value=0;
 	private int defense_value=0;
 	private HeroType available_for;
+	private AttackAbility attack=null;
 	
-	public Equipment(EqType eq_type,String eq_name,int value,HeroType available_for, int att, int def){
+	public Equipment(EqType eq_type,String eq_name,int value,HeroType available_for, AttackAbility att, int def){
 		this.eq_type = eq_type;
 		this.eq_name = eq_name;
 		this.value = value;
 		this.available_for = available_for;
-		this.attack_value = att;
+		this.attack = att;
 		this.defense_value = def;
 	}
 	
@@ -45,8 +45,8 @@ public abstract class Equipment {
 	public int get_value(){
 		return value;
 	}
-	public int get_attack_value(){
-		return attack_value;
+	public AttackAbility get_attack(){
+		return attack;
 	}
 	public int get_defense_value(){
 		return defense_value;

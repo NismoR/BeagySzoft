@@ -137,7 +137,10 @@ public abstract class Hero {
 	}
 	
 	public boolean defense(Equipment attacked_with){
-		if(current_defense<attacked_with.get_attack_value()){
+		if(attacked_with.get_attack()==null){
+			return false;
+		}
+		if(current_defense<attacked_with.get_attack().get_strength()){
 			dying=true;
 			System.out.println("UNIT died from attack");
 			return dying;
