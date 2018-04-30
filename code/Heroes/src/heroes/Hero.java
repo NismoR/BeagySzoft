@@ -133,7 +133,7 @@ public abstract class Hero {
 	}
 	
 	public boolean decrease_health(){
-		health=health-4;
+		health=health-7;
 		if(health<1){
 			health=0;
 			return true;
