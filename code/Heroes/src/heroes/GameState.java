@@ -349,13 +349,19 @@ public class GameState implements Serializable{
 		boolean should_refresh = false;
 		ListIterator<Hero> iter = heroes.listIterator();
 		while(iter.hasNext()){
+			int iterID = iter.nextIndex();
 			Hero h = iter.next();
 			if(h.get_dying()){
 				should_refresh = true;
 				if(h.decrease_health()){
+					//System.out.println("iterID: "+iterID+"  currID: "+current_hero_id);
 					iter.remove();
+					if(iterID<=current_hero_id){
+						current_hero_id--;
+					}
+					//System.out.println("Hero Died");
+					//System.out.println("Num of remaining heroes: "+heroes.size());
 				}
-				//System.out.println("decreasing health");
 			}
 		}
 		if(should_refresh){
