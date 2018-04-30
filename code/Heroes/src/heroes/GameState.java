@@ -39,11 +39,13 @@ public class GameState implements Serializable{
 	private PlayerID winner=null;
 	
 	public Click steppable = null;		//Just for storing steppable coordinates
+	public List<Click> start_pos;
 	
 	private static float perc_if_valid_field = 0.9f;
 	
 	public GameState(){
 		heroes = new ArrayList<Hero>();
+		start_pos = new ArrayList<Click>();
 		time = 0;
 		turn = GameTurn.NOT_STARTED;
 		board_bg = new FieldType[board_size][board_size];
@@ -97,6 +99,15 @@ public class GameState implements Serializable{
 		}
 	}
 	
+	private boolean is_free_for_starting(int x, int y){
+		for(Click c:start_pos){
+			if(c.x==x && c.y==y){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public void set_starting_positions2(int nr_of_cli_heroes, int nr_of_ser_heroes){
 		int x=0;
 		int y=0;
@@ -111,8 +122,8 @@ public class GameState implements Serializable{
 			if (y > board_size-1)
 				y=board_size-1;
 			
-			if(board_bg[x][y] == FieldType.FREE){
-				board_bg[x][y]=FieldType.START_CLIENT;
+			if(is_free_for_starting(x, y)){
+				start_pos.add(new Click(x, y, PlayerID.CLIENT));
 				nr_of_cli_heroes--;
 			}
 
@@ -142,10 +153,10 @@ public class GameState implements Serializable{
 			if (x > board_size-1)
 				x=board_size-1;
 			if (y > board_size-1)
-				y=board_size-1;
-			
-			if(board_bg[x][y] == FieldType.FREE){
-				board_bg[x][y]=FieldType.START_SERVER;
+				y=board_size-1;			
+
+			if(is_free_for_starting(x, y)){
+				start_pos.add(new Click(x, y, PlayerID.SERVER));
 				nr_of_ser_heroes--;
 			}
 
@@ -166,91 +177,33 @@ public class GameState implements Serializable{
 	}
 	
 	//TODO can be overloaded
-	public void set_starting_positions(int nr_of_heroes){
-		boolean waiting_for_good_roll = true;
-		int x,y, xc=0,yc=0,xs=0,ys=0;
-		while(waiting_for_good_roll){
-			Random r = new Random();
-			int should_set = 2 * nr_of_heroes;
-			boolean plus = false;
-			if(r.nextFloat() < 0.5f){
-				plus = true;
-			}
-			while(waiting_for_good_roll){
-				if(plus){
-					x = r.nextInt(board_size)+r.nextInt(board_size/2);
-					y = r.nextInt(board_size)+r.nextInt(board_size/2);					
-				}
-				else{
-					x = r.nextInt(board_size)-r.nextInt(board_size/2);
-					y = r.nextInt(board_size)-r.nextInt(board_size/2);
-				}
-				if (x < 0 || y<0 || x>board_size-1 || y>board_size-1){
-					continue;
-				}
-				
-				if(board_bg[x][y]==FieldType.FREE){
-					if(should_set > nr_of_heroes){
-						board_bg[x][y]=FieldType.START_CLIENT;
-						xc=x;
-						yc=y;
-					}
-					else{
-						board_bg[x][y]=FieldType.START_SERVER;
-						xs=x;
-						ys=y;
-						if(should_set == nr_of_heroes){
-							plus = !plus;
-						}
-					}
-					should_set--;
-					if(should_set < 1){
-						waiting_for_good_roll = false;
-					}
-				}				
-			}
-			int xd_sq = (xs-xc)*(xs-xc);
-			int yd_sq = (ys-yc)*(ys-yc);
-			//System.out.println("X:" + xd_sq + " Y:" + yd_sq + " SUM:" + (xd_sq+yd_sq));
-			if((xd_sq+yd_sq)<20){
-				waiting_for_good_roll = true;
-				board_bg[xs][ys]=FieldType.FREE;
-				board_bg[xc][yc]=FieldType.FREE;				
-			}
-		}
-	}
+	
 	
 	public void add_hero(Hero hero){
 		heroes.add(hero);
 	}
 	
-	public void set_heroes_starting_positions(){
-		for (int i = 0; i < board_size; i++) {
-			for (int j = 0; j < board_size; j++) {
-				if(board_bg[i][j] == FieldType.START_CLIENT){
-					for(Hero h : this.heroes){
-						if(h.get_x()<0){
-							if(h.get_player_id() == PlayerID.CLIENT){
-								h.set_coordinates(i, j);
-							}
-						}
+
+	public void set_heroes_starting_positions2(){
+		for(Hero h : this.heroes){
+			if(h.get_x()<0){
+				ListIterator<Click> iter = start_pos.listIterator();
+				while(iter.hasNext()){
+					Click c = iter.next();
+					if(c.playerID==h.get_player_id()){
+						h.set_coordinates(c.x,c.y);
+						iter.remove();
+						break;
 					}
-				}
-				if(board_bg[i][j] == FieldType.START_SERVER){
-					for(Hero h : this.heroes){
-						if(h.get_x()<0){
-							if(h.get_player_id() == PlayerID.SERVER){
-								h.set_coordinates(i, j);							
-							}
-						}
-					}
-				}
-				
-								
+				}				
+			}
+			if(h.get_x()<0){
+				System.out.println("ERROR: - COuldn't place Hero on board!!!!!!!!");
 			}
 		}
+		start_pos = null;
 	}
-	
+
 	boolean is_field_empty(int x, int y){
 		for(Hero h:heroes){
 			if(h.get_x()==x && h.get_y()==y){

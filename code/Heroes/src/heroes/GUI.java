@@ -271,7 +271,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			draw_valid_fields(g);
 			draw_steppables(g);
 			draw_steppable(g);
-			//draw_heroes(g);
+			draw_heroes(g);
 			draw_current_hero_mark(g);
 			Instant end = Instant.now();
 			Duration diff = Duration.between(start, end);
