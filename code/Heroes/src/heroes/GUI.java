@@ -167,7 +167,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		}
 
 		private void draw_steppable(Graphics g) {
-			Click st = gui_gs.steppable;
+			Click st = gui_gs.wanna_step;
 			if(st!=null){
 				int off_x = get_x_offset(st.x);
 				int off_y = get_y_offset(st.y);
@@ -237,9 +237,9 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					if(h.get_attackable()){
 						g.setColor(Color.red);	
 					}
-					if(gui_gs.steppable!=null){
-						if(h.get_x()==gui_gs.steppable.x){
-							if(h.get_y()==gui_gs.steppable.y){
+					if(gui_gs.wanna_step!=null){
+						if(h.get_x()==gui_gs.wanna_step.x){
+							if(h.get_y()==gui_gs.wanna_step.y){
 								g.setColor(Color.blue.darker());								
 							}
 						}

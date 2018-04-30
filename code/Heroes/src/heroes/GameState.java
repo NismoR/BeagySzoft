@@ -37,7 +37,7 @@ public class GameState implements Serializable{
 	private int current_hero_id = 0;
 	private PlayerID winner=null;
 	
-	public Click steppable = null;		//Just for storing steppable coordinates
+	public Click wanna_step = null;		//Just for storing desired coordinates to step
 	public List<Click> start_pos;
 	
 	private static float perc_if_valid_field = 0.9f;
@@ -302,26 +302,26 @@ public class GameState implements Serializable{
 	boolean check_if_stepable_and_step(int x, int y){
 		if(valid_field[x][y]){
 			Hero h = get_current_hero();
-			if(steppable!=null){
-				if(x==steppable.x && y==steppable.y){
+			if(wanna_step!=null){
+				if(x==wanna_step.x && y==wanna_step.y){
 					h.set_coordinates(x, y);
 					heroes.set(current_hero_id, h);
-					steppable = null;
+					wanna_step = null;
 					return true;	
 				}
 			}
 			if(Math.abs(x-h.get_x())<2 && Math.abs(y-h.get_y())<2){
 				if(is_field_empty(x, y)){
-					steppable = new Click(x, y, h.get_player_id());
+					wanna_step = new Click(x, y, h.get_player_id());
 					return false;		
 				}
 				if(x == h.get_x() && y==h.get_y()){
-					steppable = new Click(x, y, h.get_player_id());
+					wanna_step = new Click(x, y, h.get_player_id());
 					return false;		
 				}
 			}
 		}
-		steppable = null;
+		wanna_step = null;
 		return false;		
 	}
 	
@@ -398,7 +398,7 @@ public class GameState implements Serializable{
 		turn = gs.turn;
 		heroes = new ArrayList<Hero>(gs.heroes);
 		current_hero_id = gs.current_hero_id;
-		steppable = gs.steppable;
+		wanna_step = gs.wanna_step;
 		start_pos = gs.start_pos;
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
