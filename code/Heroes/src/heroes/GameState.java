@@ -258,7 +258,10 @@ public class GameState implements Serializable{
 		}
 		Equipment e = h.get_last_rolled_equip();
 		if(e.get_attack()!=null){
-			set_attackables(h);			
+			set_attackables(h);
+			if(e.get_attack().get_allNearby()){
+				attack_all_attackable();
+			}
 		}
 		return e.get_type_in_int();
 	}
