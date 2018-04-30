@@ -232,6 +232,17 @@ public class GameState implements Serializable{
 			}
 		}		
 	}
+
+	
+	void attack_all_attackable(){
+		Hero own = get_current_hero();
+		for(Hero h:heroes){
+			if(h.get_attackable()){
+				attack(h, own);
+			}
+		}
+		clear_attackables();
+	}
 	
 	void clear_attackables(){
 		for(Hero h:heroes){
