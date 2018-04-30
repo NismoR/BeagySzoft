@@ -17,6 +17,7 @@ public abstract class Equipment {
 			this.id=id;
 		}
 	}
+	public static final int num_of_eq = EqType.values().length;
 	private EqType eq_type;
 	private String eq_name;
 	private int value;

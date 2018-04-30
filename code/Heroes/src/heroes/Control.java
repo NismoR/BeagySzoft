@@ -7,6 +7,7 @@ package heroes;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -14,8 +15,14 @@ import java.util.concurrent.TimeUnit;
 
 import heroes.GameState.GameTurn;
 import heroes.Hero.PlayerID;
+import heroes.equipments.Equipment;
+import heroes.equipments.Equipment.EqType;
 import heroes.equipments.WoodenShield;
 import heroes.equipments.WoodenSword;
+import heroes.equipments.warrior.BladeOfRes;
+import heroes.equipments.warrior.IronShield;
+import heroes.equipments.warrior.IronSword;
+import heroes.equipments.warrior.SwordOfRes;
 
 /**
  *
@@ -32,27 +39,49 @@ class Control implements IClick{
 
 	Control() {
 		gs = new GameState();
-		clicks_to_process = new ArrayList<Click>();
-		WoodenSword eq_wsw = new WoodenSword();
-		WoodenShield eq_wsh = new WoodenShield();
-		Warrior wc = new Warrior(PlayerID.CLIENT);
-		Warrior ws = new Warrior(PlayerID.SERVER);
-		Warrior wc2 = new Warrior(PlayerID.CLIENT);
-		Warrior ws2 = new Warrior(PlayerID.SERVER);
-		wc.add_equip(eq_wsw);
-		wc.add_equip(eq_wsw);
-		wc.add_equip(eq_wsh);
-		ws.add_equip(eq_wsw);
-		ws.add_equip(eq_wsw);
-		ws.add_equip(eq_wsh);
-		wc2.add_equip(eq_wsh);
-		ws2.add_equip(eq_wsw);
-		wc2.add_equip(eq_wsw);
-		ws2.add_equip(eq_wsh);
-		gs.add_hero(ws);
-		gs.add_hero(wc);
-		gs.add_hero(ws2);
-		gs.add_hero(wc2);
+		clicks_to_process = new ArrayList<Click>();		
+		//Adding Warriors
+		for (int i = 0; i < 4; i++) {
+			Warrior w = null;
+			if(i%2==0){
+				w = new Warrior(PlayerID.CLIENT);				
+			}
+			else{
+				w = new Warrior(PlayerID.SERVER);
+			}
+
+			for (int j = 0; j < 6; j++) {
+				Random r = new Random();
+				int n = r.nextInt(Equipment.num_of_eq);
+				EqType e = EqType.values()[n];
+				switch (e) {
+				case WOODEN_SHIELD:
+					w.add_equip(new WoodenShield());
+					break;
+				case WOODEN_SWORD:
+					w.add_equip(new WoodenSword());
+					break;
+				case IRON_SHIELD:
+					w.add_equip(new IronShield());
+					break;
+				case IRON_SWORD:
+					w.add_equip(new IronSword());
+					break;
+				case BLADE_OF_RES:
+					w.add_equip(new BladeOfRes());
+					break;
+				case SWORD_OF_RES:
+					w.add_equip(new SwordOfRes());
+					break;
+
+				default:
+					break;
+				}
+				
+			}
+			gs.add_hero(w);
+		}
+		
 		generateBoard();		
 	}
 	
