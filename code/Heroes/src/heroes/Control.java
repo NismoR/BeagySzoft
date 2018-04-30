@@ -95,7 +95,7 @@ class Control implements IClick{
 			return;
 		}
 		if(gs.if_has_attackable()){
-			if(gs.check_if_attackable(c.x,c.y)){
+			if(gs.check_if_attackable_and_attack(c.x,c.y)){
 				System.out.println("ATTACKABLE");
 			}
 			else{

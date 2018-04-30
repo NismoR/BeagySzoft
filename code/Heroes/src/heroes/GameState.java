@@ -252,9 +252,30 @@ public class GameState implements Serializable{
 			}
 		}		
 	}
-	boolean check_if_attackable(int x, int y){
+	
+	Hero get_hero_at_given_coord(int x, int y){
+		for(Hero h: heroes){
+			if(h.get_x()==x && h.get_y()==y){
+				return h;
+			}
+		}
+		return null;
+	}
+	
+	void attack(Hero def, Hero att){
+		if(def.get_player_id()!=att.get_player_id())
+			def.defense(att.get_last_rolled_equip());
+	}
+	
+	boolean check_if_attackable_and_attack(int x, int y){
 		if(valid_field[x][y]){
 			if(board_bg[x][y] == FieldType.ATTACKABLE){
+				Hero def = get_hero_at_given_coord(x, y);
+				attack(def,get_current_hero());
+				if(def.get_player_id()==PlayerID.CLIENT)
+					board_bg[x][y] = FieldType.OCCUPIED_C;
+				else
+					board_bg[x][y] = FieldType.OCCUPIED_S;					
 				return true;
 			}			
 		}
