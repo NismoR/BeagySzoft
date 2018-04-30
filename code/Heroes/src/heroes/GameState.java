@@ -103,7 +103,7 @@ public class GameState implements Serializable{
 		return true;
 	}
 	
-	public void set_starting_positions2(int nr_of_cli_heroes, int nr_of_ser_heroes){
+	public void set_starting_positions(int nr_of_cli_heroes, int nr_of_ser_heroes){
 		int x=0;
 		int y=0;
 		while(nr_of_cli_heroes>0){
@@ -179,7 +179,7 @@ public class GameState implements Serializable{
 	}
 	
 
-	public void set_heroes_starting_positions2(){
+	public void set_heroes_starting_positions(){
 		for(Hero h : this.heroes){
 			if(h.get_x()<0){
 				ListIterator<Click> iter = start_pos.listIterator();

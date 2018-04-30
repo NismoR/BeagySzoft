@@ -52,8 +52,8 @@ class Control implements IClick{
 		gs.turn = GameTurn.INITING_MAP;
 		gs.init_map();
 		//gs.set_starting_positions(NR_OF_HEROES);
-		gs.set_starting_positions2(5,5);
-		gs.set_heroes_starting_positions2();
+		gs.set_starting_positions(5,5);
+		gs.set_heroes_starting_positions();
 		gs.turn = GameTurn.PLAYER_CLIENT;		
 	}
 
