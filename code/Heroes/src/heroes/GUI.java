@@ -158,10 +158,10 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					if(gui_gs.valid_field[i][j]){
 						switch (gui_gs.board_bg[i][j]) {
 						case START_CLIENT:
-							g.setColor(Color.blue);							
+							g.setColor(Color.cyan);							
 							break;
 						case START_SERVER:
-							g.setColor(Color.red);							
+							g.setColor(Color.magenta);							
 							break;					
 
 						default:
