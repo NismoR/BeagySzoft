@@ -400,7 +400,6 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		}
 		//System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
 		
-
-		ctrl.onNewClick(x, y);
+		ctrl.onNewClick(new Click(x, y, gui_gs.get_current_hero().get_player_id()));
 	}
 }
