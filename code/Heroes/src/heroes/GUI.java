@@ -237,6 +237,13 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					if(h.get_attackable()){
 						g.setColor(Color.red);	
 					}
+					if(gui_gs.steppable!=null){
+						if(h.get_x()==gui_gs.steppable.x){
+							if(h.get_y()==gui_gs.steppable.y){
+								g.setColor(Color.blue.darker());								
+							}
+						}
+					}
 					g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
 					switch (h.get_player_id()) {
 					case CLIENT:

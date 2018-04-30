@@ -290,25 +290,29 @@ public class GameState implements Serializable{
 	
 	/*Return true if should step to new hero, because step was made*/
 	boolean check_if_stepable_and_step(int x, int y){
-		boolean ret = false;
 		if(valid_field[x][y]){
 			Hero h = get_current_hero();
 			if(steppable!=null){
 				if(x==steppable.x && y==steppable.y){
 					h.set_coordinates(x, y);
-					heroes.set(current_hero_id, h);	
-					ret= true;					
+					heroes.set(current_hero_id, h);
+					steppable = null;
+					return true;	
 				}
 			}
 			if(Math.abs(x-h.get_x())<2 && Math.abs(y-h.get_y())<2){
 				if(is_field_empty(x, y)){
 					steppable = new Click(x, y, h.get_player_id());
-					return ret;		
+					return false;		
+				}
+				if(x == h.get_x() && y==h.get_y()){
+					steppable = new Click(x, y, h.get_player_id());
+					return false;		
 				}
 			}
 		}
 		steppable = null;
-		return ret;		
+		return false;		
 	}
 	
 	boolean check_if_game_finished(){
