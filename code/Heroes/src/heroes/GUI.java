@@ -145,10 +145,6 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 						case START_SERVER:
 							g.setColor(Color.red);							
 							break;
-						case OCCUPIED_C:
-						case OCCUPIED_S:	
-							g.setColor(col_field_bg.darker());							
-							break;
 						case STEPABLE:
 							g.setColor(Color.blue.darker());							
 							break;						
@@ -219,10 +215,11 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			for(Hero h : gui_gs.heroes){
 				int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_SIZE;
 				int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;
+				g.setColor(col_field_bg.darker());	
 				if(h.get_attackable()){
 					g.setColor(Color.red);	
-					g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
 				}
+				g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
 				switch (h.get_player_id()) {
 				case CLIENT:
 					g.setColor(get_col_with_alpha(col_hero_client, h.get_health()));					
