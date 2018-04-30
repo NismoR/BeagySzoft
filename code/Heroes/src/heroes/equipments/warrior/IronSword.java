@@ -6,7 +6,7 @@ import heroes.equipments.DefenseAbility;
 import heroes.equipments.Equipment;
 
 public class IronSword extends Equipment{
-	private static AttackAbility attack=new AttackAbility(2, 0, 1);
+	private static AttackAbility attack=new AttackAbility(2, 0, 1,false);
 	private static DefenseAbility defense=null;
 
 	public IronSword() {

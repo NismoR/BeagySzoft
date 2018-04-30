@@ -3,7 +3,7 @@ package heroes.equipments;
 public class WoodenSword extends Equipment{
 	
 
-	private static AttackAbility attack=new AttackAbility(1, 0, 1);
+	private static AttackAbility attack=new AttackAbility(1, 0, 1,false);
 	private static DefenseAbility defense=null;
 
 	public WoodenSword() {

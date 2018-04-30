@@ -4,12 +4,14 @@ public class AttackAbility {
 	private int strength;
 	private int minRadius;
 	private int maxRadius;
+	private boolean attackAllNearby=false;
 	
-	public AttackAbility(int str, int minR, int maxR) {
+	public AttackAbility(int str, int minR, int maxR, boolean nearby) {
 		// TODO Auto-generated constructor stub
 		this.strength=str;
 		this.minRadius=minR;
 		this.maxRadius=maxR;
+		this.attackAllNearby=nearby;
 	}
 	
 	public int get_strength(){
@@ -22,5 +24,9 @@ public class AttackAbility {
 	
 	public int get_maxR(){
 		return maxRadius;
+	}
+	
+	public boolean get_allNearby(){
+		return attackAllNearby;
 	}
 }

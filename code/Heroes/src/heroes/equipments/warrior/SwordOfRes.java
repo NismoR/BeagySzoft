@@ -6,7 +6,7 @@ import heroes.equipments.DefenseAbility;
 import heroes.equipments.Equipment;
 
 public class SwordOfRes extends Equipment{
-	private static AttackAbility attack=new AttackAbility(1, 0, 1);
+	private static AttackAbility attack=new AttackAbility(1, 0, 1,false);
 	private static DefenseAbility defense=new DefenseAbility(2);
 
 	public SwordOfRes() {

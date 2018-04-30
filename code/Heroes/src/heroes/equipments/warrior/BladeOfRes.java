@@ -7,7 +7,7 @@ import heroes.equipments.Equipment;
 import heroes.equipments.Equipment.EqType;
 
 public class BladeOfRes extends Equipment{
-	private static AttackAbility attack=new AttackAbility(1, 0, 1);
+	private static AttackAbility attack=new AttackAbility(1, 0, 1, false);
 	private static DefenseAbility defense=new DefenseAbility(1);
 
 	public BladeOfRes() {
