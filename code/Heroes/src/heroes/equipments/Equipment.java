@@ -27,6 +27,8 @@ public abstract class Equipment {
 	private DefenseAbility defense=null;
 	private HeroType available_for;
 	private AttackAbility attack=null;
+	private boolean canMoveExtra=false;
+	private boolean canRollExtra=false;
 	
 	public Equipment(EqType eq_type,String eq_name,int value,HeroType available_for, AttackAbility att, DefenseAbility def){
 		this.eq_type = eq_type;
@@ -35,6 +37,22 @@ public abstract class Equipment {
 		this.available_for = available_for;
 		this.attack = att;
 		this.defense = def;
+	}
+	
+	public boolean get_move_extra(){
+		return canMoveExtra;
+	}
+	
+	public boolean get_roll_extra(){
+		return canRollExtra;
+	}
+	
+	protected void set_move_extr(){
+		this.canMoveExtra=true;
+	}
+	
+	protected void set_roll_extr(){
+		this.canRollExtra=true;
 	}
 	
 	public EqType get_type() {
