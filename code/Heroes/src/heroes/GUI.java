@@ -7,7 +7,6 @@ package heroes;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Random;
-
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -38,16 +34,11 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	public static int FIELD_SIZE = 60;
 	public static int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
 	private final int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
-	private final int STROKE_WIDTH = 3;
-	private JPanel p;
 	private int arr_background[][] = null;
 	private int arr_char[][] = null;
 	private boolean TESTING = true;
 	
 	private GameState gui_gs;
-	
-	private int ARCHER_DRAW_MARGIN = 15;
-	private int MAGE_DRAW_MARGIN = 30;
 
 	private static Color col_bg = new Color(0xF5F2DC);
 	private static Color col_field_bg = new Color(0x7A797A);
@@ -115,24 +106,6 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		return new Color(col.getRed(), col.getGreen(), col.getBlue(), alpha);
 	}
 	
-	private void drawCenteredSquare(Graphics g, int x, int y, int r) {
-		  x = x-(r/2);
-		  y = y-(r/2);
-		  g.fillRect(x,y,r,r);
-		}
-	
-	private void draw_archer(Graphics g, int off_x, int off_y){
-		Polygon p = new Polygon();		
-		p.addPoint(off_x+FIELD_SIZE/2, off_y+ARCHER_DRAW_MARGIN);
-		p.addPoint(off_x+ARCHER_DRAW_MARGIN, off_y+FIELD_SIZE-ARCHER_DRAW_MARGIN);
-		p.addPoint(off_x+FIELD_SIZE-ARCHER_DRAW_MARGIN, off_y+FIELD_SIZE-ARCHER_DRAW_MARGIN);	    
-	    g.fillPolygon(p);
-	}
-	
-	private void draw_mage(Graphics g, int off_x, int off_y){
-		drawCenteredSquare(g,off_x+FIELD_SIZE/2, off_y+FIELD_SIZE/2, 
-				MAGE_DRAW_MARGIN);
-	}
 
 	
 
@@ -158,58 +131,6 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	private class GamePanel extends JPanel {
 
 		private static final long serialVersionUID = 1L;
-
-		private void set_color_according_to_bg(Graphics g, int bg_id){
-			switch (bg_id) {
-			case 0:
-				g.setColor(Color.magenta);
-				break;
-			case 1:
-				g.setColor(Color.cyan);
-				break;
-			case 2:
-				g.setColor(Color.orange);
-				break;
-			case 3:
-				g.setColor(Color.green);
-				break;
-			default:
-				break;
-			}
-		}
-		
-
-		private void set_color_according_to_char(Graphics g, int char_id){
-			if(char_id>0){
-				g.setColor(Color.red);			
-			}
-			else{
-				if(char_id<0){
-					g.setColor(Color.blue);			
-				}
-				else{
-					g.setColor(Color.black);				
-				}
-			}
-		}
-		
-		private void draw_one_square(Graphics g, int i, int j){
-			int off_x = TABLE_OFFSET_X + i*FIELD_SIZE;
-			int off_y = TABLE_OFFSET_Y + j*FIELD_SIZE;
-			
-
-			// Draw border of square
-			g.setColor(Color.black);
-			g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
-			// Draw background of square
-			set_color_according_to_bg(g,arr_background[i][j]);
-			g.fillRect(off_x+STROKE_WIDTH, off_y+STROKE_WIDTH,
-					FIELD_SIZE-2*STROKE_WIDTH, FIELD_SIZE-2*STROKE_WIDTH);
-			//Draw player
-			int char_id = arr_char[i][j];
-			set_color_according_to_char(g,char_id);
-			//draw_character(g, off_x, off_y,Math.abs(char_id));
-		}
 		
 		private void draw_steppables(Graphics g) {
 			for (int i = 0; i < TABLE_SIZE_X; i++) {
