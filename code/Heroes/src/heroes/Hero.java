@@ -166,12 +166,12 @@ public abstract class Hero {
 	abstract void draw(Graphics g, int off_x, int off_y);
 	
 	protected void draw_eq(Graphics g, int off_x, int off_y){
-		/*Equipment e = get_last_rolled_equip();
+		Equipment e = get_last_rolled_equip();
 		int num = 0;
 		if(e!=null){
 			num = e.get_type_in_int();
-		}*/
+		}
 		g.setColor(Color.black);
-		g.drawString(Integer.toString(last_rolled_id), off_x+GUI.FIELD_SIZE/2-5, off_y+GUI.FIELD_SIZE/2+7);
+		g.drawString(Integer.toString(num), off_x+GUI.FIELD_SIZE/2-5, off_y+GUI.FIELD_SIZE/2+7);
 	}
 }
