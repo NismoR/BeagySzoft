@@ -3,6 +3,7 @@ package heroes;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 
 import heroes.Hero.PlayerID;
@@ -300,11 +301,15 @@ public class GameState implements Serializable{
 	
 	boolean check_and_refresh_if_dying(){
 		boolean should_refresh = false;
-		for(Hero h : this.heroes){
+		ListIterator<Hero> iter = heroes.listIterator();
+		while(iter.hasNext()){
+			Hero h = iter.next();
 			if(h.get_dying()){
 				should_refresh = true;
-				boolean dead = h.decrease_health();
-				System.out.println("decreasing health");
+				if(h.decrease_health()){
+					iter.remove();
+				}
+				//System.out.println("decreasing health");
 			}
 		}
 		return should_refresh;
