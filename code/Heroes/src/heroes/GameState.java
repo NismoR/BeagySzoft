@@ -200,6 +200,9 @@ public class GameState implements Serializable{
 	}
 
 	boolean is_field_empty(int x, int y){
+		if(!valid_field[x][y]){
+			return false;
+		}
 		for(Hero h:heroes){
 			if(h.get_x()==x && h.get_y()==y){
 				return false;
