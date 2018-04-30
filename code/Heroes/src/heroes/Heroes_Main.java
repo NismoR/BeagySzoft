@@ -19,7 +19,7 @@ public class Heroes_Main {
 		Control c = new Control();
 		GUI g = new GUI(c);
 		c.setGUI(g);
-		c.refresh_board();
+		c.startScheduler();
 	}
 
 }

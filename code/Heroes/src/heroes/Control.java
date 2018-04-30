@@ -6,6 +6,11 @@
 package heroes;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import heroes.GameState.GameTurn;
 import heroes.Hero.PlayerID;
@@ -20,9 +25,14 @@ class Control implements IClick{
 	private static int NR_OF_HEROES = 1;
 	private GUI gui;
 	private GameState gs;
+	private ArrayList<Click> clicks_to_process;
+	
+	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+	private ScheduledFuture<?> future = null;
 
 	Control() {
 		gs = new GameState();
+		clicks_to_process = new ArrayList<Click>();
 		WoodenSword eq_wsw = new WoodenSword();
 		WoodenShield eq_wsh = new WoodenShield();
 		Warrior wc = new Warrior(PlayerID.CLIENT);
@@ -62,18 +72,30 @@ class Control implements IClick{
 
 	void startClient() {
 	}
+	
+	void startScheduler(){
+		Runnable periodicTask = new Runnable() {
+			public void run() {
+				//System.out.println("Periodic task started");	
+				processClicks();
+			}
+		};
 
-	void sendClick(Point p) {
+		if (future == null || future.isCancelled())
+			future = executor.scheduleAtFixedRate(periodicTask, 0, 40, TimeUnit.MILLISECONDS);
+		refresh_board();	
 	}
-
-	void clickReceived(Point p) {
-	}
-
-	@Override
-	public void onNewClick(Click click) {
-		// TODO Auto-generated method stub
+	
+	public void processClicks(){
+		if(clicks_to_process.isEmpty()){
+			return;
+		}
+		Click c = clicks_to_process.remove(0);
+		if(c.sent_by!=gs.get_current_hero().get_player_id()){
+			return;
+		}
 		if(gs.if_has_attackable()){
-			if(gs.check_if_attackable(click.x,click.y)){
+			if(gs.check_if_attackable(c.x,c.y)){
 				System.out.println("ATTACKABLE");
 			}
 			else{
@@ -81,13 +103,18 @@ class Control implements IClick{
 			}
 		}
 		else{
-			if(gs.check_if_stepable_and_step(click.x,click.y)){
+			if(gs.check_if_stepable_and_step(c.x,c.y)){
 				gs.roll();
 				if(!gs.if_has_attackable()){
 					gs.step_to_next_hero();
 				}
 			}
 		}
-		gui.onNewGameState(gs);			
+		refresh_board();	
+	}
+
+	@Override
+	public void onNewClick(Click click) {
+		clicks_to_process.add(click);				
 	}
 }
