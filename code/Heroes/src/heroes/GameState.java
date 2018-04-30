@@ -26,8 +26,7 @@ public class GameState implements Serializable{
 		START_SERVER,
 		OCCUPIED_C,//TODO delete
 		OCCUPIED_S,
-		CURRENT,
-		STEPABLE
+		CURRENT
 	}
 	
 	private static final long serialVersionUID = 1L;
@@ -40,8 +39,9 @@ public class GameState implements Serializable{
 	public List<Hero> heroes;
 	
 	private int current_hero_id = 0;
-	private boolean has_stepable = false;
 	private PlayerID winner=null;
+	
+	public Click steppable = null;		//Just for storing steppable coordinates
 	
 	private static float perc_if_valid_field = 0.9f;
 	
@@ -249,26 +249,6 @@ public class GameState implements Serializable{
 		return 0;
 	}
 	
-	void clear_stepables(int curr_x, int curr_y){
-		for(int i = -1; i < 2; i++){
-			int x=curr_x+i;
-			if(x<0 || x>= board_size){
-				continue;
-			}
-			for(int j = -1; j < 2; j++){
-				int y=curr_y+j;
-				if(y<0 || y>= board_size){
-					continue;
-				}
-				if(board_bg[x][y] == FieldType.STEPABLE){
-					board_bg[x][y] = FieldType.FREE;
-					has_stepable = false;
-					return;
-				}
-			}
-		}		
-	}
-	
 	Hero get_hero_at_given_coord(int x, int y){
 		for(Hero h: heroes){
 			if(h.get_x()==x && h.get_y()==y){
@@ -297,43 +277,27 @@ public class GameState implements Serializable{
 		return false;		
 	}
 	
-	boolean check_if_not_occupied(int x, int y){
-		if(board_bg[x][y] != FieldType.FREE){
-			return false;
-		}
-		return true;
-	}
-	
+	/*Return true if should step to new hero, because step was made*/
 	boolean check_if_stepable_and_step(int x, int y){
+		boolean ret = false;
 		if(valid_field[x][y]){
 			Hero h = get_current_hero();
-			if(has_stepable){
-				if(board_bg[x][y] == FieldType.STEPABLE){
-					board_bg[h.get_x()][h.get_y()] = FieldType.FREE;	
-					if(h.get_player_id()==PlayerID.CLIENT){
-						board_bg[x][y] = FieldType.OCCUPIED_C;						
-					}
-					else{
-						board_bg[x][y] = FieldType.OCCUPIED_S;
-					}
+			if(steppable!=null){
+				if(x==steppable.x && y==steppable.y){
 					h.set_coordinates(x, y);
-					heroes.set(current_hero_id, h);					
-					return true;
+					heroes.set(current_hero_id, h);	
+					ret= true;					
 				}
-				clear_stepables(h.get_x(),h.get_y());
 			}
-			if(Math.abs(h.get_x()-x)>1){
-				return false;
-			}
-			if(Math.abs(h.get_y()-y)>1){
-				return false;
-			}
-			if(check_if_not_occupied(x,y)){
-				board_bg[x][y] = FieldType.STEPABLE;
-				has_stepable = true;
+			if(Math.abs(x-h.get_x())<2 && Math.abs(y-h.get_y())<2){
+				if(is_field_empty(x, y)){
+					steppable = new Click(x, y, h.get_player_id());
+					return ret;		
+				}
 			}
 		}
-		return false;
+		steppable = null;
+		return ret;		
 	}
 	
 	boolean check_if_game_finished(){
@@ -409,6 +373,7 @@ public class GameState implements Serializable{
 		turn = gs.turn;
 		heroes = new ArrayList<Hero>(gs.heroes);
 		current_hero_id = gs.current_hero_id;
+		steppable = gs.steppable;
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
 				board_bg[i][j] = gs.board_bg[i][j];

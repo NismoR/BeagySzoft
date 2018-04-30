@@ -144,10 +144,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 							break;
 						case START_SERVER:
 							g.setColor(Color.red);							
-							break;
-						case STEPABLE:
-							g.setColor(Color.blue.darker());							
-							break;						
+							break;					
 
 						default:
 							g.setColor(col_field_bg);
@@ -156,6 +153,17 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 						g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);						
 					}
 				}
+			}
+		}
+		
+
+		private void draw_steppable(Graphics g) {
+			Click st = gui_gs.steppable;
+			if(st!=null){
+				int off_x = TABLE_OFFSET_X + st.x*FIELD_SIZE;
+				int off_y = TABLE_OFFSET_Y + st.y*FIELD_SIZE;
+				g.setColor(Color.blue.darker());
+				g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);					
 			}
 		}
 		
@@ -258,6 +266,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					TABLE_SIZE_X*FIELD_WIDTH+2*STROKE_WIDTH, 
 					TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);*/
 			draw_steppables(g);
+			draw_steppable(g);
 			draw_heroes(g);
 			draw_current_hero_mark(g);
 			/*for (int i = 0; i < TABLE_SIZE_X; i++) {
