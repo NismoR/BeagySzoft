@@ -89,6 +89,14 @@ class Control implements IClick{
 			}
 			gs.add_hero(w);
 		}
+
+		Warrior w = new Warrior(PlayerID.CLIENT);	
+		w.add_equip(new IronSwordOfFury());
+		w.add_equip(new IronSwordOfFury());
+		w.add_equip(new IronSwordOfFury());
+		w.add_equip(new IronSwordOfFury());
+		w.add_equip(new IronSwordOfFury());
+		gs.add_hero(w);
 		
 		generateBoard();		
 	}
