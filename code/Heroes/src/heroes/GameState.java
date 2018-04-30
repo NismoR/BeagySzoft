@@ -62,12 +62,25 @@ public class GameState implements Serializable{
 	public Hero get_current_hero(){
 		return heroes.get(current_hero_id);
 	}
-		 
-    public void step_to_next_hero(){
+	
+	public void step_to_next_hero(){
 	    current_hero_id++;
 	    if(current_hero_id >= heroes.size()){
 	           current_hero_id=0;
-	   }
+	    }
+    }
+		 
+    public void check_and_step_if_current_is_not_alive(){
+    	Hero h = get_current_hero();
+    	while(h.get_dying()){
+    		step_to_next_hero();
+    		h = get_current_hero();
+    	}
+    }
+    
+    public void step_to_next_alive_hero(){
+    	step_to_next_hero();
+    	check_and_step_if_current_is_not_alive();
     }
 
 	
@@ -362,7 +375,7 @@ public class GameState implements Serializable{
 		if(if_has_attackable()){
 			if(check_if_attackable_and_attack(x,y)){
 				//System.out.println("ATTACKABLE");
-				step_to_next_hero();
+				step_to_next_alive_hero();
 			}
 			else{
 				//System.out.println("NOT ATTACKABLE");				
@@ -372,7 +385,7 @@ public class GameState implements Serializable{
 			if(check_if_stepable_and_step(x,y)){
 				roll();
 				if(!if_has_attackable()){
-					step_to_next_hero();
+					step_to_next_alive_hero();
 				}
 			}
 		}
