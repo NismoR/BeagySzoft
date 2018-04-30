@@ -1,0 +1,23 @@
+%----------------------------------------------------------------------------
+%\chapter{\LaTeX-eszközök}\label{sect:LatexTools}
+%----------------------------------------------------------------------------
+\section{Program és játék indulása}
+%----------------------------------------------------------------------------
+Program elindítása után mindkét játékosnak ki kell választani, hogy szerverként, vagy kliensként működjön a programjuk. Ezt követően a szerver beállítja a játék paramétereit. . Játékosok kiválasztják a használandó karaktereket, majd beállítják azok felszereléseit, jelzik, ha készen vannak.
+Ha mindenki készen áll, akkor a szerver legenerálja a pályát. A generált pályára a játékosok elhelyezik a karaktereket. Ha ez megtörténik indul a harc.
+%----------------------------------------------------------------------------
+\section{Grafika}
+%----------------------------------------------------------------------------
+A GUI osztály konstruktorának a korábbiakban példányosított CONTROL objektum kerül átadásra. Ennek a felhasználásával teremtünk kapcsolatot a vezérlés, és a megjelenítés között. A konstruktorban kialakításra kerül az alkalmazáshoz tartozó menüsáv, elején a Start menüvel, ami továbbiakban tartalmazza a Server, illetve Client menüpontokat. A menüsáv utolsó elemeként, egy Exit menüpont lett
+kialakítva, amelyet felhasználva tudjuk bezárni a programot. Ezeket a JMenu, JMenuBar, illetve a JMenuItem példányosításával hoztuk létre. Az egyes JMenuItem elemekhez meghatároztuk, a hozzájuk tartozó eseményeket JMenuItem addActionListener() metódusát felhasználva, illetve egy ActionListener osztályt példányosítva.
+Továbbá két osztályt örököltetünk (extends segítségével) a JPanel osztályból. A TextPanel örököltetett osztály a user-el való kommunikációért lesz felelős (kiírja, hogy kinek, mikor, mit
+kell tennie). A másik örököltetett, a DrawPanelosztály pedig a játékfelületet fogja biztosítani.
+Az örököltetett osztályoknak felüldefiniáljuk a metódusait az ablak helyes átméretezésének a
+megvalósításához, grafikai elemek kirajzolásához.
+
+
+%----------------------------------------------------------------------------
+\section{Vezérlés}
+%----------------------------------------------------------------------------
+\subsection{Játékindítás}
+A GUI o
