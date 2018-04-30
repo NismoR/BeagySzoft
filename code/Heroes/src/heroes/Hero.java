@@ -35,6 +35,7 @@ public abstract class Hero {
 	private int current_defense=0;
 	
 	private int health = 255;
+	private boolean dying = false;
 	
 	public Hero(HeroType type, PlayerID player_id){
 		equips = new ArrayList<Equipment>();
@@ -60,6 +61,10 @@ public abstract class Hero {
 	
 	public int get_health(){
 		return health;
+	}
+	
+	public boolean get_dying(){
+		return dying;
 	}
 	
 	public int get_max_eq_nr(){
@@ -120,9 +125,9 @@ public abstract class Hero {
 	
 	public boolean defense(Equipment attacked_with){
 		if(current_defense<attacked_with.get_attack_value()){
-			return true;
+			dying=true;
 		}
-		return false;
+		return dying;
 	}
 
 	abstract void draw(Graphics g, int off_x, int off_y);
