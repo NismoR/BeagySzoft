@@ -132,6 +132,22 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 
 		private static final long serialVersionUID = 1L;
 		
+		private void draw_valid_fields(Graphics g) {
+			for (int i = 0; i < TABLE_SIZE_X; i++) {
+				for (int j = 0; j < TABLE_SIZE_Y; j++) {
+					if(gui_gs.valid_field[i][j]){
+						int off_x = TABLE_OFFSET_X + i*FIELD_SIZE;
+						int off_y = TABLE_OFFSET_Y + j*FIELD_SIZE;
+						g.setColor(col_field_bg);
+						g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);	
+					}					
+				}
+			}			
+		}
+		
+		
+		/*Actually not steppables, rather extra_info for fields.
+		 * Currently not using but maybe will be usefull later*/
 		private void draw_steppables(Graphics g) {
 			for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
@@ -265,7 +281,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			/*g.fillRect(TABLE_OFFSET_X-STROKE_WIDTH, TABLE_OFFSET_Y-STROKE_WIDTH, 
 					TABLE_SIZE_X*FIELD_WIDTH+2*STROKE_WIDTH, 
 					TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);*/
-			draw_steppables(g);
+			draw_valid_fields(g);
 			draw_steppable(g);
 			draw_heroes(g);
 			draw_current_hero_mark(g);
