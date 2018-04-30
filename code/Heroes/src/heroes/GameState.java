@@ -188,6 +188,19 @@ public class GameState implements Serializable{
 		}
 	}
 	
+	boolean is_field_empty(int x, int y){
+		for(Hero h:heroes){
+			if(h.get_x()==x && h.get_y()==y){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	boolean is_field_occupied(int x, int y){
+		return !is_field_empty(x, y);
+	}
+	
 	boolean if_has_attackable(){
 		for(Hero h:heroes){
 			if(h.get_attackable()){
