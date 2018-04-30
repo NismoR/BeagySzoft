@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -42,6 +43,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	private static Color col_current_hero_mark= new Color(0xF0CA4D);
 	private static Color col_hero_client = new Color(0xFF5729);	
 	private static Color col_hero_server = new Color(0x009494);
+	private static Color col_start_client = new Color(0xFF5729);	
+	private static Color col_start_server = new Color(0x009494);
 	
 	public static int hero_death_decr = 11;
 	
@@ -159,7 +162,29 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 				}
 			}
 		}
-		
+
+
+		private void draw_starting_positions(Graphics g) {
+			List<Click> start_pos=gui_gs.start_pos;
+			if(start_pos!=null){
+				for(Click c:start_pos){
+					int off_x = TABLE_OFFSET_X + c.x*FIELD_SIZE;
+					int off_y = TABLE_OFFSET_Y + c.y*FIELD_SIZE;
+					switch (c.playerID) {
+					case CLIENT:
+						g.setColor(col_start_client);
+						break;
+					case SERVER:
+						g.setColor(col_start_server);
+						break;
+					default:
+						g.setColor(Color.black);
+						break;
+					}
+					g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
+				}
+			}
+		}
 
 		private void draw_steppable(Graphics g) {
 			Click st = gui_gs.steppable;
@@ -269,7 +294,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			g.setColor(Color.black);
 			g.setFont(new Font("Times New Roman", Font.BOLD, 24));
 			draw_valid_fields(g);
-			draw_steppables(g);
+			draw_starting_positions(g);
 			draw_steppable(g);
 			draw_heroes(g);
 			draw_current_hero_mark(g);
