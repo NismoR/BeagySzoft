@@ -286,8 +286,9 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					TABLE_SIZE_X*FIELD_WIDTH+2*STROKE_WIDTH, 
 					TABLE_SIZE_X*FIELD_HEIGHT+2*STROKE_WIDTH);*/
 			draw_valid_fields(g);
+			draw_steppables(g);
 			draw_steppable(g);
-			draw_heroes(g);
+			//draw_heroes(g);
 			draw_current_hero_mark(g);
 			/*for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
