@@ -46,6 +46,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	private static Color col_hero_client = new Color(0xFF5729);	
 	private static Color col_hero_server = new Color(0x009494);
 	
+	public static int hero_death_decr = 11;
+	
 	private GamePanel gamePanel;
 
 	GUI(Control c) {
@@ -237,27 +239,29 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		
 		private void draw_heroes(Graphics g){
 			for(Hero h : gui_gs.heroes){
-				int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_SIZE;
-				int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;
-				g.setColor(col_field_bg.darker());	
-				if(h.get_attackable()){
-					g.setColor(Color.red);	
+				if(h.get_health() % 6 >2){
+					int off_x = TABLE_OFFSET_X + h.get_x()*FIELD_SIZE;
+					int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;
+					g.setColor(col_field_bg.darker());	
+					if(h.get_attackable()){
+						g.setColor(Color.red);	
+					}
+					g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
+					switch (h.get_player_id()) {
+					case CLIENT:
+						g.setColor(col_hero_client);					
+						break;
+					case SERVER:	
+						g.setColor(col_hero_server);				
+						break;
+	
+					default:
+						g.setColor(Color.black);
+						break;
+					}
+					draw_defense(g,h);
+					h.draw(g, off_x,  off_y);
 				}
-				g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
-				switch (h.get_player_id()) {
-				case CLIENT:
-					g.setColor(get_col_with_alpha(col_hero_client, h.get_health()));					
-					break;
-				case SERVER:	
-					g.setColor(get_col_with_alpha(col_hero_server, h.get_health()));				
-					break;
-
-				default:
-					g.setColor(Color.black);
-					break;
-				}
-				draw_defense(g,h);
-				h.draw(g, off_x,  off_y);
 			}
 		}
 		

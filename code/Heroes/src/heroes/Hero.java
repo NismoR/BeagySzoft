@@ -147,7 +147,7 @@ public abstract class Hero {
 	}
 	
 	public boolean decrease_health(){
-		health=health-7;
+		health=health-GUI.hero_death_decr;
 		if(health<1){
 			health=0;
 			return true;
