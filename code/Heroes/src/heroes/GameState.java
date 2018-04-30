@@ -245,19 +245,11 @@ public class GameState implements Serializable{
 		if(!eq_valid){
 			return 0;
 		}
-		EqType et = h.get_last_rolled_equip().get_type();
-		switch (et) {
-		case WOODEN_SWORD:
-			set_attackables(h);
-			return 1;
-		case WOODEN_SHIELD:
-			
-			return 2;
-
-		default:
-			break;
+		Equipment e = h.get_last_rolled_equip();
+		if(e.get_attack()!=null){
+			set_attackables(h);			
 		}
-		return 0;
+		return e.get_type_in_int();
 	}
 	
 	Hero get_hero_at_given_coord(int x, int y){
