@@ -8,7 +8,8 @@ public abstract class Equipment {
 		WOODEN_SHIELD,
 		IRON_SWORD,
 		IRON_SHIELD,
-		BLADE_OF_RES
+		BLADE_OF_RES,
+		SWORD_OF_RES
 	}
 	private EqType eq_type;
 	private String eq_name;
@@ -42,6 +43,8 @@ public abstract class Equipment {
 			return 4;
 		case BLADE_OF_RES:			
 			return 5;
+		case SWORD_OF_RES:			
+			return 6;
 		default:		
 			return 0;
 		}
