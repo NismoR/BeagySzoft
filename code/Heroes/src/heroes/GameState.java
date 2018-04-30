@@ -220,17 +220,20 @@ public class GameState implements Serializable{
 		}
 		return false;
 	}
-	void set_attackables(Hero own){
+	boolean set_attackables(Hero own){
+		boolean ret = false;
 		PlayerID own_id = own.get_player_id();
 		for(Hero h:heroes){
 			if(h.get_player_id()!=own_id){
 				if(Math.abs(own.get_x()-h.get_x())<2){
 					if(Math.abs(own.get_y()-h.get_y())<2){
-						h.set_as_attackable();						
+						h.set_as_attackable();	
+						ret = true;
 					}
 				}
 			}
-		}		
+		}
+		return ret;
 	}
 
 	
@@ -258,9 +261,10 @@ public class GameState implements Serializable{
 		}
 		Equipment e = h.get_last_rolled_equip();
 		if(e.get_attack()!=null){
-			set_attackables(h);
-			if(e.get_attack().get_allNearby()){
-				attack_all_attackable();
+			if(set_attackables(h)){
+				if(e.get_attack().get_allNearby()){
+					attack_all_attackable();
+				}
 			}
 		}
 		return e.get_type_in_int();
