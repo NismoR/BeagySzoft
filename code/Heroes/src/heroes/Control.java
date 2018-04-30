@@ -77,7 +77,7 @@ class Control implements IClick{
 		Runnable periodicTask = new Runnable() {
 			public void run() {
 				//System.out.println("Periodic task started");	
-				processClicks();
+				mainProcess();
 			}
 		};
 
@@ -111,6 +111,10 @@ class Control implements IClick{
 			}
 		}
 		refresh_board();	
+	}
+	
+	public void mainProcess(){
+		processClicks();
 	}
 
 	@Override
