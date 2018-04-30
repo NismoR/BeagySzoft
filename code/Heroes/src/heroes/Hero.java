@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import heroes.equipments.DefenseAbility;
 import heroes.equipments.Equipment;
 import heroes.equipments.Equipment.EqType;
 import heroes.equipments.WoodenShield;
@@ -130,8 +131,12 @@ public abstract class Hero {
 		if(last_rolled_id<0 || last_rolled_id>=equips.size()){
 			return false;
 		}
-		if(get_last_rolled_equip_type() == EqType.WOODEN_SHIELD){
-			current_defense=1;
+		Equipment e = get_last_rolled_equip();
+		if(e!=null){
+			DefenseAbility def = e.get_defense();
+			if(def!=null){
+				current_defense=def.get_strength();
+			}
 		}
 		return true;
 	}
