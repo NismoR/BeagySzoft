@@ -298,6 +298,18 @@ public class GameState implements Serializable{
 		return false;
 	}
 	
+	boolean check_and_refresh_if_dying(){
+		boolean should_refresh = false;
+		for(Hero h : this.heroes){
+			if(h.get_dying()){
+				should_refresh = true;
+				boolean dead = h.decrease_health();
+				System.out.println("decreasing health");
+			}
+		}
+		return should_refresh;
+	}
+	
 	public void copy(GameState gs){
 		time = gs.time;
 		turn = gs.turn;

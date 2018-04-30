@@ -129,6 +129,15 @@ public abstract class Hero {
 		}
 		return dying;
 	}
+	
+	public boolean decrease_health(){
+		health=health-4;
+		if(health<1){
+			health=0;
+			return true;
+		}
+		return false;
+	}
 
 	abstract void draw(Graphics g, int off_x, int off_y);
 	

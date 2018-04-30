@@ -113,7 +113,14 @@ class Control implements IClick{
 		refresh_board();	
 	}
 	
+	public void check_for_periodic_change(){
+		if(gs.check_and_refresh_if_dying()){
+			refresh_board();
+		}
+	}
+	
 	public void mainProcess(){
+		check_for_periodic_change();
 		processClicks();
 	}
 
