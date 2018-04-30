@@ -135,34 +135,6 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 				}
 			}			
 		}
-		
-		
-		/*Actually not steppables, rather extra_info for fields.
-		 * Currently not using but maybe will be usefull later*/
-		private void draw_steppables(Graphics g) {
-			for (int i = 0; i < TABLE_SIZE_X; i++) {
-				for (int j = 0; j < TABLE_SIZE_Y; j++) {
-					int off_x = TABLE_OFFSET_X + i*FIELD_SIZE;
-					int off_y = TABLE_OFFSET_Y + j*FIELD_SIZE;
-					if(gui_gs.valid_field[i][j]){
-						switch (gui_gs.board_bg[i][j]) {
-						case START_CLIENT:
-							g.setColor(Color.cyan);							
-							break;
-						case START_SERVER:
-							g.setColor(Color.magenta);							
-							break;					
-
-						default:
-							g.setColor(col_field_bg);
-							break;
-						}
-						g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);						
-					}
-				}
-			}
-		}
-
 
 		private void draw_starting_positions(Graphics g) {
 			List<Click> start_pos=gui_gs.start_pos;
