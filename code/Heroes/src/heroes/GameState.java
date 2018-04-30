@@ -26,7 +26,6 @@ public class GameState implements Serializable{
 		START_SERVER,
 		OCCUPIED_C,//TODO delete
 		OCCUPIED_S,
-		ATTACKABLE,
 		CURRENT,
 		STEPABLE
 	}
@@ -42,7 +41,6 @@ public class GameState implements Serializable{
 	
 	private int current_hero_id = 0;
 	private boolean has_stepable = false;
-	private boolean has_attackable = false;
 	private PlayerID winner=null;
 	
 	private static float perc_if_valid_field = 0.9f;
@@ -178,38 +176,30 @@ public class GameState implements Serializable{
 	}
 	
 	boolean if_has_attackable(){
-		return has_attackable;
+		for(Hero h:heroes){
+			if(h.get_attackable()){
+				return true;
+			}
+		}
+		return false;
+	}
+	void set_attackables(Hero own){
+		PlayerID own_id = own.get_player_id();
+		for(Hero h:heroes){
+			if(h.get_player_id()!=own_id){
+				if(Math.abs(own.get_x()-h.get_x())<2){
+					if(Math.abs(own.get_y()-h.get_y())<2){
+						h.set_as_attackable();						
+					}
+				}
+			}
+		}		
 	}
 	
-	void set_attackables(Hero h){
-		int cent_x = h.get_x();
-		int cent_y = h.get_y();
-		PlayerID own_id = h.get_player_id();
-		
-		for(int i = -1; i < 2; i++){
-			int x=cent_x+i;
-			if(x<0 || x>= board_size){
-				continue;
-			}
-			for(int j = -1; j < 2; j++){
-				int y=cent_y+j;
-				if(y<0 || y>= board_size){
-					continue;
-				}
-				if(own_id == PlayerID.CLIENT){
-					if(board_bg[x][y] == FieldType.OCCUPIED_S){
-						board_bg[x][y] = FieldType.ATTACKABLE;
-						has_attackable = true;
-					}
-				}
-				else{
-					if(board_bg[x][y] == FieldType.OCCUPIED_C){
-						board_bg[x][y] = FieldType.ATTACKABLE;
-						has_attackable = true;
-					}
-				}
-			}
-		}	
+	void clear_attackables(){
+		for(Hero h:heroes){
+			h.clear_attackable();
+		}		
 	}
 	
 	int roll(){
@@ -266,19 +256,16 @@ public class GameState implements Serializable{
 		if(def.get_player_id()!=att.get_player_id())
 			def.defense(att.get_last_rolled_equip());
 	}
-	
 	/*Return true if clicked field is attackable, false if not*/
 	boolean check_if_attackable_and_attack(int x, int y){
 		if(valid_field[x][y]){
-			if(board_bg[x][y] == FieldType.ATTACKABLE){
-				Hero def = get_hero_at_given_coord(x, y);
-				attack(def,get_current_hero());
-				if(def.get_player_id()==PlayerID.CLIENT)
-					board_bg[x][y] = FieldType.OCCUPIED_C;
-				else
-					board_bg[x][y] = FieldType.OCCUPIED_S;
-				has_attackable=false;
-				return true;
+			Hero def = get_hero_at_given_coord(x, y);
+			if(def!=null){
+				if(def.get_attackable()){
+					attack(def,get_current_hero());
+					clear_attackables();
+					return true;					
+				}
 			}			
 		}
 		return false;		
@@ -355,13 +342,13 @@ public class GameState implements Serializable{
 			if(h.get_dying()){
 				should_refresh = true;
 				if(h.decrease_health()){
-					//System.out.println("iterID: "+iterID+"  currID: "+current_hero_id);
+					System.out.println("iterID: "+iterID+"  currID: "+current_hero_id);
 					iter.remove();
 					if(iterID<=current_hero_id){
 						current_hero_id--;
 					}
-					//System.out.println("Hero Died");
-					//System.out.println("Num of remaining heroes: "+heroes.size());
+					System.out.println("Hero Died");
+					System.out.println("Num of remaining heroes: "+heroes.size());
 				}
 			}
 		}

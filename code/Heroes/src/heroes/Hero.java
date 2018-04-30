@@ -36,6 +36,7 @@ public abstract class Hero {
 	
 	private int health = 255;
 	private boolean dying = false;
+	private boolean attackable = false;
 	
 	public Hero(HeroType type, PlayerID player_id){
 		equips = new ArrayList<Equipment>();
@@ -65,6 +66,18 @@ public abstract class Hero {
 	
 	public boolean get_dying(){
 		return dying;
+	}
+	
+	public boolean get_attackable(){
+		return attackable;
+	}
+	
+	public void set_as_attackable(){
+		this.attackable=true;
+	}
+	
+	public void clear_attackable(){
+		this.attackable=false;
 	}
 	
 	public int get_max_eq_nr(){
