@@ -267,6 +267,7 @@ public class GameState implements Serializable{
 			def.defense(att.get_last_rolled_equip());
 	}
 	
+	/*Return true if clicked field is attackable, false if not*/
 	boolean check_if_attackable_and_attack(int x, int y){
 		if(valid_field[x][y]){
 			if(board_bg[x][y] == FieldType.ATTACKABLE){
