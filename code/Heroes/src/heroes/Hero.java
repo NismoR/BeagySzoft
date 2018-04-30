@@ -34,6 +34,8 @@ public abstract class Hero {
 	private int last_rolled_id=-1;
 	private int current_defense=0;
 	
+	private int health = 255;
+	
 	public Hero(HeroType type, PlayerID player_id){
 		equips = new ArrayList<Equipment>();
 		this.type = type;
@@ -54,6 +56,10 @@ public abstract class Hero {
 	
 	public int get_y(){
 		return y;
+	}
+	
+	public int get_health(){
+		return health;
 	}
 	
 	public int get_max_eq_nr(){

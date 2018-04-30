@@ -111,6 +111,10 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		add(gamePanel);
 	}
 	
+	private Color get_col_with_alpha(Color col, int alpha){
+		return new Color(col.getRed(), col.getGreen(), col.getBlue(), alpha);
+	}
+	
 	private void drawCenteredSquare(Graphics g, int x, int y, int r) {
 		  x = x-(r/2);
 		  y = y-(r/2);
@@ -299,10 +303,10 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 				int off_y = TABLE_OFFSET_Y + h.get_y()*FIELD_SIZE;
 				switch (h.get_player_id()) {
 				case CLIENT:
-					g.setColor(col_hero_client);					
+					g.setColor(get_col_with_alpha(col_hero_client, h.get_health()));					
 					break;
-				case SERVER:
-					g.setColor(col_hero_server);					
+				case SERVER:	
+					g.setColor(get_col_with_alpha(col_hero_server, h.get_health()));				
 					break;
 
 				default:
