@@ -20,6 +20,8 @@ import heroes.equipments.Equipment.EqType;
 import heroes.equipments.WoodenShield;
 import heroes.equipments.WoodenSword;
 import heroes.equipments.warrior.BladeOfRes;
+import heroes.equipments.warrior.ElvenBlade;
+import heroes.equipments.warrior.ElvenDagger;
 import heroes.equipments.warrior.IronShield;
 import heroes.equipments.warrior.IronSword;
 import heroes.equipments.warrior.IronSwordOfFury;
@@ -81,6 +83,12 @@ class Control implements IClick{
 				case IRON_SWORD_OF_FURY:
 					w.add_equip(new IronSwordOfFury());
 					break;
+				case ELVEN_DAGGER:
+					w.add_equip(new ElvenDagger());
+					break;
+				case ELVEN_BLADE:
+					w.add_equip(new ElvenBlade());
+					break;
 
 				default:
 					break;
@@ -91,9 +99,9 @@ class Control implements IClick{
 		}
 
 		Warrior w = new Warrior(PlayerID.CLIENT);	
-		w.add_equip(new IronSwordOfFury());
-		w.add_equip(new IronSwordOfFury());
-		w.add_equip(new IronSwordOfFury());
+		w.add_equip(new ElvenBlade());
+		w.add_equip(new ElvenBlade());
+		w.add_equip(new ElvenBlade());
 		w.add_equip(new IronSwordOfFury());
 		w.add_equip(new IronSwordOfFury());
 		gs.add_hero(w);
