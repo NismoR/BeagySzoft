@@ -92,7 +92,7 @@ class Control implements IClick{
 			return;
 		}
 		Click c = clicks_to_process.remove(0);
-		if(c.sent_by!=gs.get_current_hero().get_player_id()){
+		if(c.playerID!=gs.get_current_hero().get_player_id()){
 			return;
 		}
 		gs.interact(c.x, c.y);
