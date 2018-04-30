@@ -275,7 +275,8 @@ public class GameState implements Serializable{
 				if(def.get_player_id()==PlayerID.CLIENT)
 					board_bg[x][y] = FieldType.OCCUPIED_C;
 				else
-					board_bg[x][y] = FieldType.OCCUPIED_S;					
+					board_bg[x][y] = FieldType.OCCUPIED_S;
+				has_attackable=false;
 				return true;
 			}			
 		}
