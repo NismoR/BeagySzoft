@@ -4,13 +4,15 @@ import heroes.Hero.HeroType;
 
 public abstract class Equipment {
 	public enum EqType {
-		NONE			(0),
-		WOODEN_SWORD	(1),
-		WOODEN_SHIELD	(2),
-		IRON_SWORD		(3),
-		IRON_SHIELD		(4),
-		BLADE_OF_RES	(5),
-		SWORD_OF_RES	(6);
+		NONE					(0),
+		WOODEN_SWORD			(1),
+		WOODEN_SHIELD			(2),
+		IRON_SWORD				(3),
+		IRON_SHIELD				(4),
+		BLADE_OF_RES			(5),
+		SWORD_OF_RES			(6),
+		WOODEN_SWORD_OF_FURY	(7)
+		;
 		
 		public final int id;
 		private EqType(int id) {
