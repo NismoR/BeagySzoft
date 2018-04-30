@@ -6,7 +6,8 @@ public abstract class Equipment {
 	public enum EqType {
 		WOODEN_SWORD,
 		WOODEN_SHIELD,
-		IRON_SWORD
+		IRON_SWORD,
+		IRON_SHIELD
 	}
 	private EqType eq_type;
 	private String eq_name;
@@ -36,6 +37,8 @@ public abstract class Equipment {
 			return 2;
 		case IRON_SWORD:			
 			return 3;
+		case IRON_SHIELD:			
+			return 4;
 		default:		
 			return 0;
 		}
