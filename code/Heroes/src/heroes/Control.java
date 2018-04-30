@@ -94,23 +94,7 @@ class Control implements IClick{
 		if(c.sent_by!=gs.get_current_hero().get_player_id()){
 			return;
 		}
-		if(gs.if_has_attackable()){
-			if(gs.check_if_attackable_and_attack(c.x,c.y)){
-				//System.out.println("ATTACKABLE");
-				gs.step_to_next_hero();
-			}
-			else{
-				//System.out.println("NOT ATTACKABLE");				
-			}
-		}
-		else{
-			if(gs.check_if_stepable_and_step(c.x,c.y)){
-				gs.roll();
-				if(!gs.if_has_attackable()){
-					gs.step_to_next_hero();
-				}
-			}
-		}
+		gs.interact(c.x, c.y);
 		refresh_board();	
 	}
 	

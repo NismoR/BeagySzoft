@@ -358,6 +358,26 @@ public class GameState implements Serializable{
 		return should_refresh;
 	}
 	
+	public void interact(int x, int y){
+		if(if_has_attackable()){
+			if(check_if_attackable_and_attack(x,y)){
+				//System.out.println("ATTACKABLE");
+				step_to_next_hero();
+			}
+			else{
+				//System.out.println("NOT ATTACKABLE");				
+			}
+		}
+		else{
+			if(check_if_stepable_and_step(x,y)){
+				roll();
+				if(!if_has_attackable()){
+					step_to_next_hero();
+				}
+			}
+		}
+	}
+	
 	public void copy(GameState gs){
 		time = gs.time;
 		turn = gs.turn;
