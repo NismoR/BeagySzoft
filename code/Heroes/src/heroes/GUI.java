@@ -31,10 +31,11 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
-	private int WINDOW_WIDTH = 950, WINDOW_HEIGHT = 650;
 	public static int FIELD_SIZE = 60;
-	public static int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
 	private int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
+	public static int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
+	private int BOARD_WIDTH = TABLE_SIZE_X*FIELD_SIZE, BOARD_HEIGHT = TABLE_SIZE_Y*FIELD_SIZE;
+	private int WINDOW_WIDTH = 4*TABLE_OFFSET_X+BOARD_WIDTH, WINDOW_HEIGHT = 4*TABLE_OFFSET_X+BOARD_HEIGHT;
 	
 	private GameState gui_gs;
 
@@ -90,7 +91,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		setVisible(true);
 
 		gamePanel = new GamePanel();
-		gamePanel.setBounds(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+		gamePanel.setBounds(TABLE_OFFSET_X, TABLE_OFFSET_Y, BOARD_WIDTH, BOARD_HEIGHT);
 		//gamePanel.setBorder(BorderFactory.createTitledBorder("Game"));
 		add(gamePanel);
 	}
@@ -100,11 +101,11 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	}
 	
 	private int get_x_offset(int x){
-		return TABLE_OFFSET_X + x*FIELD_SIZE;
+		return x*FIELD_SIZE;
 	}
 	
 	private int get_y_offset(int y){
-		return TABLE_OFFSET_Y + y*FIELD_SIZE;
+		return y*FIELD_SIZE;
 	}
 	
 
@@ -365,7 +366,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		if(y <0 || y>= TABLE_SIZE_Y){
 			return;
 		}
-		//System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
+		System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
 		
 		ctrl.onNewClick(new Click(x, y, gui_gs.get_current_hero().get_player_id()));
 	}
