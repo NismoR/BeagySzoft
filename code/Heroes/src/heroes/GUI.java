@@ -23,6 +23,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import heroes.Hero.HeroType;
+import heroes.equipments.Equipment;
+
 /**
  *
  * @author ABence
@@ -38,6 +41,10 @@ public class GUI extends JFrame implements IGameState{
 	private int WINDOW_WIDTH = 4*TABLE_OFFSET_X+BOARD_WIDTH, WINDOW_HEIGHT = 4*TABLE_OFFSET_X+BOARD_HEIGHT;
 	
 	private GameState gui_gs;
+	
+
+	private int WARRIOR_DRAW_RADIUS = 30;
+	private int ARCHER_DRAW_MARGIN = 15;
 
 	private static Color col_bg = new Color(0xF5F2DC);
 	private static Color col_field_bg = new Color(0x7A797A);
@@ -243,6 +250,39 @@ public class GUI extends JFrame implements IGameState{
 				break;
 			}
 		}
+		private void drawCenteredCircle(Graphics g, int x, int y, int r) {
+			  x = x-(r/2);
+			  y = y-(r/2);
+			  g.fillOval(x,y,r,r);
+			}
+		
+		private void draw_hero(Graphics g, HeroType h, int off_x, int off_y){
+			switch (h) {
+			case WARRIOR:
+				drawCenteredCircle(g,off_x+GUI.FIELD_SIZE/2, off_y+GUI.FIELD_SIZE/2, 
+						WARRIOR_DRAW_RADIUS);
+				break;
+			case ARCHER:
+				Polygon p = new Polygon();		
+				p.addPoint(off_x+GUI.FIELD_SIZE/2, off_y+ARCHER_DRAW_MARGIN);
+				p.addPoint(off_x+ARCHER_DRAW_MARGIN, off_y+GUI.FIELD_SIZE-ARCHER_DRAW_MARGIN);
+				p.addPoint(off_x+GUI.FIELD_SIZE-ARCHER_DRAW_MARGIN, off_y+GUI.FIELD_SIZE-ARCHER_DRAW_MARGIN);	    
+			    g.fillPolygon(p);
+				break;
+
+			default:
+				break;
+			}
+		}
+		
+		protected void draw_eq(Graphics g, Equipment e, int off_x, int off_y){
+			int num = 0;
+			if(e!=null){
+				num = e.get_type_in_int();
+			}
+			g.setColor(Color.black);
+			g.drawString(Integer.toString(num), off_x+GUI.FIELD_SIZE/2-5, off_y+GUI.FIELD_SIZE/2+7);
+		}
 		
 		private void draw_heroes(Graphics g){
 			for(Hero h : gui_gs.heroes){
@@ -277,7 +317,9 @@ public class GUI extends JFrame implements IGameState{
 						break;
 					}
 					draw_defense(g,h);
-					h.draw(g, off_x,  off_y);
+					//h.draw(g, off_x,  off_y);
+					draw_hero(g,h.get_type(),off_x,off_y);
+					draw_eq(g,h.get_last_rolled_equip(),off_x,off_y);
 				}
 			}
 		}
