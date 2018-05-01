@@ -153,6 +153,9 @@ class Control implements IClick{
 		if(clicks_to_process.isEmpty()){
 			return;
 		}
+
+		if(clicks_to_process.size()!=1)
+			System.out.println("NR_OF_CLICKS AT PROCESS "+clicks_to_process.size());
 		Click c = clicks_to_process.remove(0);
 		if(c.playerID!=gs.get_current_hero().get_player_id()){
 			return;
@@ -162,7 +165,11 @@ class Control implements IClick{
 	}
 	
 	public void check_for_periodic_change(){
+		if(clicks_to_process.size()>1)
+			System.out.println("NR_OF_CLICKS AT BEFORE REFRESH "+clicks_to_process.size());
 		if(gs.check_and_refresh_if_dying()){
+			if(clicks_to_process.size()>1)
+				System.out.println("NR_OF_CLICKS AT REFRESH "+clicks_to_process.size());
 			refresh_board();
 		}
 	}
@@ -177,6 +184,8 @@ class Control implements IClick{
 		if (future == null || future.isCancelled())
 			System.out.println("SCHEDULER NOT RUNNING !!!!! ");	
 			
-		clicks_to_process.add(click);				
+		clicks_to_process.add(click);
+		if(clicks_to_process.size()!=1)
+			System.out.println("NR_OF_CLICKS "+clicks_to_process.size());					
 	}
 }
