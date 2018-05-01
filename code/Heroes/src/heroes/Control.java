@@ -151,7 +151,14 @@ class Control implements IClick{
 		Runnable periodicTask = new Runnable() {
 			public void run() {
 				//System.out.println("Periodic task started");	
-				mainProcess();
+				try {
+					mainProcess();					
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println("Error in executing periodicTask");
+					e.printStackTrace();
+					throw new RuntimeException(e);
+				}
 			}
 		};
 
