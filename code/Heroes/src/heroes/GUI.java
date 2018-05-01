@@ -249,6 +249,9 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					if(h.get_attackable()){
 						g.setColor(Color.red);	
 					}
+					if(!gui_gs.extra_steps.isEmpty() && h==gui_gs.get_current_hero()){
+						g.setColor(col_extra_step);						
+					}
 					if(gui_gs.wanna_step!=null){
 						if(h.get_x()==gui_gs.wanna_step.x){
 							if(h.get_y()==gui_gs.wanna_step.y){
