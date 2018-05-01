@@ -48,7 +48,7 @@ class Control implements IClick{
 		gs = new GameState();
 		clicks_to_process = new ArrayList<Click>();		
 		//Adding Warriors
-		/*for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			Warrior w = null;
 			if(i%2==0){
 				w = new Warrior(PlayerID.CLIENT);				
@@ -59,73 +59,79 @@ class Control implements IClick{
 
 			for (int j = 0; j < 6; j++) {
 				Random r = new Random();
-				int n = r.nextInt(Equipment.num_of_eq);
-				EqType e = EqType.values()[n];
-				switch (e) {
-				case WOODEN_SHIELD:
+				int n = r.nextInt(11);
+				switch (n) {
+				case 1:
 					w.add_equip(new WoodenShield());
 					break;
-				case WOODEN_SWORD:
+				case 2:
 					w.add_equip(new WoodenSword());
 					break;
-				case IRON_SHIELD:
+				case 3:
 					w.add_equip(new IronShield());
 					break;
-				case IRON_SWORD:
+				case 4:
 					w.add_equip(new IronSword());
 					break;
-				case BLADE_OF_RES:
+				case 5:
 					w.add_equip(new BladeOfRes());
 					break;
-				case SWORD_OF_RES:
+				case 6:
 					w.add_equip(new SwordOfRes());
 					break;
-				case WOODEN_SWORD_OF_FURY:
+				case 7:
 					w.add_equip(new WoodenSwordOfFury());
 					break;
-				case IRON_SWORD_OF_FURY:
+				case 8:
 					w.add_equip(new IronSwordOfFury());
 					break;
-				case ELVEN_DAGGER:
+				case 9:
 					w.add_equip(new ElvenDagger());
 					break;
-				case ELVEN_BLADE:
+				case 10:
 					w.add_equip(new ElvenBlade());
 					break;
-
 				default:
 					break;
-				}
-				
+				}				
 			}
 			gs.add_hero(w);
-		}*/
+		}
 
-		Warrior w = new Warrior(PlayerID.CLIENT);	
-		w.add_equip(new ElvenBlade());
-		w.add_equip(new ElvenBlade());
-		w.add_equip(new ElvenBlade());
-		w.add_equip(new ElvenDagger());
-		w.add_equip(new ElvenDagger());
-		w.add_equip(new ElvenDagger());
-		gs.add_hero(w);
-		
-		Archer a = new Archer(PlayerID.SERVER);	
-		a.add_equip(new WoodenShield());
-		a.add_equip(new WoodenSword());
-		a.add_equip(new ElvenBlade());		//Just to test if it rejects it
-		a.add_equip(new ElvenArmor());
-		a.add_equip(new MythrillArmor());
-		a.add_equip(new WoodenShield());
-		a.add_equip(new WoodenShield());
-		gs.add_hero(a);
+		for (int i = 0; i < 2; i++) {
+			Archer a = null;
+			if(i%2==0){
+				a = new Archer(PlayerID.SERVER);					
+			}
+			else{
+				a = new Archer(PlayerID.CLIENT);	
+			}
 
-		a = new Archer(PlayerID.SERVER);
-		a.add_equip(new ElvenBoots());
-		a.add_equip(new ElvenBoots());
-		a.add_equip(new ElvenBoots());
-		a.add_equip(new ElvenBoots());
-		gs.add_hero(a);
+			for (int j = 0; j < 6; j++) {
+				Random r = new Random();
+				int n = r.nextInt(8);
+				switch (n) {
+				case 1:
+					a.add_equip(new WoodenShield());
+					break;
+				case 2:
+					a.add_equip(new WoodenSword());
+					break;
+				case 3:
+					a.add_equip(new ElvenArmor());
+					break;
+				case 4:
+					a.add_equip(new MythrillArmor());
+					break;
+				case 5:
+					a.add_equip(new ElvenBoots());
+					break;
+				default:
+					break;
+				}				
+			}
+			gs.add_hero(a);
+		}
 		
 		generateBoard();		
 	}
