@@ -45,7 +45,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	
 	public int TABLE_OFFSET_X = FIELD_SIZE/2, TABLE_OFFSET_Y = FIELD_SIZE/2;
 	private int BOARD_WIDTH = TABLE_SIZE_X*FIELD_SIZE, BOARD_HEIGHT = TABLE_SIZE_Y*FIELD_SIZE;
-	private int WINDOW_WIDTH = 2*TABLE_OFFSET_X+BOARD_WIDTH+8*2, WINDOW_HEIGHT = 2*TABLE_OFFSET_X+BOARD_HEIGHT+54+8;
+	
+	private int WINDOW_WIDTH = 2*TABLE_OFFSET_X+BOARD_WIDTH+WINDOW_BORDER_OFFSET*2;
+	private int WINDOW_HEIGHT = 2*TABLE_OFFSET_X+BOARD_HEIGHT+MENUBAR_OFFSET+WINDOW_BORDER_OFFSET;
 	
 	private GameState gui_gs;
 	
@@ -66,7 +68,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	public static int hero_death_decr = 11;
 	
 	private GamePanel gamePanel;
-
+	
 	GUI(Control c) {
 		super("Heroes");
 		
