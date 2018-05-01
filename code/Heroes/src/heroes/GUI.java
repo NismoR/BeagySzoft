@@ -45,6 +45,8 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	private static Color col_hero_server = new Color(0x009494);
 	private static Color col_start_client = new Color(0xFF5729);	
 	private static Color col_start_server = new Color(0x009494);
+	private static Color col_extra_step = new Color(0x324D5C);
+	private static Color col_wanna_step = new Color(0x46B29D);
 	
 	public static int hero_death_decr = 11;
 	
@@ -170,7 +172,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			for(Click c:gui_gs.extra_steps){
 				int off_x = get_x_offset(c.x);
 				int off_y = get_y_offset(c.y);
-				g.setColor(Color.blue.brighter());
+				g.setColor(col_extra_step);
 				g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
 				
 			}	
@@ -181,7 +183,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			if(st!=null){
 				int off_x = get_x_offset(st.x);
 				int off_y = get_y_offset(st.y);
-				g.setColor(Color.blue.darker());
+				g.setColor(col_wanna_step);
 				g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);					
 			}
 		}
@@ -250,7 +252,7 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 					if(gui_gs.wanna_step!=null){
 						if(h.get_x()==gui_gs.wanna_step.x){
 							if(h.get_y()==gui_gs.wanna_step.y){
-								g.setColor(Color.blue.darker());								
+								g.setColor(col_wanna_step);								
 							}
 						}
 					}
