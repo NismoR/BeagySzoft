@@ -249,11 +249,12 @@ public class GameState implements Serializable{
 			if(h.get_player_id()!=own_id){
 				int d_x=Math.abs(own.get_x()-h.get_x());
 				int d_y=Math.abs(own.get_y()-h.get_y());
-				if(d_x<=a.get_maxR() && d_y<=a.get_maxR()){
-					if(d_x>=a.get_minR() && d_y>=a.get_minR()){
-						h.set_as_attackable();	
-						ret = true;					
-					}				
+				int r_2=d_x*d_x+d_y*d_y;
+				int max_2=a.get_maxR()*a.get_maxR();
+				int min_2=a.get_minR()*a.get_minR();				
+				if(r_2>=min_2 && r_2<=max_2){
+					h.set_as_attackable();	
+					ret = true;						
 				}
 			}
 		}
