@@ -20,6 +20,8 @@ import heroes.equipments.Equipment.EqType;
 import heroes.equipments.WoodenShield;
 import heroes.equipments.WoodenSword;
 import heroes.equipments.archer.ElvenArmor;
+import heroes.equipments.archer.ElvenBoots;
+import heroes.equipments.archer.MythrillArmor;
 import heroes.equipments.warrior.BladeOfRes;
 import heroes.equipments.warrior.ElvenBlade;
 import heroes.equipments.warrior.ElvenDagger;
@@ -113,9 +115,16 @@ class Control implements IClick{
 		a.add_equip(new WoodenSword());
 		a.add_equip(new ElvenBlade());		//Just to test if it rejects it
 		a.add_equip(new ElvenArmor());
-		a.add_equip(new ElvenArmor());
+		a.add_equip(new MythrillArmor());
 		a.add_equip(new WoodenShield());
 		a.add_equip(new WoodenShield());
+		gs.add_hero(a);
+
+		a = new Archer(PlayerID.SERVER);
+		a.add_equip(new ElvenBoots());
+		a.add_equip(new ElvenBoots());
+		a.add_equip(new ElvenBoots());
+		a.add_equip(new ElvenBoots());
 		gs.add_hero(a);
 		
 		generateBoard();		
