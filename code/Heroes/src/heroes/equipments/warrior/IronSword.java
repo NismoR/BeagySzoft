@@ -1,16 +1,13 @@
 package heroes.equipments.warrior;
 
-import heroes.Hero.HeroType;
 import heroes.equipments.AttackAbility;
 import heroes.equipments.DefenseAbility;
-import heroes.equipments.Equipment;
 
-public class IronSword extends Equipment{
+public class IronSword extends WarriorEquipment{
 	private static AttackAbility attack=new AttackAbility(2, 0, 1,false);
 	private static DefenseAbility defense=null;
 
 	public IronSword() {
-		super(EqType.IRON_SWORD, "IronSword", 2, HeroType.WARRIOR,attack,defense);
-		// TODO Auto-generated constructor stub
+		super(EqType.IRON_SWORD, "IronSword", 2,attack,defense);
 	}
 }
