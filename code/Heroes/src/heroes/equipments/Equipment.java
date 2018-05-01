@@ -15,7 +15,8 @@ public abstract class Equipment {
 		IRON_SWORD_OF_FURY		(8),
 		ELVEN_DAGGER			(9),
 		ELVEN_BLADE				(10),
-		ELVEN_ARMOR				(11)
+		ELVEN_ARMOR				(11),
+		MYTHRILL_ARMOR			(12)
 		;
 		
 		public final int id;
