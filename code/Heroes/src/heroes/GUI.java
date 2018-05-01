@@ -43,11 +43,11 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	private static int MENUBAR_OFFSET = 54;
 	private static int WINDOW_BORDER_OFFSET = 8;
 	
-	public int TABLE_OFFSET_X = FIELD_SIZE/2, TABLE_OFFSET_Y = FIELD_SIZE/2;
+	public int BOARD_OFFSET = FIELD_SIZE/2;
 	private int BOARD_WIDTH = TABLE_SIZE_X*FIELD_SIZE, BOARD_HEIGHT = TABLE_SIZE_Y*FIELD_SIZE;
 	
-	private int WINDOW_WIDTH = 2*TABLE_OFFSET_X+BOARD_WIDTH+WINDOW_BORDER_OFFSET*2;
-	private int WINDOW_HEIGHT = 2*TABLE_OFFSET_X+BOARD_HEIGHT+MENUBAR_OFFSET+WINDOW_BORDER_OFFSET;
+	private int WINDOW_WIDTH = 2*BOARD_OFFSET+BOARD_WIDTH+WINDOW_BORDER_OFFSET*2;
+	private int WINDOW_HEIGHT = 2*BOARD_OFFSET+BOARD_HEIGHT+MENUBAR_OFFSET+WINDOW_BORDER_OFFSET;
 	
 	private GameState gui_gs;
 	
@@ -106,10 +106,14 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		setVisible(true);
 
 		gamePanel = new GamePanel();
-		gamePanel.setBounds(TABLE_OFFSET_X, TABLE_OFFSET_Y, BOARD_WIDTH, BOARD_HEIGHT);
+		update_game_panel_bounds();
 		//gamePanel.setBorder(BorderFactory.createTitledBorder("Game"));
 		add(gamePanel);
 		this.addComponentListener(this);
+	}
+	
+	private void update_game_panel_bounds(){
+		gamePanel.setBounds(BOARD_OFFSET, BOARD_OFFSET, BOARD_WIDTH, BOARD_HEIGHT);		
 	}
 	
 	private Color get_col_with_alpha(Color col, int alpha){
@@ -420,6 +424,22 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	}
 
 
+	private void calculate_window_sizes(){
+		int field_x =  (getWidth()-2*WINDOW_BORDER_OFFSET)/(TABLE_SIZE_X+1);
+		int field_y =  (getHeight()-WINDOW_BORDER_OFFSET-MENUBAR_OFFSET)/(TABLE_SIZE_Y+1);
+		//System.out.println("CALC FIELD - X:" + field_x + " Y:" + field_y);
+		if(field_x<field_y){
+			FIELD_SIZE=field_x;
+		}
+		else{
+			FIELD_SIZE=field_y;			
+		}
+		BOARD_OFFSET=FIELD_SIZE/2;
+		BOARD_HEIGHT=FIELD_SIZE*TABLE_SIZE_Y;
+		BOARD_WIDTH=FIELD_SIZE*TABLE_SIZE_X;
+		WINDOW_HEIGHT=getHeight();
+		WINDOW_WIDTH=getWidth();
+	}
 
 	@Override
 	public void onNewGameState(GameState gs) {
@@ -443,17 +463,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	@Override
 	public void componentResized(ComponentEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("RESIZED WINDOW - X:" + getWidth() + " Y:" + getHeight());
-		int field_x =  (getWidth()-2*WINDOW_BORDER_OFFSET)/(TABLE_SIZE_X+1);
-		int field_y =  (getHeight()-WINDOW_BORDER_OFFSET-MENUBAR_OFFSET)/(TABLE_SIZE_Y+1);
-		System.out.println("CALC FIELD - X:" + field_x + " Y:" + field_y);
-		if(field_x<field_y){
-			FIELD_SIZE=field_x;
-		}
-		else{
-			FIELD_SIZE=field_y;			
-		}
-		gamePanel.setBounds(FIELD_SIZE/2, FIELD_SIZE/2, FIELD_SIZE*TABLE_SIZE_X, FIELD_SIZE*TABLE_SIZE_Y);
+		//System.out.println("RESIZED WINDOW - X:" + getWidth() + " Y:" + getHeight());
+		calculate_window_sizes();
+		update_game_panel_bounds();
 	}
 
 	@Override
