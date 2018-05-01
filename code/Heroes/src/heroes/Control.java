@@ -19,6 +19,7 @@ import heroes.equipments.Equipment;
 import heroes.equipments.Equipment.EqType;
 import heroes.equipments.WoodenShield;
 import heroes.equipments.WoodenSword;
+import heroes.equipments.archer.ElvenArmor;
 import heroes.equipments.warrior.BladeOfRes;
 import heroes.equipments.warrior.ElvenBlade;
 import heroes.equipments.warrior.ElvenDagger;
@@ -45,7 +46,7 @@ class Control implements IClick{
 		gs = new GameState();
 		clicks_to_process = new ArrayList<Click>();		
 		//Adding Warriors
-		for (int i = 0; i < 4; i++) {
+		/*for (int i = 0; i < 4; i++) {
 			Warrior w = null;
 			if(i%2==0){
 				w = new Warrior(PlayerID.CLIENT);				
@@ -96,7 +97,7 @@ class Control implements IClick{
 				
 			}
 			gs.add_hero(w);
-		}
+		}*/
 
 		Warrior w = new Warrior(PlayerID.CLIENT);	
 		w.add_equip(new ElvenBlade());
@@ -111,6 +112,10 @@ class Control implements IClick{
 		a.add_equip(new WoodenShield());
 		a.add_equip(new WoodenSword());
 		a.add_equip(new ElvenBlade());		//Just to test if it rejects it
+		a.add_equip(new ElvenArmor());
+		a.add_equip(new ElvenArmor());
+		a.add_equip(new WoodenShield());
+		a.add_equip(new WoodenShield());
 		gs.add_hero(a);
 		
 		generateBoard();		
