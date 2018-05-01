@@ -174,6 +174,9 @@ class Control implements IClick{
 
 	@Override
 	public void onNewClick(Click click) {
+		if (future == null || future.isCancelled())
+			System.out.println("SCHEDULER NOT RUNNING !!!!! ");	
+			
 		clicks_to_process.add(click);				
 	}
 }
