@@ -18,6 +18,7 @@ public abstract class Equipment {
 		ELVEN_ARMOR				(11),
 		MYTHRILL_ARMOR			(12),
 		ELVEN_BOOTS				(13),
+		SHORT_BOW				(14),
 		;
 		
 		public final int id;
