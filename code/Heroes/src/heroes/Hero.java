@@ -34,6 +34,8 @@ public abstract class Hero {
 	private int x=-1,y=-1;
 	private int last_rolled_id=-1;
 	private int current_defense=0;
+	private int extra_def=0;
+	private int extra_def_roll=0;
 	
 	private int health = 255;
 	private boolean dying = false;
@@ -86,6 +88,13 @@ public abstract class Hero {
 	}
 	
 	public int get_current_defense(){
+		if(extra_def_roll>0){
+			int def = current_defense+extra_def;
+			if(def>2){
+				def=2;
+			}
+			return def;
+		}
 		return current_defense;
 	}
 	
@@ -132,6 +141,12 @@ public abstract class Hero {
 		Random r = new Random();
 		last_rolled_id = r.nextInt(MAX_EQUIPMENT_NR);
 		current_defense = 0;
+		if(extra_def_roll>0){
+			extra_def_roll--;
+			if(extra_def_roll<1){
+				extra_def=0;
+			}
+		}
 		if(last_rolled_id<0 || last_rolled_id>=equips.size()){
 			return false;
 		}
@@ -139,7 +154,13 @@ public abstract class Hero {
 		if(e!=null){
 			DefenseAbility def = e.get_defense();
 			if(def!=null){
-				current_defense=def.get_strength();
+				if(def.get_nr_of_rolls()==0){
+					current_defense=def.get_strength();
+				}
+				else{
+					extra_def=def.get_strength();
+					extra_def_roll=def.get_nr_of_rolls();
+				}
 			}
 		}
 		return true;
