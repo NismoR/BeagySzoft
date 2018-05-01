@@ -42,6 +42,7 @@ public class GameState implements Serializable{
 	public List<Click> extra_steps;
 	
 	public boolean copy_lock_open=true;
+	public boolean roll_again=false;
 	
 	private static float perc_if_valid_field = 0.9f;
 	
@@ -298,18 +299,24 @@ public class GameState implements Serializable{
 	
 	int roll(){
 		extra_steps.clear();
+		roll_again=false;
 		Hero h = get_current_hero();
 		boolean eq_valid=h.roll();
 		if(!eq_valid){
 			return 0;
 		}
 		Equipment e = h.get_last_rolled_equip();
-		if(!e.get_move_extra()){
-			attack_process();
+		if(e.get_roll_extra()){
+			roll_again=true;
 		}
 		else{
-			set_extra_steps();
-		}
+			if(!e.get_move_extra()){
+				attack_process();
+			}
+			else{
+				set_extra_steps();
+			}
+			}
 		return e.get_type_in_int();
 	}
 	
@@ -433,7 +440,9 @@ public class GameState implements Serializable{
 					roll();
 					if(extra_steps.isEmpty()){
 						if(!if_has_attackable()){
-							step_to_next_alive_hero();
+							if(!roll_again){
+								step_to_next_alive_hero();
+							}
 						}					
 					}
 				}
@@ -457,6 +466,7 @@ public class GameState implements Serializable{
 			start_pos = gs.start_pos;
 			copy_lock_open = gs.copy_lock_open;
 			extra_steps = gs.extra_steps;
+			roll_again = gs.roll_again;
 			for(int i = 0; i < board_size; i++){	//TODO array copy
 				for(int j = 0; j < board_size; j++){
 					valid_field[i][j] = gs.valid_field[i][j];
