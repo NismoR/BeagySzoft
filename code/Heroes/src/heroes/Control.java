@@ -21,7 +21,9 @@ import heroes.equipments.WoodenShield;
 import heroes.equipments.WoodenSword;
 import heroes.equipments.archer.ElvenArmor;
 import heroes.equipments.archer.ElvenBoots;
+import heroes.equipments.archer.LongBow;
 import heroes.equipments.archer.MythrillArmor;
+import heroes.equipments.archer.ShortBow;
 import heroes.equipments.warrior.BladeOfRes;
 import heroes.equipments.warrior.ElvenBlade;
 import heroes.equipments.warrior.ElvenDagger;
@@ -125,6 +127,12 @@ class Control implements IClick{
 					break;
 				case 5:
 					a.add_equip(new ElvenBoots());
+					break;
+				case 6:
+					a.add_equip(new ShortBow());
+					break;
+				case 7:
+					a.add_equip(new LongBow());
 					break;
 				default:
 					break;
