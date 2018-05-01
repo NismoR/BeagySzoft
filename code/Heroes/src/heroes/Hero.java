@@ -93,8 +93,12 @@ public abstract class Hero {
 		if(equips.size()>=MAX_EQUIPMENT_NR){
 			return false;
 		}
-		equips.add(e);
-		return true;
+		HeroType type_for = e.get_available_for();
+		if(type_for==null || type_for==type){
+			equips.add(e);
+			return true;
+		}
+		return false;
 	}
 	
 	public Equipment get_equip(int index){
