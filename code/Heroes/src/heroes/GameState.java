@@ -41,6 +41,8 @@ public class GameState implements Serializable{
 	public List<Click> start_pos;
 	public List<Click> extra_steps;
 	
+	public boolean copy_lock_open=true;
+	
 	private static float perc_if_valid_field = 0.9f;
 	
 	public GameState(){
@@ -406,6 +408,7 @@ public class GameState implements Serializable{
 	}
 	
 	public void interact(int x, int y){
+		copy_lock_open=false;
 		if(if_has_attackable()){
 			if(check_if_attackable_and_attack(x,y)){
 				//System.out.println("ATTACKABLE");
@@ -433,20 +436,22 @@ public class GameState implements Serializable{
 				}
 			}
 		}
+		copy_lock_open=true;
 	}
 	
 	public void copy(GameState gs){
-		time = gs.time;
-		turn = gs.turn;
-		heroes = new ArrayList<Hero>(gs.heroes);
-		current_hero_id = gs.current_hero_id;
-		wanna_step = gs.wanna_step;
-		start_pos = gs.start_pos;
-		extra_steps = gs.extra_steps;
-		for(int i = 0; i < board_size; i++){
-			for(int j = 0; j < board_size; j++){
-				valid_field[i][j] = gs.valid_field[i][j];
+			time = gs.time;
+			turn = gs.turn;
+			heroes = new ArrayList<Hero>(gs.heroes);
+			current_hero_id = gs.current_hero_id;
+			wanna_step = gs.wanna_step;
+			start_pos = gs.start_pos;
+			copy_lock_open = gs.copy_lock_open;
+			extra_steps = gs.extra_steps;
+			for(int i = 0; i < board_size; i++){	//TODO array copy
+				for(int j = 0; j < board_size; j++){
+					valid_field[i][j] = gs.valid_field[i][j];
+				}
 			}
-		}
 	}
 }
