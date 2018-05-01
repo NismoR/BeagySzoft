@@ -107,6 +107,12 @@ class Control implements IClick{
 		w.add_equip(new ElvenDagger());
 		gs.add_hero(w);
 		
+		Archer a = new Archer(PlayerID.SERVER);	
+		a.add_equip(new WoodenShield());
+		a.add_equip(new WoodenSword());
+		a.add_equip(new ElvenBlade());		//Just to test if it rejects it
+		gs.add_hero(a);
+		
 		generateBoard();		
 	}
 	
