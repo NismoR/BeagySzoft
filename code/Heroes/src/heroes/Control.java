@@ -184,6 +184,7 @@ class Control implements IClick{
 		if (future == null || future.isCancelled())
 			System.out.println("SCHEDULER NOT RUNNING !!!!! ");	
 			
+		clicks_to_process.clear();
 		clicks_to_process.add(click);
 		if(clicks_to_process.size()!=1)
 			System.out.println("NR_OF_CLICKS "+clicks_to_process.size());					
