@@ -41,8 +41,6 @@ public class GameState implements Serializable{
 	public List<Click> start_pos;
 	public List<Click> extra_steps;
 	
-	public boolean should_step_again=false;
-	
 	private static float perc_if_valid_field = 0.9f;
 	
 	public GameState(){
@@ -288,7 +286,6 @@ public class GameState implements Serializable{
 	}
 	
 	int roll(){
-		should_step_again=false;
 		extra_steps.clear();
 		Hero h = get_current_hero();
 		boolean eq_valid=h.roll();
@@ -300,7 +297,6 @@ public class GameState implements Serializable{
 			attack_process();
 		}
 		else{
-			should_step_again=true;
 			set_extra_steps();
 		}
 		return e.get_type_in_int();
@@ -421,16 +417,15 @@ public class GameState implements Serializable{
 		}
 		else{
 			if(check_if_stepable_and_step(x,y)){
-				if(!should_step_again){
+				if(extra_steps.isEmpty()){
 					roll();
-					if(!should_step_again){
+					if(extra_steps.isEmpty()){
 						if(!if_has_attackable()){
 							step_to_next_alive_hero();
 						}					
 					}
 				}
 				else{
-					should_step_again=false;
 					extra_steps.clear();
 					if(!attack_process()){
 						step_to_next_alive_hero();						
@@ -447,7 +442,6 @@ public class GameState implements Serializable{
 		current_hero_id = gs.current_hero_id;
 		wanna_step = gs.wanna_step;
 		start_pos = gs.start_pos;
-		should_step_again = gs.should_step_again;
 		extra_steps = gs.extra_steps;
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
