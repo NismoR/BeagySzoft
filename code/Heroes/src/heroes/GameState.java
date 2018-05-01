@@ -99,6 +99,9 @@ public class GameState implements Serializable{
 	}
 	
 	private boolean is_free_for_starting(int x, int y){
+		if(x<0 || y<0 || x>board_size-1 || y>board_size-1){
+			return false;
+		}
 		if(valid_field[x][y]){
 			for(Click c:start_pos){
 				if(c.x==x && c.y==y){
@@ -207,6 +210,9 @@ public class GameState implements Serializable{
 	}
 
 	boolean is_field_empty(int x, int y){
+		if(x<0 || y<0 || x>board_size-1 || y>board_size-1){
+			return false;
+		}
 		if(!valid_field[x][y]){
 			return false;
 		}
