@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import java.util.Random;
 
 import heroes.Hero.PlayerID;
+import heroes.equipments.AttackAbility;
 import heroes.equipments.Equipment;
 import heroes.equipments.Equipment.EqType;
 
@@ -240,13 +241,19 @@ public class GameState implements Serializable{
 	boolean set_attackables(Hero own){
 		boolean ret = false;
 		PlayerID own_id = own.get_player_id();
+		AttackAbility a = own.get_last_rolled_equip().get_attack();
+		if(a==null){
+			return ret;
+		}
 		for(Hero h:heroes){
 			if(h.get_player_id()!=own_id){
-				if(Math.abs(own.get_x()-h.get_x())<2){
-					if(Math.abs(own.get_y()-h.get_y())<2){
+				int d_x=Math.abs(own.get_x()-h.get_x());
+				int d_y=Math.abs(own.get_y()-h.get_y());
+				if(d_x<=a.get_maxR() && d_y<=a.get_maxR()){
+					if(d_x>=a.get_minR() && d_y>=a.get_minR()){
 						h.set_as_attackable();	
-						ret = true;
-					}
+						ret = true;					
+					}				
 				}
 			}
 		}
