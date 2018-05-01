@@ -165,6 +165,16 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 				}
 			}
 		}
+		
+		private void draw_all_steppable(Graphics g) {
+			for(Click c:gui_gs.extra_steps){
+				int off_x = get_x_offset(c.x);
+				int off_y = get_y_offset(c.y);
+				g.setColor(Color.blue.brighter());
+				g.fillRect(off_x, off_y, FIELD_SIZE, FIELD_SIZE);
+				
+			}	
+		}
 
 		private void draw_steppable(Graphics g) {
 			Click st = gui_gs.wanna_step;
@@ -282,12 +292,13 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 			g.setFont(new Font("Times New Roman", Font.BOLD, 24));
 			draw_valid_fields(g);
 			draw_starting_positions(g);
+			draw_all_steppable(g);
 			draw_steppable(g);
 			draw_heroes(g);
 			draw_current_hero_mark(g);
 			if(gui_gs.should_step_again){
 				g.setColor(Color.black);
-				g.fillRect(get_x_offset(8), get_y_offset(8), 3*FIELD_SIZE, 3*FIELD_SIZE);				
+				g.fillRect(get_x_offset(8), get_y_offset(8), 3*FIELD_SIZE, 3*FIELD_SIZE);
 			}
 			Instant end = Instant.now();
 			Duration diff = Duration.between(start, end);

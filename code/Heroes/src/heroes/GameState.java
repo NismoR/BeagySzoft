@@ -39,6 +39,7 @@ public class GameState implements Serializable{
 	
 	public Click wanna_step = null;		//Just for storing desired coordinates to step
 	public List<Click> start_pos;
+	public List<Click> extra_steps;
 	
 	public boolean should_step_again=false;
 	
@@ -47,6 +48,7 @@ public class GameState implements Serializable{
 	public GameState(){
 		heroes = new ArrayList<Hero>();
 		start_pos = new ArrayList<Click>();
+		extra_steps = new ArrayList<Click>();
 		time = 0;
 		turn = GameTurn.NOT_STARTED;
 		valid_field = new boolean[board_size][board_size];
@@ -258,6 +260,19 @@ public class GameState implements Serializable{
 		}		
 	}
 	
+	void set_extra_steps(){
+		Hero h = get_current_hero();
+		int x=h.get_x();
+		int y=h.get_y();
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				if(is_field_empty(x+i, y+j)){
+					extra_steps.add(new Click(x+i, y+j, null));
+				}
+			}
+		}
+	}
+	
 	boolean attack_process(){
 		Hero h = get_current_hero();
 		Equipment e = h.get_last_rolled_equip();
@@ -274,6 +289,7 @@ public class GameState implements Serializable{
 	
 	int roll(){
 		should_step_again=false;
+		extra_steps.clear();
 		Hero h = get_current_hero();
 		boolean eq_valid=h.roll();
 		if(!eq_valid){
@@ -285,6 +301,7 @@ public class GameState implements Serializable{
 		}
 		else{
 			should_step_again=true;
+			set_extra_steps();
 		}
 		return e.get_type_in_int();
 	}
@@ -414,6 +431,7 @@ public class GameState implements Serializable{
 				}
 				else{
 					should_step_again=false;
+					extra_steps.clear();
 					if(!attack_process()){
 						step_to_next_alive_hero();						
 					}
@@ -430,6 +448,7 @@ public class GameState implements Serializable{
 		wanna_step = gs.wanna_step;
 		start_pos = gs.start_pos;
 		should_step_again = gs.should_step_again;
+		extra_steps = gs.extra_steps;
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
 				valid_field[i][j] = gs.valid_field[i][j];
