@@ -34,7 +34,7 @@ public class GUI extends JFrame implements IGameState{
 
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
-	public static int FIELD_SIZE = 60;
+	public int FIELD_SIZE = 60;
 	private int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
 	public static int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
 	private int BOARD_WIDTH = TABLE_SIZE_X*FIELD_SIZE, BOARD_HEIGHT = TABLE_SIZE_Y*FIELD_SIZE;
@@ -236,15 +236,15 @@ public class GUI extends JFrame implements IGameState{
 		protected void draw_defense(Graphics g, Hero h){
 			int off_x = get_x_offset(h.get_x());
 			int off_y = get_y_offset(h.get_y());			
-			int size = GUI.FIELD_SIZE/4;
+			int size = FIELD_SIZE/4;
 			switch (h.get_current_defense()) {
 			case 2:
-				draw_small_triangle(g, off_x+GUI.FIELD_SIZE, off_y, size, 1);
-				draw_small_triangle(g, off_x, off_y+GUI.FIELD_SIZE, size, 3);
+				draw_small_triangle(g, off_x+FIELD_SIZE, off_y, size, 1);
+				draw_small_triangle(g, off_x, off_y+FIELD_SIZE, size, 3);
 				/*FALLTHRU*/
 			case 1:	
 				draw_small_triangle(g, off_x, off_y, size, 0);
-				draw_small_triangle(g, off_x+GUI.FIELD_SIZE, off_y+GUI.FIELD_SIZE, size, 2);
+				draw_small_triangle(g, off_x+FIELD_SIZE, off_y+FIELD_SIZE, size, 2);
 				break;
 			default:
 				break;
@@ -259,14 +259,14 @@ public class GUI extends JFrame implements IGameState{
 		private void draw_hero(Graphics g, HeroType h, int off_x, int off_y){
 			switch (h) {
 			case WARRIOR:
-				drawCenteredCircle(g,off_x+GUI.FIELD_SIZE/2, off_y+GUI.FIELD_SIZE/2, 
+				drawCenteredCircle(g,off_x+FIELD_SIZE/2, off_y+FIELD_SIZE/2, 
 						WARRIOR_DRAW_RADIUS);
 				break;
 			case ARCHER:
 				Polygon p = new Polygon();		
-				p.addPoint(off_x+GUI.FIELD_SIZE/2, off_y+ARCHER_DRAW_MARGIN);
-				p.addPoint(off_x+ARCHER_DRAW_MARGIN, off_y+GUI.FIELD_SIZE-ARCHER_DRAW_MARGIN);
-				p.addPoint(off_x+GUI.FIELD_SIZE-ARCHER_DRAW_MARGIN, off_y+GUI.FIELD_SIZE-ARCHER_DRAW_MARGIN);	    
+				p.addPoint(off_x+FIELD_SIZE/2, off_y+ARCHER_DRAW_MARGIN);
+				p.addPoint(off_x+ARCHER_DRAW_MARGIN, off_y+FIELD_SIZE-ARCHER_DRAW_MARGIN);
+				p.addPoint(off_x+FIELD_SIZE-ARCHER_DRAW_MARGIN, off_y+FIELD_SIZE-ARCHER_DRAW_MARGIN);	    
 			    g.fillPolygon(p);
 				break;
 
@@ -281,7 +281,7 @@ public class GUI extends JFrame implements IGameState{
 				num = e.get_type_in_int();
 			}
 			g.setColor(Color.black);
-			g.drawString(Integer.toString(num), off_x+GUI.FIELD_SIZE/2-5, off_y+GUI.FIELD_SIZE/2+7);
+			g.drawString(Integer.toString(num), off_x+FIELD_SIZE/2-5, off_y+FIELD_SIZE/2+7);
 		}
 		
 		private void draw_heroes(Graphics g){
