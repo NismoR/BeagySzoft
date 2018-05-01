@@ -290,15 +290,38 @@ public class GameState implements Serializable{
 		}
 	}
 	
+	boolean is_enemy_near(){
+		Hero own = get_current_hero();
+		PlayerID id = own.get_player_id();
+		for (Hero h: heroes) {
+			if(h.get_player_id()!=id){
+				int d_x=Math.abs(own.get_x()-h.get_x());
+				int d_y=Math.abs(own.get_y()-h.get_y());
+				if(d_x<=1 && d_y<=1){
+					return true;		
+				}
+			}
+		}		
+		return false;
+	}
+	
 	boolean attack_process(){
 		Hero h = get_current_hero();
 		Equipment e = h.get_last_rolled_equip();
 		if(e.get_attack()!=null){
-			if(set_attackables(h)){
-				if(e.get_attack().get_allNearby()){
-					attack_all_attackable();
+			AttackAbility a = e.get_attack();
+			if(a.get_blockedBy()){
+				if(!is_enemy_near()){
+					set_attackables(h);
 				}
-				return true;
+			}
+			else{
+				if(set_attackables(h)){
+					if(a.get_allNearby()){
+						attack_all_attackable();
+					}
+					return true;
+				}
 			}
 		}
 		return false;

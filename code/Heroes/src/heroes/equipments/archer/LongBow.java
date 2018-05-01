@@ -9,5 +9,6 @@ public class LongBow extends ArcherEquipment{
 
 	public LongBow() {
 		super(EqType.LONG_BOW, "LongBow", 2, att, def);
+		this.get_attack().set_blockedBy();
 	}
 }

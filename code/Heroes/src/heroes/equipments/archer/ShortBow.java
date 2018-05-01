@@ -10,6 +10,7 @@ public class ShortBow extends ArcherEquipment{
 
 	public ShortBow() {
 		super(EqType.SHORT_BOW, "ShortBow", 2, att, def);
+		this.get_attack().set_blockedBy();
 	}
 
 }

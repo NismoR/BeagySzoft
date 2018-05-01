@@ -5,6 +5,7 @@ public class AttackAbility {
 	private int minRadius;
 	private int maxRadius;
 	private boolean attackAllNearby=false;
+	private boolean blockedByNearby=false;
 	
 	public AttackAbility(int str, int minR, int maxR, boolean nearby) {
 		// TODO Auto-generated constructor stub
@@ -28,5 +29,13 @@ public class AttackAbility {
 	
 	public boolean get_allNearby(){
 		return attackAllNearby;
+	}
+	
+	public boolean get_blockedBy(){
+		return blockedByNearby;
+	}
+	
+	public void set_blockedBy(){
+		blockedByNearby=true;
 	}
 }
