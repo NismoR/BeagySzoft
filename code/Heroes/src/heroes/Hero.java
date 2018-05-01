@@ -140,6 +140,7 @@ public abstract class Hero {
 	public boolean roll(){
 		Random r = new Random();
 		last_rolled_id = r.nextInt(MAX_EQUIPMENT_NR);
+		System.out.println("ROLLED NR: "+last_rolled_id);
 		current_defense = 0;
 		if(extra_def_roll>0){
 			extra_def_roll--;
