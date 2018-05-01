@@ -10,12 +10,15 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Random;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -30,15 +33,19 @@ import heroes.equipments.Equipment;
  *
  * @author ABence
  */
-public class GUI extends JFrame implements IGameState{
+public class GUI extends JFrame implements IGameState, ComponentListener{
 
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
 	public int FIELD_SIZE = 60;
 	private int TABLE_SIZE_X = 8, TABLE_SIZE_Y = 8;
-	public static int TABLE_OFFSET_X = 30, TABLE_OFFSET_Y = 30;
+	
+	private static int MENUBAR_OFFSET = 54;
+	private static int WINDOW_BORDER_OFFSET = 8;
+	
+	public int TABLE_OFFSET_X = FIELD_SIZE/2, TABLE_OFFSET_Y = FIELD_SIZE/2;
 	private int BOARD_WIDTH = TABLE_SIZE_X*FIELD_SIZE, BOARD_HEIGHT = TABLE_SIZE_Y*FIELD_SIZE;
-	private int WINDOW_WIDTH = 4*TABLE_OFFSET_X+BOARD_WIDTH, WINDOW_HEIGHT = 4*TABLE_OFFSET_X+BOARD_HEIGHT;
+	private int WINDOW_WIDTH = 2*TABLE_OFFSET_X+BOARD_WIDTH+8*2, WINDOW_HEIGHT = 2*TABLE_OFFSET_X+BOARD_HEIGHT+54+8;
 	
 	private GameState gui_gs;
 	
@@ -100,6 +107,7 @@ public class GUI extends JFrame implements IGameState{
 		gamePanel.setBounds(TABLE_OFFSET_X, TABLE_OFFSET_Y, BOARD_WIDTH, BOARD_HEIGHT);
 		//gamePanel.setBorder(BorderFactory.createTitledBorder("Game"));
 		add(gamePanel);
+		this.addComponentListener(this);
 	}
 	
 	private Color get_col_with_alpha(Color col, int alpha){
@@ -418,4 +426,37 @@ public class GUI extends JFrame implements IGameState{
 		gamePanel.repaint();
 	}
 
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("RESIZED WINDOW - X:" + getWidth() + " Y:" + getHeight());
+		int field_x =  (getWidth()-2*WINDOW_BORDER_OFFSET)/(TABLE_SIZE_X+1);
+		int field_y =  (getHeight()-WINDOW_BORDER_OFFSET-MENUBAR_OFFSET)/(TABLE_SIZE_Y+1);
+		System.out.println("CALC FIELD - X:" + field_x + " Y:" + field_y);
+		if(field_x<field_y){
+			FIELD_SIZE=field_x;
+		}
+		else{
+			FIELD_SIZE=field_y;			
+		}
+		gamePanel.setBounds(FIELD_SIZE/2, FIELD_SIZE/2, FIELD_SIZE*TABLE_SIZE_X, FIELD_SIZE*TABLE_SIZE_Y);
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
