@@ -64,6 +64,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	private static Color col_start_server = new Color(0x009494);
 	private static Color col_extra_step = new Color(0x324D5C);
 	private static Color col_wanna_step = new Color(0x46B29D);
+	private static Color col_dying_hero = new Color(0xDE5B49);
 	
 	public static int hero_death_decr = 11;
 	
@@ -309,6 +310,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 					}
 					if(!gui_gs.extra_steps.isEmpty() && h==gui_gs.get_current_hero()){
 						g.setColor(col_extra_step);						
+					}
+					if(h.get_dying()){
+						g.setColor(col_dying_hero);
 					}
 					if(gui_gs.wanna_step!=null){
 						if(h.get_x()==gui_gs.wanna_step.x){
