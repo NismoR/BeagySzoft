@@ -99,12 +99,15 @@ public class GameState implements Serializable{
 	}
 	
 	private boolean is_free_for_starting(int x, int y){
-		for(Click c:start_pos){
-			if(c.x==x && c.y==y){
-				return false;
+		if(valid_field[x][y]){
+			for(Click c:start_pos){
+				if(c.x==x && c.y==y){
+					return false;
+				}
 			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	public void set_starting_positions(int nr_of_cli_heroes, int nr_of_ser_heroes){
