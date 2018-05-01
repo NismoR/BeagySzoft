@@ -40,6 +40,8 @@ public class GameState implements Serializable{
 	public Click wanna_step = null;		//Just for storing desired coordinates to step
 	public List<Click> start_pos;
 	
+	public boolean should_step_again=false;
+	
 	private static float perc_if_valid_field = 0.9f;
 	
 	public GameState(){
@@ -256,19 +258,33 @@ public class GameState implements Serializable{
 		}		
 	}
 	
-	int roll(){
+	boolean attack_process(){
 		Hero h = get_current_hero();
-		boolean eq_valid=h.roll();
-		if(!eq_valid){
-			return 0;
-		}
 		Equipment e = h.get_last_rolled_equip();
 		if(e.get_attack()!=null){
 			if(set_attackables(h)){
 				if(e.get_attack().get_allNearby()){
 					attack_all_attackable();
 				}
+				return true;
 			}
+		}
+		return false;
+	}
+	
+	int roll(){
+		should_step_again=false;
+		Hero h = get_current_hero();
+		boolean eq_valid=h.roll();
+		if(!eq_valid){
+			return 0;
+		}
+		Equipment e = h.get_last_rolled_equip();
+		if(!e.get_move_extra()){
+			attack_process();
+		}
+		else{
+			should_step_again=true;
 		}
 		return e.get_type_in_int();
 	}
@@ -388,9 +404,19 @@ public class GameState implements Serializable{
 		}
 		else{
 			if(check_if_stepable_and_step(x,y)){
-				roll();
-				if(!if_has_attackable()){
-					step_to_next_alive_hero();
+				if(!should_step_again){
+					roll();
+					if(!should_step_again){
+						if(!if_has_attackable()){
+							step_to_next_alive_hero();
+						}					
+					}
+				}
+				else{
+					should_step_again=false;
+					if(!attack_process()){
+						step_to_next_alive_hero();						
+					}
 				}
 			}
 		}
@@ -403,6 +429,7 @@ public class GameState implements Serializable{
 		current_hero_id = gs.current_hero_id;
 		wanna_step = gs.wanna_step;
 		start_pos = gs.start_pos;
+		should_step_again = gs.should_step_again;
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
 				valid_field[i][j] = gs.valid_field[i][j];

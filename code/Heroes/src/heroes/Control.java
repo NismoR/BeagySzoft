@@ -102,8 +102,9 @@ class Control implements IClick{
 		w.add_equip(new ElvenBlade());
 		w.add_equip(new ElvenBlade());
 		w.add_equip(new ElvenBlade());
-		w.add_equip(new IronSwordOfFury());
-		w.add_equip(new IronSwordOfFury());
+		w.add_equip(new ElvenDagger());
+		w.add_equip(new ElvenDagger());
+		w.add_equip(new ElvenDagger());
 		gs.add_hero(w);
 		
 		generateBoard();		
