@@ -27,7 +27,7 @@ import javax.swing.WindowConstants;
  *
  * @author ABence
  */
-public class GUI extends JFrame implements IGameState, MouseListener{
+public class GUI extends JFrame implements IGameState{
 
 	private static final long serialVersionUID = 1L;
 	private Control ctrl;
@@ -55,7 +55,6 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 
 	GUI(Control c) {
 		super("Heroes");
-		this.addMouseListener(this);
 		
 		
 		
@@ -130,9 +129,13 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 	
 	
 	
-	private class GamePanel extends JPanel {
+	private class GamePanel extends JPanel implements MouseListener{
 
 		private static final long serialVersionUID = 1L;
+		
+		public GamePanel(){
+			this.addMouseListener(this);
+		}
 		
 		private void draw_valid_fields(Graphics g) {
 			for (int i = 0; i < TABLE_SIZE_X; i++) {
@@ -320,6 +323,48 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 				//System.out.println("Time taken: "+ diff_in_nano +" nanoseconds");				
 			}
 		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+			int x = e.getX() / FIELD_SIZE;
+			if(x <0 || x>= TABLE_SIZE_X){
+				return;
+			}
+			int y = e.getY() / FIELD_SIZE ;	
+			if(y <0 || y>= TABLE_SIZE_Y){
+				return;
+			}
+			System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
+			
+			ctrl.onNewClick(new Click(x, y, gui_gs.get_current_hero().get_player_id()));
+			
+		}
 	}
 
 
@@ -331,43 +376,4 @@ public class GUI extends JFrame implements IGameState, MouseListener{
 		gamePanel.repaint();
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {	
-
-		int x = (e.getX() - TABLE_OFFSET_X - 10 + FIELD_SIZE) / FIELD_SIZE -1;
-		if(x <0 || x>= TABLE_SIZE_X){
-			return;
-		}
-		int y = (e.getY() - TABLE_OFFSET_Y - 54 + FIELD_SIZE) / FIELD_SIZE -1;	
-		if(y <0 || y>= TABLE_SIZE_Y){
-			return;
-		}
-		System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
-		
-		ctrl.onNewClick(new Click(x, y, gui_gs.get_current_hero().get_player_id()));
-	}
 }
