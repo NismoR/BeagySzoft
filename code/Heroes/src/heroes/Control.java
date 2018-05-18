@@ -171,7 +171,10 @@ class Control implements IClick{
 	
 	//todo delete later
 	void refresh_board(){
-		gui.onNewGameState(gs);		
+		gui.onNewGameState(gs);	
+		if (net != null){
+			s.onNewGameState(gs);			
+		}
 	}
 
 	/**
