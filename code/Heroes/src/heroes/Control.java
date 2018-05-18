@@ -237,6 +237,9 @@ class Control implements IClick{
 		if(clicks_to_process.size()!=1)
 			System.out.println("NR_OF_CLICKS AT PROCESS "+clicks_to_process.size());
 		Click c = clicks_to_process.remove(0);
+		if(gs.get_current_hero()==null){
+			return;
+		}
 		if(c.playerID!=gs.get_current_hero().get_player_id()){
 			return;
 		}
