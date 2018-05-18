@@ -62,6 +62,9 @@ public class GameState implements Serializable{
 	}
 	
 	public Hero get_current_hero(){
+		if(heroes.isEmpty()){
+			return null;
+		}
 		return heroes.get(current_hero_id);
 	}
 	
