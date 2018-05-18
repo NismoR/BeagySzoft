@@ -454,8 +454,19 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				return;
 			}
 			
-			if(click!=null){
-				click.onNewClick(new Click(x, y, gui_gs.get_current_hero().get_player_id()));				
+			if(click!=null){				
+				//DETERMINE WHO CLICKED
+				//nagyon nem szép, lehet rajta agyalni, hogy hogy lehetne jobban
+				//de nincs már több idõ. majd ha kérdezik a végén, akkor kb egy plusz interfésszel
+				//ahol csak a koordináta van (úgyis használtab csak koordinátára a clicket) - Bence
+				if(click==ctrl){
+					//System.out.println(" CLICKED ON SERVER ");
+					click.onNewClick(new Click(x, y, PlayerID.SERVER));	
+				}
+				else{
+					//System.out.println(" CLICKED ON CLIENT ");	
+					click.onNewClick(new Click(x, y, PlayerID.CLIENT));				
+				}			
 			}
 		}
 	}
