@@ -1,6 +1,7 @@
 package heroes.equipments;
+import java.io.Serializable;
 
-public class AttackAbility {
+public class AttackAbility implements Serializable{
 	private int strength;
 	private int minRadius;
 	private int maxRadius;

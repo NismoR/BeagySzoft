@@ -254,11 +254,13 @@ public class Server extends Network implements IGameState{
 				out.reset();
 				out.writeObject(gs);
 				out.flush();
+				
 			}
 		} catch (IOException ex) {
 			System.err.println("Send error.");
 		} finally {
 			lock.unlock();
+			
 		}
 	}
 }

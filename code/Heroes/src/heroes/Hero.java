@@ -12,7 +12,9 @@ import heroes.equipments.Equipment;
 import heroes.equipments.Equipment.EqType;
 import heroes.equipments.WoodenShield;
 
-public abstract class Hero {
+import java.io.Serializable;
+
+public abstract class Hero implements Serializable  {
 	
 	private int MAX_EQUIPMENT_NR=6;
 	

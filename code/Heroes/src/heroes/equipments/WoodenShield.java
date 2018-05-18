@@ -1,6 +1,7 @@
 package heroes.equipments;
+import java.io.Serializable;
 
-public class WoodenShield extends Equipment{
+public class WoodenShield extends Equipment implements Serializable{
 
 	private static AttackAbility attack=null;
 	private static DefenseAbility defense=new DefenseAbility(1);

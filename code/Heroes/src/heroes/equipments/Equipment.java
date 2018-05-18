@@ -1,8 +1,9 @@
 package heroes.equipments;
 
 import heroes.Hero.HeroType;
+import java.io.Serializable;
 
-public abstract class Equipment {
+public abstract class Equipment implements Serializable {
 	public enum EqType {
 		NONE					(0),
 		WOODEN_SWORD			(1),

@@ -1,6 +1,7 @@
 package heroes.equipments;
+import java.io.Serializable;
 
-public class DefenseAbility {
+public class DefenseAbility implements Serializable{
 	private int strength;
 	private int nr_of_rolls=0;
 	

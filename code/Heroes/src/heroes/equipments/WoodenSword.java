@@ -1,6 +1,7 @@
 package heroes.equipments;
+import java.io.Serializable;
 
-public class WoodenSword extends Equipment{
+public class WoodenSword extends Equipment implements Serializable{
 	
 
 	private static AttackAbility attack=new AttackAbility(1, 0, 1,false);
