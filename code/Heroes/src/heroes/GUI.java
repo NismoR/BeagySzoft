@@ -454,8 +454,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				return;
 			}
 			
-			ctrl.onNewClick(new Click(x, y, gui_gs.get_current_hero().get_player_id()));
-			
+			if(click!=null){
+				click.onNewClick(new Click(x, y, gui_gs.get_current_hero().get_player_id()));				
+			}
 		}
 	}
 
