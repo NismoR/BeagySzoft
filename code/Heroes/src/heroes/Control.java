@@ -43,105 +43,116 @@ class Control implements IClick{
 	private GameState gs;
 	private ArrayList<Click> clicks_to_process;
 	
+	/**
+	 * A játék állapotát megkapó szerver.
+	 */
+	private IGameState s; //bear
+	/**
+	 * network feladatokat kapcsolatos feladatokat kezelõ változó
+	 */
+	private Network net = null;//bear
+	
 	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 	private ScheduledFuture<?> future = null;
 
 	Control() {
 		gs = new GameState();
-		clicks_to_process = new ArrayList<Click>();		
+		clicks_to_process = new ArrayList<Click>();			
+	}
+	void generate_new_game(){
 		//Adding Warriors
-		for (int i = 0; i < 4; i++) {
-			Warrior w = null;
-			if(i%2==0){
-				w = new Warrior(PlayerID.CLIENT);				
-			}
-			else{
-				w = new Warrior(PlayerID.SERVER);
-			}
+				for (int i = 0; i < 4; i++) {
+					Warrior w = null;
+					if(i%2==0){
+						w = new Warrior(PlayerID.CLIENT);				
+					}
+					else{
+						w = new Warrior(PlayerID.SERVER);
+					}
 
-			for (int j = 0; j < 6; j++) {
-				Random r = new Random();
-				int n = r.nextInt(11);
-				switch (n) {
-				case 1:
-					w.add_equip(new WoodenShield());
-					break;
-				case 2:
-					w.add_equip(new WoodenSword());
-					break;
-				case 3:
-					w.add_equip(new IronShield());
-					break;
-				case 4:
-					w.add_equip(new IronSword());
-					break;
-				case 5:
-					w.add_equip(new BladeOfRes());
-					break;
-				case 6:
-					w.add_equip(new SwordOfRes());
-					break;
-				case 7:
-					w.add_equip(new WoodenSwordOfFury());
-					break;
-				case 8:
-					w.add_equip(new IronSwordOfFury());
-					break;
-				case 9:
-					w.add_equip(new ElvenDagger());
-					break;
-				case 10:
-					w.add_equip(new ElvenBlade());
-					break;
-				default:
-					break;
-				}				
-			}
-			gs.add_hero(w);
-		}
+					for (int j = 0; j < 6; j++) {
+						Random r = new Random();
+						int n = r.nextInt(11);
+						switch (n) {
+						case 1:
+							w.add_equip(new WoodenShield());
+							break;
+						case 2:
+							w.add_equip(new WoodenSword());
+							break;
+						case 3:
+							w.add_equip(new IronShield());
+							break;
+						case 4:
+							w.add_equip(new IronSword());
+							break;
+						case 5:
+							w.add_equip(new BladeOfRes());
+							break;
+						case 6:
+							w.add_equip(new SwordOfRes());
+							break;
+						case 7:
+							w.add_equip(new WoodenSwordOfFury());
+							break;
+						case 8:
+							w.add_equip(new IronSwordOfFury());
+							break;
+						case 9:
+							w.add_equip(new ElvenDagger());
+							break;
+						case 10:
+							w.add_equip(new ElvenBlade());
+							break;
+						default:
+							break;
+						}				
+					}
+					gs.add_hero(w);
+				}
 
-		for (int i = 0; i < 2; i++) {
-			Archer a = null;
-			if(i%2==0){
-				a = new Archer(PlayerID.SERVER);					
-			}
-			else{
-				a = new Archer(PlayerID.CLIENT);	
-			}
+				for (int i = 0; i < 2; i++) {
+					Archer a = null;
+					if(i%2==0){
+						a = new Archer(PlayerID.SERVER);					
+					}
+					else{
+						a = new Archer(PlayerID.CLIENT);	
+					}
 
-			for (int j = 0; j < 6; j++) {
-				Random r = new Random();
-				int n = r.nextInt(8);
-				switch (n) {
-				case 1:
-					a.add_equip(new WoodenShield());
-					break;
-				case 2:
-					a.add_equip(new WoodenSword());
-					break;
-				case 3:
-					a.add_equip(new ElvenArmor());
-					break;
-				case 4:
-					a.add_equip(new MythrillArmor());
-					break;
-				case 5:
-					a.add_equip(new ElvenBoots());
-					break;
-				case 6:
-					a.add_equip(new ShortBow());
-					break;
-				case 7:
-					a.add_equip(new LongBow());
-					break;
-				default:
-					break;
-				}				
-			}
-			gs.add_hero(a);
-		}
-		
-		generateBoard();		
+					for (int j = 0; j < 6; j++) {
+						Random r = new Random();
+						int n = r.nextInt(8);
+						switch (n) {
+						case 1:
+							a.add_equip(new WoodenShield());
+							break;
+						case 2:
+							a.add_equip(new WoodenSword());
+							break;
+						case 3:
+							a.add_equip(new ElvenArmor());
+							break;
+						case 4:
+							a.add_equip(new MythrillArmor());
+							break;
+						case 5:
+							a.add_equip(new ElvenBoots());
+							break;
+						case 6:
+							a.add_equip(new ShortBow());
+							break;
+						case 7:
+							a.add_equip(new LongBow());
+							break;
+						default:
+							break;
+						}				
+					}
+					gs.add_hero(a);
+				}
+				
+				generateBoard();	
 	}
 	
 	private void generateBoard(){
@@ -162,15 +173,35 @@ class Control implements IClick{
 		gui.onNewGameState(gs);		
 	}
 
+	/**
+	 * Szerver indítása, ha a felhasználó a megfelelõ gombra nyomott.
+	 */
 	void startServer() {
-		generateBoard();
-		gui.onNewGameState(gs);		
+		//generateBoard();
+		gui.onNewGameState(gs);	
+		if (net != null)//bearStart
+			net.stop();
+		net = new Server(this, gui);
+		net.start("localhost");//bearEnd
+		System.out.println("start szerver megvolt");
 	}
 
-	void startClient() {
+	/**
+	 * Csatlakozás a megadott IP címen található szerverre.
+	 * @param s: IP cím
+	 */
+	void startClient(String s) {//bearStart
+		if (net != null)
+			net.stop();
+		net = new Client(gui);
+		net.start(s);//bearEnd
+		System.out.println("startclient megvolt!");
 	}
 	
 	void startScheduler(){
+		this.gui.setClick(this); //bear
+		s = (Server) net; //bear
+		
 		Runnable periodicTask = new Runnable() {
 			public void run() {
 				//System.out.println("Periodic task started");	
@@ -187,7 +218,10 @@ class Control implements IClick{
 
 		if (future == null || future.isCancelled())
 			future = executor.scheduleAtFixedRate(periodicTask, 0, 40, TimeUnit.MILLISECONDS);
-		refresh_board();	
+		
+		refresh_board();
+		s.onNewGameState(gs);
+		
 	}
 	
 	public void processClicks(){

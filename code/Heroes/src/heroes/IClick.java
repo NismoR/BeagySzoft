@@ -1,5 +1,5 @@
 package heroes;
 
 public interface IClick {
-	public void onNewClick(Click click);
+	public void onNewClick(Click c);
 }

@@ -23,10 +23,12 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import heroes.Hero.HeroType;
+import heroes.Hero.PlayerID;
 import heroes.equipments.Equipment;
 
 /**
@@ -70,6 +72,14 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	
 	private GamePanel gamePanel;
 	
+	private IClick click = null; //bear
+	
+	
+	void setClick(IClick c) { //bear
+		click = c;
+	}
+	
+	
 	GUI(Control c) {
 		super("Heroes");
 		
@@ -95,7 +105,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 
 		menuBar.add(menu);
 
-		menuItem = new JMenuItem("Clear");
+		menuItem = new JMenuItem("New Game");
 		menuItem.addActionListener(new MenuListener());
 		menuBar.add(menuItem);
 
@@ -135,16 +145,22 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	private class MenuListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			if (e.getActionCommand().equals("Clear")) {
+			if (e.getActionCommand().equals("New Game")) {
+				ctrl.generate_new_game();
 			}
 			if (e.getActionCommand().equals("Exit")) {
 				System.exit(0);
 			}
 			if (e.getActionCommand().equals("Server")) {
+				System.out.println("ide ejöttünk1?");
 				ctrl.startServer();
+				System.out.println("ide ejöttünk2?");
+				
 			}
 			if (e.getActionCommand().equals("Client")) {
-				ctrl.startClient();
+				
+				ctrl.startClient("localhost");//bear
+				
 			}
 		}
 	}
@@ -364,6 +380,11 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			draw_all_steppable(g);
 			draw_steppable(g);
 			draw_heroes(g);
+			
+			if(gui_gs.heroes.isEmpty()){
+				return;
+			}
+			
 			draw_current_hero_mark(g);
 			if(!gui_gs.extra_steps.isEmpty()){
 				g.setColor(Color.black);
@@ -421,6 +442,11 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				return;
 			}
 			System.out.println("X:" + x + " Y:" + y+ "    e-X:" + e.getX() + " Y:" + e.getY());
+			
+			if(gui_gs.heroes.isEmpty()){
+				ctrl.onNewClick(new Click(x,y,PlayerID.CLIENT));
+				return;
+			}
 			
 			ctrl.onNewClick(new Click(x, y, gui_gs.get_current_hero().get_player_id()));
 			
