@@ -207,6 +207,8 @@ class Control implements IClick{
 		this.gui.setClick(this); //bear
 		s = (Server) net; //bear
 		
+		this.gui.enable_new_game_button();
+		
 		Runnable periodicTask = new Runnable() {
 			public void run() {
 				//System.out.println("Periodic task started");	

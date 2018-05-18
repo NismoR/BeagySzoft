@@ -110,6 +110,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 
 		menuItem_new_game = new JMenuItem("New Game");
 		menuItem_new_game.addActionListener(new MenuListener());
+		menuItem_new_game.setEnabled(false);
 		menuBar.add(menuItem_new_game);
 
 		menuItem = new JMenuItem("Exit");
@@ -142,7 +143,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		return y*FIELD_SIZE;
 	}
 	
-
+	public void enable_new_game_button(){
+		menuItem_new_game.setEnabled(true);
+	}
 	
 
 	private class MenuListener implements ActionListener {
@@ -162,7 +165,6 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				
 			}
 			if (e.getActionCommand().equals("Client")) {
-				menuItem_new_game.setEnabled(false);
 				ctrl.startClient("localhost");//bear
 				
 			}
