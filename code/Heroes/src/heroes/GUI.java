@@ -74,6 +74,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	
 	private IClick click = null; //bear
 	
+	private JMenuBar menuBar;
+	private JMenuItem menuItem_new_game;
+	
 	
 	void setClick(IClick c) { //bear
 		click = c;
@@ -91,7 +94,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		setLayout(null);
 		gui_gs = new GameState();
 
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 
 		JMenu menu = new JMenu("Start");
 
@@ -105,9 +108,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 
 		menuBar.add(menu);
 
-		menuItem = new JMenuItem("New Game");
-		menuItem.addActionListener(new MenuListener());
-		menuBar.add(menuItem);
+		menuItem_new_game = new JMenuItem("New Game");
+		menuItem_new_game.addActionListener(new MenuListener());
+		menuBar.add(menuItem_new_game);
 
 		menuItem = new JMenuItem("Exit");
 		menuItem.addActionListener(new MenuListener());
@@ -159,7 +162,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				
 			}
 			if (e.getActionCommand().equals("Client")) {
-				
+				menuItem_new_game.setEnabled(false);
 				ctrl.startClient("localhost");//bear
 				
 			}
