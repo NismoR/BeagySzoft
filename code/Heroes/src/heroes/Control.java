@@ -185,6 +185,8 @@ class Control implements IClick{
 		net = new Server(this, gui);
 		net.start("localhost");//bearEnd
 		System.out.println("start szerver megvolt");
+		startScheduler();
+		System.out.println("scheduler elinditva");
 	}
 
 	/**
@@ -220,9 +222,7 @@ class Control implements IClick{
 		if (future == null || future.isCancelled())
 			future = executor.scheduleAtFixedRate(periodicTask, 0, 40, TimeUnit.MILLISECONDS);
 		
-		refresh_board();
-		s.onNewGameState(gs);
-		
+		refresh_board();		
 	}
 	
 	public void processClicks(){
