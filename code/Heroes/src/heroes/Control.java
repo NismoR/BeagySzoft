@@ -188,8 +188,6 @@ class Control implements IClick{
 		net = new Server(this, gui);
 		net.start("localhost");//bearEnd
 		System.out.println("start szerver megvolt");
-		startScheduler();
-		System.out.println("scheduler elinditva");
 	}
 
 	/**
@@ -205,6 +203,7 @@ class Control implements IClick{
 	}
 	
 	void startScheduler(){
+		System.out.println("scheduler elinditva");
 		this.gui.setClick(this); //bear
 		s = (Server) net; //bear
 		
