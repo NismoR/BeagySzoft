@@ -152,7 +152,8 @@ class Control implements IClick{
 					gs.add_hero(a);
 				}
 				
-				generateBoard();	
+				generateBoard();
+				refresh_board();
 	}
 	
 	private void generateBoard(){
