@@ -235,6 +235,10 @@ class Control implements IClick{
 		if(clicks_to_process.isEmpty()){
 			return;
 		}
+		
+		if(gs.get_winner()!=null){
+			return;
+		}
 
 		if(clicks_to_process.size()!=1)
 			System.out.println("NR_OF_CLICKS AT PROCESS "+clicks_to_process.size());
