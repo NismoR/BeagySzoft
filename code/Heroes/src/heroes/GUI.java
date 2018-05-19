@@ -441,14 +441,6 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			}
 			
 			draw_current_hero_mark(g);
-			if(!gui_gs.extra_steps.isEmpty()){
-				g.setColor(Color.black);
-				g.fillRect(get_x_offset(8), get_y_offset(8), 3*FIELD_SIZE, 3*FIELD_SIZE);
-			}
-			if(!gui_gs.copy_lock_open){
-				g.setColor(Color.red);
-				g.fillRect(get_x_offset(8), get_y_offset(0), 3*FIELD_SIZE, 3*FIELD_SIZE);
-			}
 			Instant end = Instant.now();
 			Duration diff = Duration.between(start, end);
 			long diff_in_nano = System.nanoTime() - startTime;
