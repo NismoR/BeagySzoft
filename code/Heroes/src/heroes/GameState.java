@@ -78,12 +78,22 @@ public class GameState implements Serializable{
     	}
     }
     
+    /**
+     * Egyszer mindenképp a következõ játékosra lép, majd ha
+     * az már haldoklik, akkor addig lép míg nem talál élõ hõst.
+     */
+    
     public void step_to_next_alive_hero(){
     	step_to_next_hero();
     	check_and_step_if_current_is_not_alive();
     }
 
-	
+	/**
+	 * Véletlenszerû pályát generál.
+	 * Végigmegy az összes lehetséges mezõn, majd bizonyos valószínûség 
+	 * alapján eldönti, hogy az adott mezõ léphetõ lesz-e, avagy nem.
+	 * 
+	 */
 	public void init_map(){
 		Random r = new Random();
 		for (int i = 0; i < board_size; i++) {
@@ -97,6 +107,15 @@ public class GameState implements Serializable{
 			}
 		}
 	}
+	
+	/**
+	 * Leellenõrzi, hogy az adott mezõ megfelelõ kezdõpozíció-e.
+	 * Csak akkor tér vissza igaz értékkel, ha biztosan a táblán szereplõ mezõ lett meghívva,
+	 * az adott mezõ léphetõ, is még nem kezdõpozíciója egy másik hõsnek sem.
+	 * @param x a választandó mezõ x koordinátája
+	 * @param y a választandó mezõ y koordinátája
+	 * @return igaz/hamis, annak függvényében, hogy szabad-e a mezõ
+	 */
 	
 	private boolean is_free_for_starting(int x, int y){
 		if(x<0 || y<0 || x>board_size-1 || y>board_size-1){
@@ -112,6 +131,15 @@ public class GameState implements Serializable{
 		}
 		return false;
 	}
+	
+	/**
+	 * Beállítja a lehetséges kezdõpozíciókat.
+	 * A Kliens játékosait a bal felsõ saroktól, a Server játékosait a jobb alsóból
+	 * kezdve helyezi el, véletlenszerûen lépve az egyik környezõ mezõre. A lépés
+	 * iránya az átellenes sarokba a legvalószínûbb.
+	 * @param nr_of_cli_heroes meghatározza, hogy hány mezõt jelöljön ki a kliensnek
+	 * @param nr_of_ser_heroes meghatározza, hogy hány mezõt jelöljön ki a szervernek
+	 */
 	
 	public void set_starting_positions(int nr_of_cli_heroes, int nr_of_ser_heroes){
 		int x=0;
@@ -181,14 +209,18 @@ public class GameState implements Serializable{
 		}
 	}
 	
-	//TODO can be overloaded
-	
-	
+	/**
+	 * Hozzáadja a Hõs objektumot, a játékban szereplõ hõsök listájára
+	 * @param hero Az új Hõs objektum, mely felkerül a játékban szereplõ hõsök listájára
+	 */
 	public void add_hero(Hero hero){
 		heroes.add(hero);
 	}
 	
-
+	/**
+	 * Végigmegy a hõsök listáján, és felhelyezi õket az egyik lehetséges
+	 * kezdõpozíció egyikére.
+	 */
 	public void set_heroes_starting_positions(){
 		for(Hero h : this.heroes){
 			if(h.get_x()<0){
@@ -209,6 +241,13 @@ public class GameState implements Serializable{
 		start_pos = null;
 	}
 
+	
+	/**
+	 * Leellenõrzi, hogy a kiválasztott mezõ üres-e, illetve hogy valós mezõ-e
+	 * @param x a kiválasztott mezõ x koordinátája
+	 * @param y a kiválasztott mezõ y koordinátája
+	 * @return igaz, ha valóban üres és léphetõ mezõt választottunk
+	 */
 	boolean is_field_empty(int x, int y){
 		if(x<0 || y<0 || x>board_size-1 || y>board_size-1){
 			return false;

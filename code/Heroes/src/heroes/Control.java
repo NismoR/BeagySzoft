@@ -50,13 +50,28 @@ class Control implements IClick{
 	 */
 	private Network net = null;//bear
 	
+	/**
+	 * A server-en a játék vezérlésére egy schedulert indítunk, ami figyeli a
+	 * kattintásokat, melyek hatására továbblépteti a játékciklust. Az executor és
+	 * a future a scheduler vezérléséért felelõs változók.
+	 */
 	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 	private ScheduledFuture<?> future = null;
 
+	/**
+	 * A Control osztály konstruktora. Példányosítja a játék állapotát mentõ változót,
+	 * illetve a feldolgozandó kattintások listáját.
+	 */
 	Control() {
 		gs = new GameState();
 		clicks_to_process = new ArrayList<Click>();			
 	}
+	
+	/**
+	 * Az új játék generálását végzõ függvény. 
+	 * Játékosonként hozzáad 2 Harcost és 1 Íjászt a játékhoz, véletlenszerûen felszereléseket választva.
+	 * Ezután legenerálja a táblát és felhelyezi a karaktereket.
+	 */
 	void generate_new_game(){
 		gs = new GameState();
 		clicks_to_process = new ArrayList<Click>();	
@@ -156,17 +171,29 @@ class Control implements IClick{
 				refresh_board();
 	}
 	
+	/**
+	 * A tábla generálását végzõ függvény. 
+	 */
+	
 	private void generateBoard(){
 		gs.init_map();
 		gs.set_starting_positions(5,5);
 		gs.set_heroes_starting_positions();		
 	}
+	
+	/**
+	 * Összekapcsolja a GUI példányt ezen Control példánnyal.
+	 * @param g A GUI példány, melyet a Controlhoz kívánunk kapcsolni.
+	 */
 
 	void setGUI(GUI g) {
 		gui = g;
 	}
 	
-	//todo delete later
+	/**
+	 * A tábla frissítését végzõ függvény. Elküldi az új táblaállapotot a helyi GUI-nak,
+	 * továbbá, a Networkon keresztül továbbítja azt a másik oldalnak.
+	 */
 	void refresh_board(){
 		gui.onNewGameState(gs);	
 		if (net != null){
@@ -199,6 +226,17 @@ class Control implements IClick{
 		System.out.println("startclient megvolt!");
 	}
 	
+	/**
+	 * Az ütemezõ elindításáért felelõs függvény. 
+	 * Beállítja a megfelelõ kommunikációs interfészeket, példányosítja a külön
+	 * szálon futó <code>Runnable</code> objektumot, majd 40 ms-ként lefuttatja azt.
+	 * A függvény végén frissíti a táblát.
+	 * 
+	 * A külön szálon való futtatás célja, hogy mind a GUI-n történõ, mind a Network
+	 * felõl érkezõ eseményeket könnyebb legyen kezelni, továbbá az idõben maguktól változó
+	 * események (pl sebzés esetén életerõ csökkenés) is könyebben implementálhatóak.
+	 */
+	
 	void startScheduler(){
 		System.out.println("scheduler elinditva");
 		this.gui.setClick(this); //bear
@@ -226,6 +264,12 @@ class Control implements IClick{
 		refresh_board();		
 	}
 	
+	/**
+	 * Ha a játék még nem ért a végéhez, feldolgozza a GUI-n, vagy hálózaton érkezõ 
+	 * kattintásokat, feltéve, hogy azt a soron következõ játékos küldte. A kattintott
+	 * mezõ alapján lépteti a játékot, majd frissíti a táblát.
+	 */
+	
 	public void processClicks(){
 		
 		
@@ -250,16 +294,30 @@ class Control implements IClick{
 		refresh_board();	
 	}
 	
+	/**
+	 * Az idõben önmaguktól változó események ellenõrzése.
+	 * Ha van haldokló hõs a táblán, akkor a frissíti a táblát.
+	 */
 	public void check_for_periodic_change(){
 		if(gs.check_and_refresh_if_dying()){
 			refresh_board();
 		}
 	}
 	
+	/**
+	 * A fõ folyamat, mely meghívja a periodikus változásokat, valamint ellenõrzi,
+	 * hogy van-e feldolgozandó kattintás. Ezt hívja meg az ütemezett feladat.
+	 */
+	
 	public void mainProcess(){
 		check_for_periodic_change();
 		processClicks();
 	}
+	
+	/**
+	 * Hozzáadja az interfészen beérkezõ kattintásokat a feldolgozandó kattintásokhoz.
+	 * A GUI illetve a Network felõl is ezen keresztül érkeznek a kattintások. 
+	 */
 
 	@Override
 	public void onNewClick(Click click) {
