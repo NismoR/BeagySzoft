@@ -61,6 +61,10 @@ public class GameState implements Serializable{
 		}
 	}
 	
+	public PlayerID get_winner(){
+		return winner; 
+	}
+	
 	public Hero get_current_hero(){
 		if(heroes.isEmpty()){
 			return null;
