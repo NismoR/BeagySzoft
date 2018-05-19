@@ -502,6 +502,10 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				return;
 			}
 			
+			if(gui_gs.get_winner()!=null){
+				return;
+			}
+			
 			if(click!=null){				
 				if(am_i_the_server()){
 					//System.out.println(" CLICKED ON SERVER ");
