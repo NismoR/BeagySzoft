@@ -505,6 +505,7 @@ public class GameState implements Serializable{
 			copy_lock_open = gs.copy_lock_open;
 			extra_steps = gs.extra_steps;
 			roll_again = gs.roll_again;
+			winner = gs.winner;
 			for(int i = 0; i < board_size; i++){	//TODO array copy
 				for(int j = 0; j < board_size; j++){
 					valid_field[i][j] = gs.valid_field[i][j];
