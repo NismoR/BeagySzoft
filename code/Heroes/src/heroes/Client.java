@@ -164,9 +164,9 @@ public class Client extends Network implements IClick{
 					return;
 				}
 				
-				WinBlocker blocker = null;
+				GUI_Blocker blocker = null;
 				// Block main window
-				blocker = new WinBlocker(gui);
+				blocker = new GUI_Blocker(gui);
 				while(s == null)
 				{
 

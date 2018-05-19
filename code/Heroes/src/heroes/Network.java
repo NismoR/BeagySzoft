@@ -39,7 +39,7 @@ abstract class Network {
 	 * @author Misi
 	 *
 	 */
-	protected class WinBlocker implements Runnable{
+	protected class GUI_Blocker implements Runnable{
 		private JDialog d;
 		
 		/**
@@ -48,7 +48,7 @@ abstract class Network {
 		 * 
 		 * @param g
 		 */
-		public WinBlocker(GUI g) {
+		public GUI_Blocker(GUI g) {
 			
 			JPanel pan = new JPanel(new GridLayout(2, 1));
 

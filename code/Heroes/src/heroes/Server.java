@@ -188,10 +188,10 @@ public class Server extends Network implements IGameState{
 					lock.unlock();
 					if(f==true) return;
 					
-					WinBlocker blocker = null;
+					GUI_Blocker blocker = null;
 					try{
 						// Block main window
-						blocker = new WinBlocker(gui);
+						blocker = new GUI_Blocker(gui);
 						cs = serverSocket.accept();
 						// Release blocking
 						blocker.stop();
