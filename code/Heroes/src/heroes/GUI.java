@@ -458,11 +458,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			}
 			
 			if(click!=null){				
-				//DETERMINE WHO CLICKED
-				//nagyon nem szép, lehet rajta agyalni, hogy hogy lehetne jobban
-				//de nincs már több idõ. majd ha kérdezik a végén, akkor kb egy plusz interfésszel
-				//ahol csak a koordináta van (úgyis használtab csak koordinátára a clicket) - Bence
-				if(click==ctrl){
+				if(am_i_the_server()){
 					//System.out.println(" CLICKED ON SERVER ");
 					click.onNewClick(new Click(x, y, PlayerID.SERVER));	
 				}
@@ -474,6 +470,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		}
 	}
 
+	private boolean am_i_the_server(){
+		return click==ctrl;
+	}
 
 	private void calculate_window_sizes(){
 		int field_x =  (getWidth()-2*WINDOW_BORDER_OFFSET)/(TABLE_SIZE_X+1);
