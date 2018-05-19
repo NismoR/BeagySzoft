@@ -19,49 +19,46 @@ import heroes.GUI;
  */
 abstract class Network {
 	/**
-	 * Elindítja a hálózati interfész mûködését, ami a <code> stop </code> függvény meghívásáig 
-	 * folyamatosan próbál csatlakozni a másik félhez.
+	 * 
+	 * A hálozatti interfész  <code> start </code> függvény meghívásától <code> stop </code> 
+	 * függvény meghívásáig folyamatosan probál csatlakozni a mások hálozati elemhez
+	 * 
 	 * @param ip A cél IP cím.
 	 */
 	abstract void start(String ip);
 	/**
-	 * Lebontja a hálózati interfészt, és megállítja az azt kezelõ objektumot.
+	 * A hálozatti interfész  <code> start </code> függvény meghívásától <code> stop </code> 
+	 * függvény meghívásáig folyamatosan probál csatlakozni a mások hálozati elemhez
 	 */
 	abstract void stop();	
 	
 	/**
-	 * Blokkolja a konstruktorban megadott ablakot a <code> stop </code> függvény meghívásáig.
-	 * A dialógusablak egy címkét és egy gombot tartalmaz, ez utóbbira kattintva bezáródik az alkalmazás.
+	 * A <code> stop </code> függvény meghívásáig blokkolja a konstruktorban megadott ablakot. A szerver és a
+	 * kliens guiját blokolja a csatlakozás ideje alatt
 	 * 
-	 * Az osztály célja, hogy a Network-höz tartozó GUI-t leblokkolja a csatlakozás idejére. 
-	 * Minden objektum egy saját szálban futtatja a dialógusablak eseménykezelõjét, így a konstruktor meghívója
-	 * nem blokkolódik.
-	 * @author Tibi
+	 * @author Misi
 	 *
 	 */
 	protected class WinBlocker implements Runnable{
 		private JDialog d;
 		
 		/**
-		 * Konstruktor. Az objektum létrejötte során egy dialógus ablakot hoz létre, ami futása alatt leblokkolja
-		 * a paraméterben megadott GUI objektumot. A dialógusablak tartalmaz egy megszakítás gombot, ami leállítja a
-		 * program mûködését.
+		 * A létrejövõ dialogus ablak a paraméterben megadott GUI objektumot blokolja,
+		 *  ezzenfelül tartalmaze egy gombot a program leállítására.
+		 * 
 		 * @param g
 		 */
 		public WinBlocker(GUI g) {
 			
 			JPanel pan = new JPanel(new GridLayout(2, 1));
-			
-			//ImageIcon icon = new ImageIcon("loader.gif");
-	
-			//JLabel label = new JLabel("Connecting...",icon,JLabel.CENTER);
+
 			JButton button = new JButton("Finish");
 			button.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					stop();
-					System.out.println("Reconnection terminated by the user.");
+					System.out.println("Program is closed by the user.");
 					System.exit(-1);
 				}
 			});
@@ -82,7 +79,7 @@ abstract class Network {
 		}
 		
 		/**
-		 * Szoftveresen bezára a dialógusablakot.
+		 * dialogus ablakok bezárására szolgáló függvény.
 		 */
 		public void stop() {
 			d.dispose();

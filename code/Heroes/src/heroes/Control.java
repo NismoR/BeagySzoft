@@ -44,11 +44,11 @@ class Control implements IClick{
 	private ArrayList<Click> clicks_to_process;
 	
 	/**
-	 * A játék állapotát megkapó szerver.
+	 * Szerver aminek küldi a control a játék állapotot (bear)
 	 */
 	private IGameState s; //bear
 	/**
-	 * network feladatokat kapcsolatos feladatokat kezelõ változó
+	 * network feladatait kezelõ változó (bear)
 	 */
 	private Network net = null;//bear
 	
@@ -178,7 +178,7 @@ class Control implements IClick{
 	}
 
 	/**
-	 * Szerver indítása, ha a felhasználó a megfelelõ gombra nyomott.
+	 * Szerver indítása, GUI-n keresztül.(bear)
 	 */
 	void startServer() {
 		//generateBoard();
@@ -191,7 +191,7 @@ class Control implements IClick{
 	}
 
 	/**
-	 * Csatlakozás a megadott IP címen található szerverre.
+	 * Adott IP címen található szerverre való csatlakozás (bear).
 	 * @param s: IP cím
 	 */
 	void startClient(String s) {//bearStart
@@ -230,6 +230,8 @@ class Control implements IClick{
 	}
 	
 	public void processClicks(){
+		
+		
 		if(clicks_to_process.isEmpty()){
 			return;
 		}

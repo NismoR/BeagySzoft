@@ -159,9 +159,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				System.exit(0);
 			}
 			if (e.getActionCommand().equals("Server")) {
-				System.out.println("ide ejöttünk1?");
+				
 				ctrl.startServer();
-				System.out.println("ide ejöttünk2?");
+				
 				
 			}
 			if (e.getActionCommand().equals("Client")) {

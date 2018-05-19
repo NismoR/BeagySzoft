@@ -10,33 +10,34 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JOptionPane;
 
 /**
- * Szerver hálózati interfész implementálása.
+ * Szerver hálózati interfész.
+ * Network osztályból öröklödik, emelett implementálja az IGameState interfészt.
+ * Egyszerre képes gamestatek fogadására és küldésére.
  * 
- * Megvalósítja a Network absztrakt osztály függvényeit, továbbá implementálja az IGameState interfészt,
- * így ezáltal játék állapotok fogadására és továbbküldésére is alkalmas.
+ * A szervert létrehozza egy külön szálban. Server soketet nyit a megadott porton,
+ *  majd várakozik a kliens csatlakozásához. Abban az esetben ha megszakadna a kapcsolat
+ *  ujra várakozó állapotba kerül és eközben a serveroldali GUI-t blokolja a <code> Network GUI_Blocker</code>
+ *  osztálya segítségével.A kapcsolat felépítése után fogadja a beérkezõ 
+ *  adatokat, amit Click objektumokká alakít,és továbküldi az IClick interfészen keresztül a Control felé.
+ *  A játékállapotokat (<code> GameState </code>) objektumokat az IGameState interfészen keresztül
+ *  küldi tovább a kliensnek.
+ *  
  * 
- * A szerver példányosítása után egy külön szálat hoz létre, amiben elõször szerver socketet nyit 
- * a 10007-es porton, majd várakozni kezd a kliens csatlakozására. Ennek megtörténte után felépíti
- * a kapcsolatot, majd fogadja a beérkezõ adatfolyamot, amit Command objektumokká alakítva a Logic felé továbbít
- * az ICommand interfészen keresztül. A játékállapotok (<code> GameState </code>) kliens felé küldésére az IGameState
- * interfész OnNewGameState függvényével biztosít lehetõséget. 
- * A kapcsolat megszakadása esetén újból kliens csatlakozásra vár a szerver socketen keresztül. A várakozás alatt
- * a játéktáblát megvalósító GUI objektumot letiltja a <code> Network WinBlocker</code> alosztálya segítségével.
  * @author Misi
- *
+ * 
  */
 public class Server extends Network implements IGameState{
 	
 	private ServerSocket serverSocket = null;
 	private Socket clientSocket = null;
 	/**
-	 * A kapcsolat szándékos lebontását jelzõ flag. Ennek igaz értéke esetén a worker szál nem kezd további várakozásba,
-	 * hanem befejezi mûködését.
+	 * A kliens Server közötti kapcsolat megszakítását jelzõ flag, igaz értékre állítás esetén
+	 *  megszakítja a kapcsolatott és leállítja a szálat.
 	 */
 	private boolean exit_flag;
 	private ObjectOutputStream out = null;
 	/**
-	 * Az exit flag, output stream, szerver és kliens socket párhuzamos hozzáférésektõl való védelmét látja el.
+	 * párhuzamos hozáférések elleni védelemmet valosít meg.
 	 */
 	private ReentrantLock lock = null;
 	
@@ -45,7 +46,7 @@ public class Server extends Network implements IGameState{
 	private Control clickInterface;
 	private GUI gui;
 	/**
-	 * A szerver mûködését megvalósító <code> Runnable </code> objektum.
+	 * A szervert egy külön szálba helyezõ , és ott mülködtetõ <code> Runnable </code> objektum.
 	 */
 	private ListenerWorker worker;
 	/**
@@ -66,7 +67,7 @@ public class Server extends Network implements IGameState{
 		lock = new ReentrantLock();
 	}
 	/**
-	 * A kliens socket, ki és bemeneti adatfolyamok bezárására szolgál.
+	 * Strimek bezárása
 	 */
 	 private void cleanup()
 	{
@@ -99,10 +100,12 @@ public class Server extends Network implements IGameState{
 	}
 	
 	 /**
-	  * Elindítja a szerever mûködését. Elsõ lépésben bezárja az esetleg meglévõ kapcsolatot, majd egy
-	  * új worker szálat készít, ami ellátja a kliensekre várakozást, illetve az adatfogadást.
+	  * Szerver indítás. Meglévõ kapcsolatok bezárrása, majd worker szál készítése.
+	  *	A szerver létrehozza egy külön szálban. Végtelen ciklusban várakozik a kliensre.
+	  *  Miután felépíteték a kapcsolatott, a bejövõ adatokat fogadja, Az esetleges szétkapcsolások után újra
+	  *  visszatér a végtelen ciklusban és várakozik egy esetleges csatlakozásra
 	  */
-	@Override
+	 @Override
 	void start(String ip) {
 		stop();
 		exit_flag=false;
@@ -111,9 +114,10 @@ public class Server extends Network implements IGameState{
 	}
 	
 	/**
-	 * Megállítja a futó szerver mûködését.
-	 * Elõször bezárja a kliens és szerver socketet, ami által a worker szál kivétel dobásával
-	 * kikerül az esetleges várakozó állapotból. Végül megvárja a worker szál befejezõdését, majd visszatér.
+	 * Szerver leállítás.
+	 * <code> exit_flag=true</code> beállításával illetve a szerver kliens socket bezárásával
+	 * egy kivétel dobást generál, ami segítségével kilép a várakozó állapotból.
+	 * Végül megsemísiti a worker szálat.
 	 */
 	@Override
 	void stop() {
@@ -147,11 +151,11 @@ public class Server extends Network implements IGameState{
 	}
 	
 	/**
-	 * Worker szál, ami a szerver mûködését biztosítja. Feladata a szerver socket létrehozása, kliensekre várakozás
-	 * kapcsolat felépítése, majd a bejövõ adatok fogadása.
-	 * A kapcsolat megszakadása esetén újból kliensre várakozó állapotba kerül.
-	 * @author Miso
+	 *	A szerver létrehozza egy külön szálban. Végtelen ciklusban várakozik a kliensre.
+	 *  Miután felépíteték a kapcsolatott, a bejövõ adatokat fogadja, Az esetleges szétkapcsolások után újra
+	 *  visszatér a végtelen ciklusban és várakozik egy esetleges csatlakozásra
 	 *
+	 *@author Misi
 	 */
         private class ListenerWorker implements Runnable {
 		public void run() {
@@ -243,7 +247,7 @@ public class Server extends Network implements IGameState{
 	}// worker
 	
         /**
-         * Játékállapot küldését valósítja meg a kliens felé.
+         * A server által küldött játékállapotok küldését valósítja meg a kliens felé.
          */
 	public void onNewGameState(GameState gs)
 	{

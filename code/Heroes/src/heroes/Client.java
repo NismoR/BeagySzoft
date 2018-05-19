@@ -8,32 +8,27 @@ import java.net.UnknownHostException;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Kliens hálózati interfész implementálása.
- * 
- * Megvalósítja a Network absztrakt osztály függvényeit, továbbá implementálja az ICommand interfészt,
- * így ezáltal parancsok fogadására és továbbküldésére is alkalmas.
- * 
- * A kliens példányosítása után egy külön szálat hoz létre, ebben próbálkozik a szerverhez csatlakozni,
- * majd a kapcsolat felépülése után ez látja el a várakozó szál szerepét. A csatlakozás alatt leblokkolja
- * a GUI-t, hogy a felhasználó addig ne tudjon semmilyen bevitelt megadni.
- * 
- * Mûködése során a socketen keresztül fogadott adatfolyamot GameState objektumokká alakítja,
- * majd ezeket továbbítja a GUI felé az IGameState interfész felhasználásával. 
- * Emellett a GUI felõl parancsokat fogad (<code>OnNewCommand</code>, amiket a szerver felé továbbít.
- * @author Tibi
+ * Kliens hálózati interfész.
+ * Network osztályból öröklödik, emelett implementálja az IClick interfészt.
+ * Egyszerre képes Click objektunok fogadására és küldésére.
+ *  A klienst létrehozzása egy külön szálban. A kliens végtelen ciklusban probál csatlakozni a szerverhez.
+ *  Miután felépíteték a kapcsolatott, a bejövõ adatokból GameState objektumot generál, majd 
+ *  továbbítja a kliens GUI felé. Csatlakozás alatt a GUI_Blockerrel blokolja a kliens GUI-t.
+ *  leállási feltételmaz exit_flage igaz értéke
  *
+ * @author Misi
  */
 public class Client extends Network implements IClick{
 	
 	private Socket socket = null;
 	/**
-	 * A kapcsolat szándékos legontását jelzõ flag. Ennek igaz értéke esetén a worker szál nem kezd további csatlakozási
-	 * kísérletekbe, hanem befejezi mûködését.
+	 * A kliens Server közötti kapcsolat megszakítását jelzõ flag, igaz értékre állítás esetén
+	 * megszakítja a kapcsolatott és leállítja a szálat.
 	 */
 	private boolean exit_flag = false;
 	private ObjectOutputStream out = null;
 	/**
-	 * Az exit flag, a socket illetve az output stream párhuzamos hozzáférésektõl való védelmét látja el.
+	 * párhuzamos hozáférések elleni védelemmet valosít meg..
 	 */
 	private ReentrantLock lock = null;
 	
@@ -48,7 +43,7 @@ public class Client extends Network implements IClick{
 	private GUI gui;
 
 	/**
-	 * A kliens feladatát megvalósító <code> Runnable </code> objektum.
+	 *  A klienst egy külön szálba helyezõ , és ott mülködtetõ <code> Runnable </code> objektum.
 	 */
 	private ListenerWorker worker;
 	/**
@@ -70,7 +65,7 @@ public class Client extends Network implements IClick{
 	}
 
 	/**
-	 * A belsõ objektumok felszabadítását végzi el. Ezek: Ki és bemeneti streamek, socket.
+	 * Socketek, strimek felszabadítása
 	 */
 	private void cleanup()
 	{
@@ -102,7 +97,11 @@ public class Client extends Network implements IClick{
 		lock.unlock();
 	}
 	/** 
-	 * Elindítja a kliens mûködését. Elsõ lépésben bezárja az esetlegesen éppen futó kapcsolatokat, majd egy újat indít.
+	 *  Client indítás. Meglévõ kapcsolatok bezárrása, majd worker szál készítése.
+	 *  A klienst létrehozza egy külön szálban. Végtelen ciklusban probál csatlakozni a szerverhez.
+	 *  Miután felépíteték a kapcsolatott, a bejövõ adatokból GameState objektumot generál, majd 
+	 *  továbbítja a kliens GUI felé. Csatlakozás alatt a GUI_Blockerrel blokolja a kliens GUI-t.
+	 *  leállási feltételmaz exit_flage igaz értéke
 	 */
 	public void start(String ip)
 	{
@@ -113,10 +112,10 @@ public class Client extends Network implements IClick{
 		thread.start();
 	}
 	/**
-	 * Megállítja a kliens mûködését.
-	 * Elsõ lépésként a socket bezárásával megakasztja a worker szál mûködését, ami ennek következtében kivétel 
-	 * dobásával kikerül a várakozó állapotból, és befejezi a mûködését.
-	 * A függvény visszatérése elõtt megvárja a worker szál befejeztét.
+	 * Client leállítás.
+	 * <code> exit_flag=true</code> beállításával illetve a szerver kliens socket bezárásával
+	 * egy kivétel dobást generál, ami segítségével kilép a várakozó állapotból.
+	 * Végül megsemísiti a worker szálat.
 	 */
 	public void stop()
 	{
@@ -142,13 +141,12 @@ public class Client extends Network implements IClick{
 
 	}
 	/**
-	 *  A kliens mûködését megvalósító osztály.
-	 *  Futtatása során végtelen ciklusban elõször megpróbál csatlakozni a szerverhez, majd siker esetén felépíti a 
-	 *  kapcsolatot, végül fogadja a bejövõ adatfolyamot, amibõl GameState objektumokat generál és juttat el a GUI felé.
-	 *  Leállásának feltétele az exit_flag true értéke, amit a ciklus bizonyos pontjain ellenõriz.
-	 *  A szerverhez hasonlóan a csatlakozási kísérletek alatt a WinBlocker segítségével leblokkolja a kliens GUI-t.
-	 *  
-	 * @author Tibi
+	 *  A klienst létrehozza egy külön szálban. Végtelen ciklusban probál csatlakozni a szerverhez.
+	 *  Miután felépíteték a kapcsolatott, a bejövõ adatokból GameState objektumot generál, majd 
+	 *  továbbítja a kliens GUI felé. Csatlakozás alatt a GUI_Blockerrel blokolja a kliens GUI-t.
+	 *  leállási feltételmaz exit_flage igaz értéke
+	 *   
+	 * @author Misi
 	 *
 	 */
 	private class ListenerWorker implements Runnable {
@@ -218,11 +216,7 @@ public class Client extends Network implements IClick{
 	
 				// CONNECTION ESTABLISHED
 				System.out.println("Connected to server.");
-				// TODO send comman for the logic
-				/*
-				GameState g = new GameState("Connected");
-				gsInterface.onNewGameState(g);
-				*/
+
 				try {
 					while (true) {
 						GameState gs = (GameState) in.readObject();
@@ -234,15 +228,10 @@ public class Client extends Network implements IClick{
 					System.out.println("Disconnected");
 				} finally {
 					cleanup();
-					// TODO create game state to signal to he gsInterface
-					/*
-					GameState gs = new GameState("Connection lost");
-					gsInterface.onNewGameState(gs);
-					*/
 				}
 			}// while
 		} // run
-	} //worker
+	} //
 	
 	/**
 	 * Command objektumok küldésére szolgál a szerver felé.
