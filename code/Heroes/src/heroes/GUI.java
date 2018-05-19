@@ -6,6 +6,7 @@ package heroes;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.event.ActionEvent;
@@ -59,6 +60,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 
 	private static Color col_bg = new Color(0xF5F2DC);
 	private static Color col_field_bg = new Color(0x7A797A);
+	private static Color col_win_text = new Color(0xE82C0C);
 	private static Color col_current_hero_mark= new Color(0xF0CA4D);
 	private static Color col_hero_client = new Color(0xFF5729);	
 	private static Color col_hero_server = new Color(0x009494);
@@ -239,6 +241,46 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			}
 		}
 		
+		private void drawStringCenter(Graphics g, String text, int width, int height){
+	    	FontMetrics metrics = g.getFontMetrics();
+			String[] txt_arr = text.split("\n");
+			int y = height/2-txt_arr.length*metrics.getHeight();
+			
+	        for (String line : txt_arr)       	
+	            g.drawString(line, (width - metrics.stringWidth(line)) / 2, y += metrics.getHeight());
+	    }
+		
+		private boolean draw_end_game_text(Graphics g){
+			boolean did_i_win=false;
+			PlayerID winner = gui_gs.get_winner();
+			if(winner==null){
+				return false;
+			}
+			switch (winner) {
+			case SERVER:
+				if(am_i_the_server()){
+					did_i_win=true;
+				}
+				break;
+			case CLIENT:
+				if(am_i_the_server()==false){
+					did_i_win=true;
+				}
+				break;
+			default:
+				return false;
+			}
+			g.setColor(col_win_text);
+			g.setFont(new Font("Times New Roman", Font.BOLD, BOARD_WIDTH/20));
+			if(did_i_win){
+				drawStringCenter(g, "Congratulations!\nYou won the Game!", BOARD_WIDTH, BOARD_HEIGHT);
+			}
+			else{
+				drawStringCenter(g, "You lost the Game!\nBetter luck next time!", BOARD_WIDTH, BOARD_HEIGHT);				
+			}
+			return true;
+		}
+		
 		private void draw_small_triangle(Graphics g, int x, int y, int size, int rot_clckwise_90){
 			Polygon p = new Polygon();
 			switch (rot_clckwise_90) {
@@ -383,7 +425,10 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			g.setColor(col_bg);
 			g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 			g.setColor(Color.black);
-			g.setFont(new Font("Times New Roman", Font.BOLD, 24));
+			g.setFont(new Font("Times New Roman", Font.BOLD, 24));		
+			if(draw_end_game_text(g)){
+				return;
+			}
 			draw_valid_fields(g);
 			draw_starting_positions(g);
 			draw_all_steppable(g);
