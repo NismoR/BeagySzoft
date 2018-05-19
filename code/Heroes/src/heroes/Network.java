@@ -20,21 +20,21 @@ import heroes.GUI;
 abstract class Network {
 	/**
 	 * 
-	 * A hálozatti interfész  <code> start </code> függvény meghívásától <code> stop </code> 
-	 * függvény meghívásáig folyamatosan probál csatlakozni a mások hálozati elemhez
+	 * A hálózati interfész  <code> start </code> függvény meghívásától <code> stop </code> 
+	 * függvény meghívásáig folyamatosan probál csatlakozni a másik hálozati elemhez
 	 * 
 	 * @param ip A cél IP cím.
 	 */
 	abstract void start(String ip);
 	/**
-	 * A hálozatti interfész  <code> start </code> függvény meghívásától <code> stop </code> 
-	 * függvény meghívásáig folyamatosan probál csatlakozni a mások hálozati elemhez
+	 * A hálózati interfész  <code> start </code> függvény meghívásától <code> stop </code> 
+	 * függvény meghívásáig folyamatosan probál csatlakozni a másik hálozati elemhez
 	 */
 	abstract void stop();	
 	
 	/**
-	 * A <code> stop </code> függvény meghívásáig blokkolja a konstruktorban megadott ablakot. A szerver és a
-	 * kliens guiját blokolja a csatlakozás ideje alatt
+	 * Az osztály a szerver és a kliens GUI-ját blokkolja a csatlakozás ideje alatt.
+	 * A blokkolást a <code> stop </code> függvény segítségével oldja fel.
 	 * 
 	 * @author Misi
 	 *
@@ -43,8 +43,8 @@ abstract class Network {
 		private JDialog d;
 		
 		/**
-		 * A létrejövõ dialogus ablak a paraméterben megadott GUI objektumot blokolja,
-		 *  ezzenfelül tartalmaze egy gombot a program leállítására.
+		 * A létrejövõ dialogus ablak a paraméterben megadott GUI objektumot blokkolja,
+		 *  ezenfelül tartalmaz egy gombot a program leállítására.
 		 * 
 		 * @param g
 		 */
@@ -79,7 +79,7 @@ abstract class Network {
 		}
 		
 		/**
-		 * dialogus ablakok bezárására szolgáló függvény.
+		 * Dialogus ablakok bezárására szolgáló függvény.
 		 */
 		public void stop() {
 			d.dispose();

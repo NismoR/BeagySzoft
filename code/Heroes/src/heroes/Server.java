@@ -11,15 +11,15 @@ import javax.swing.JOptionPane;
 
 /**
  * Szerver hálózati interfész.
- * Network osztályból öröklödik, emelett implementálja az IGameState interfészt.
- * Egyszerre képes gamestatek fogadására és küldésére.
+ * Network osztályból öröklödik, emellett implementálja az IGameState interfészt.
+ * Egyszerre képes gamestate-ek hálózaton történõ küldésére és fogadására.
  * 
- * A szervert létrehozza egy külön szálban. Server soketet nyit a megadott porton,
- *  majd várakozik a kliens csatlakozásához. Abban az esetben ha megszakadna a kapcsolat
- *  ujra várakozó állapotba kerül és eközben a serveroldali GUI-t blokolja a <code> Network GUI_Blocker</code>
- *  osztálya segítségével.A kapcsolat felépítése után fogadja a beérkezõ 
- *  adatokat, amit Click objektumokká alakít,és továbküldi az IClick interfészen keresztül a Control felé.
- *  A játékállapotokat (<code> GameState </code>) objektumokat az IGameState interfészen keresztül
+ * A szervert létrehozza egy külön szálban. Server socketet nyit a megadott porton,
+ *  majd várakozik a kliens csatlakozására. Abban az esetben ha megszakadna a kapcsolat
+ *  újra várakozó állapotba kerül és eközben a server oldali GUI-t blokkolja a <code> Network GUI_Blocker</code>
+ *  osztály segítségével. A kapcsolat felépítése után fogadja a beérkezõ 
+ *  adatokat, amit Click objektumokká alakít,és továbbküldi az IClick interfészen keresztül a Control felé.
+ *  A játékállapot (<code> GameState </code>) objektumokat az IGameState interfészen keresztül
  *  küldi tovább a kliensnek.
  *  
  * 
@@ -37,7 +37,7 @@ public class Server extends Network implements IGameState{
 	private boolean exit_flag;
 	private ObjectOutputStream out = null;
 	/**
-	 * párhuzamos hozáférések elleni védelemmet valosít meg.
+	 * Párhuzamos hozzáférések elleni védelmet valosítja meg.
 	 */
 	private ReentrantLock lock = null;
 	
@@ -46,7 +46,7 @@ public class Server extends Network implements IGameState{
 	private Control clickInterface;
 	private GUI gui;
 	/**
-	 * A szervert egy külön szálba helyezõ , és ott mülködtetõ <code> Runnable </code> objektum.
+	 * A szervert egy külön szálba helyezõ és ott mûködtetõ <code> Runnable </code> objektum.
 	 */
 	private ListenerWorker worker;
 	/**
@@ -67,7 +67,7 @@ public class Server extends Network implements IGameState{
 		lock = new ReentrantLock();
 	}
 	/**
-	 * Strimek bezárása
+	 * Stream-ek bezárása
 	 */
 	 private void cleanup()
 	{
@@ -100,10 +100,10 @@ public class Server extends Network implements IGameState{
 	}
 	
 	 /**
-	  * Szerver indítás. Meglévõ kapcsolatok bezárrása, majd worker szál készítése.
-	  *	A szerver létrehozza egy külön szálban. Végtelen ciklusban várakozik a kliensre.
-	  *  Miután felépíteték a kapcsolatott, a bejövõ adatokat fogadja, Az esetleges szétkapcsolások után újra
-	  *  visszatér a végtelen ciklusban és várakozik egy esetleges csatlakozásra
+	  * Szerver indítás. Meglévõ kapcsolatok bezárása, majd worker szál készítése.
+	  *	A szervert létrehozza egy külön szálban. Végtelen ciklusban várakozik a kliensre.
+	  *  Miután felépítették a kapcsolatot, a bejövõ adatokat fogadja, az esetleges szétkapcsolások után újra
+	  *  visszatér a végtelen ciklusba és várakozik egy esetleges csatlakozásra.
 	  */
 	 @Override
 	void start(String ip) {
@@ -115,9 +115,9 @@ public class Server extends Network implements IGameState{
 	
 	/**
 	 * Szerver leállítás.
-	 * <code> exit_flag=true</code> beállításával illetve a szerver kliens socket bezárásával
+	 * <code> exit_flag=true</code> beállításával, illetve a szerver kliens socket bezárásával
 	 * egy kivétel dobást generál, ami segítségével kilép a várakozó állapotból.
-	 * Végül megsemísiti a worker szálat.
+	 * Végül megsemmísiti a worker szálat.
 	 */
 	@Override
 	void stop() {
@@ -151,9 +151,9 @@ public class Server extends Network implements IGameState{
 	}
 	
 	/**
-	 *	A szerver létrehozza egy külön szálban. Végtelen ciklusban várakozik a kliensre.
-	 *  Miután felépíteték a kapcsolatott, a bejövõ adatokat fogadja, Az esetleges szétkapcsolások után újra
-	 *  visszatér a végtelen ciklusban és várakozik egy esetleges csatlakozásra
+	 *	A szervert létrehozza egy külön szálban. Végtelen ciklusban várakozik a kliensre.
+	  *  Miután felépítették a kapcsolatot, a bejövõ adatokat fogadja, az esetleges szétkapcsolások után újra
+	  *  visszatér a végtelen ciklusba és várakozik egy esetleges csatlakozásra.
 	 *
 	 *@author Misi
 	 */

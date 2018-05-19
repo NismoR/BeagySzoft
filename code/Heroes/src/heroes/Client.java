@@ -9,12 +9,13 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Kliens hálózati interfész.
- * Network osztályból öröklödik, emelett implementálja az IClick interfészt.
- * Egyszerre képes Click objektunok fogadására és küldésére.
- *  A klienst létrehozzása egy külön szálban. A kliens végtelen ciklusban probál csatlakozni a szerverhez.
- *  Miután felépíteték a kapcsolatott, a bejövõ adatokból GameState objektumot generál, majd 
- *  továbbítja a kliens GUI felé. Csatlakozás alatt a GUI_Blockerrel blokolja a kliens GUI-t.
- *  leállási feltételmaz exit_flage igaz értéke
+ * Network osztályból öröklödik, emellett implementálja az IClick interfészt.
+ * Egyszerre képes gamestate-ek hálózaton történõ küldésére és fogadására.
+ * 
+ *  A klienst létrehozza egy külön szálban. A kliens végtelen ciklusban próbál csatlakozni a szerverhez.
+ *  Miután felépítették a kapcsolatot, a bejövõ adatokból GameState objektumot generál, majd 
+ *  továbbítja a kliens GUI felé. Csatlakozás alatt a GUI_Blockerrel blokkolja a kliens GUI-t.
+ *  Ha az exit_flag értéke <code>true</code>-ra változik, akkor leáll.
  *
  * @author Misi
  */
@@ -22,13 +23,13 @@ public class Client extends Network implements IClick{
 	
 	private Socket socket = null;
 	/**
-	 * A kliens Server közötti kapcsolat megszakítását jelzõ flag, igaz értékre állítás esetén
-	 * megszakítja a kapcsolatott és leállítja a szálat.
+	 * A kliens Server közötti kapcsolat megszakítását jelzõ flag, <code>true</code> értékre állítás esetén
+	 * megszakítja a kapcsolatot és leállítja a szálat.
 	 */
 	private boolean exit_flag = false;
 	private ObjectOutputStream out = null;
 	/**
-	 * párhuzamos hozáférések elleni védelemmet valosít meg..
+	 * Párhuzamos hozzáférések elleni védelmet valosítja meg.
 	 */
 	private ReentrantLock lock = null;
 	
@@ -43,7 +44,7 @@ public class Client extends Network implements IClick{
 	private GUI gui;
 
 	/**
-	 *  A klienst egy külön szálba helyezõ , és ott mülködtetõ <code> Runnable </code> objektum.
+	 * A klienst egy külön szálba helyezõ és ott mûködtetõ <code> Runnable </code> objektum.
 	 */
 	private ListenerWorker worker;
 	/**
@@ -65,7 +66,7 @@ public class Client extends Network implements IClick{
 	}
 
 	/**
-	 * Socketek, strimek felszabadítása
+	 * Socketek, streamek felszabadítása
 	 */
 	private void cleanup()
 	{
@@ -99,9 +100,9 @@ public class Client extends Network implements IClick{
 	/** 
 	 *  Client indítás. Meglévõ kapcsolatok bezárrása, majd worker szál készítése.
 	 *  A klienst létrehozza egy külön szálban. Végtelen ciklusban probál csatlakozni a szerverhez.
-	 *  Miután felépíteték a kapcsolatott, a bejövõ adatokból GameState objektumot generál, majd 
-	 *  továbbítja a kliens GUI felé. Csatlakozás alatt a GUI_Blockerrel blokolja a kliens GUI-t.
-	 *  leállási feltételmaz exit_flage igaz értéke
+	 *  Miután felépítették a kapcsolatot, a bejövõ adatokból GameState objektumot generál, majd 
+	 *  továbbítja a kliens GUI felé. Csatlakozás alatt a GUI_Blockerrel blokkolja a kliens GUI-t.
+	 *  Ha az exit_flag értéke <code>true</code>-ra változik, akkor leáll.
 	 */
 	public void start(String ip)
 	{
@@ -113,9 +114,9 @@ public class Client extends Network implements IClick{
 	}
 	/**
 	 * Client leállítás.
-	 * <code> exit_flag=true</code> beállításával illetve a szerver kliens socket bezárásával
+	 * <code> exit_flag=true</code> beállításával, illetve a szerver kliens socket bezárásával
 	 * egy kivétel dobást generál, ami segítségével kilép a várakozó állapotból.
-	 * Végül megsemísiti a worker szálat.
+	 * Végül megsemmísiti a worker szálat.
 	 */
 	public void stop()
 	{
@@ -142,10 +143,9 @@ public class Client extends Network implements IClick{
 	}
 	/**
 	 *  A klienst létrehozza egy külön szálban. Végtelen ciklusban probál csatlakozni a szerverhez.
-	 *  Miután felépíteték a kapcsolatott, a bejövõ adatokból GameState objektumot generál, majd 
-	 *  továbbítja a kliens GUI felé. Csatlakozás alatt a GUI_Blockerrel blokolja a kliens GUI-t.
-	 *  leállási feltételmaz exit_flage igaz értéke
-	 *   
+	 *  Miután felépítették a kapcsolatot, a bejövõ adatokból GameState objektumot generál, majd 
+	 *  továbbítja a kliens GUI felé. Csatlakozás alatt a GUI_Blockerrel blokkolja a kliens GUI-t.
+	 *  Ha az exit_flag értéke <code>true</code>-ra változik, akkor leáll. 
 	 * @author Misi
 	 *
 	 */
