@@ -76,6 +76,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	
 	private JMenuBar menuBar;
 	private JMenuItem menuItem_new_game;
+	private JFrame frame;
 	
 	
 	void setClick(IClick c) { //bear
@@ -165,7 +166,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				
 			}
 			if (e.getActionCommand().equals("Client")) {
-				ctrl.startClient("localhost");//bear
+				String s = (String) JOptionPane.showInputDialog(frame, "Server IP:", "Connecting...",
+						JOptionPane.PLAIN_MESSAGE, null, null, "localhost");
+				ctrl.startClient(s);//bear
 				
 			}
 		}
