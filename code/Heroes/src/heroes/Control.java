@@ -60,6 +60,8 @@ class Control implements IClick{
 		clicks_to_process = new ArrayList<Click>();			
 	}
 	void generate_new_game(){
+		gs = new GameState();
+		clicks_to_process = new ArrayList<Click>();	
 		//Adding Warriors
 				for (int i = 0; i < 4; i++) {
 					Warrior w = null;

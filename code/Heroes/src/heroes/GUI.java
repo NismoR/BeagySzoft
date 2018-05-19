@@ -155,6 +155,7 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("New Game")) {
+				gui_gs = new GameState();
 				ctrl.generate_new_game();
 								
 			}
