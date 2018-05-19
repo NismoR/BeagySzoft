@@ -421,8 +421,6 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		
 		@Override
 		public void paintComponent(Graphics g) {
-			Instant start = Instant.now();
-			long startTime = System.nanoTime();
 			g.setColor(col_bg);
 			g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 			g.setColor(Color.black);
@@ -441,15 +439,6 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			}
 			
 			draw_current_hero_mark(g);
-			Instant end = Instant.now();
-			Duration diff = Duration.between(start, end);
-			long diff_in_nano = System.nanoTime() - startTime;
-			if(diff.toMillis()>10){
-				//System.out.println("Time taken: "+ diff.toMillis() +" milliseconds");
-			}
-			else{
-				//System.out.println("Time taken: "+ diff_in_nano +" nanoseconds");				
-			}
 		}
 
 		@Override
