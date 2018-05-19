@@ -12,13 +12,6 @@ import heroes.equipments.Equipment;
 import heroes.equipments.Equipment.EqType;
 
 public class GameState implements Serializable{
-
-	public enum GameTurn {
-		NOT_STARTED,
-		INITING_MAP,
-		PLAYER_CLIENT,
-		PLAYER_SERVER
-	}
 	
 	public enum FieldType {
 		NOT_AVAILABLE,
@@ -31,7 +24,6 @@ public class GameState implements Serializable{
 	
 	private int board_size = 8;
 	public int time;
-	public GameTurn turn;
 	public boolean[][] valid_field;
 	public List<Hero> heroes;
 	
@@ -52,7 +44,6 @@ public class GameState implements Serializable{
 		start_pos = new ArrayList<Click>();
 		extra_steps = new ArrayList<Click>();
 		time = 0;
-		turn = GameTurn.NOT_STARTED;
 		valid_field = new boolean[board_size][board_size];
 		for(int i = 0; i < board_size; i++){
 			for(int j = 0; j < board_size; j++){
@@ -497,7 +488,6 @@ public class GameState implements Serializable{
 	
 	public void copy(GameState gs){
 			time = gs.time;
-			turn = gs.turn;
 			heroes = new ArrayList<Hero>(gs.heroes);
 			current_hero_id = gs.current_hero_id;
 			wanna_step = gs.wanna_step;

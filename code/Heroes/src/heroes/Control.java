@@ -13,7 +13,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import heroes.GameState.GameTurn;
 import heroes.Hero.PlayerID;
 import heroes.equipments.Equipment;
 import heroes.equipments.Equipment.EqType;
@@ -38,7 +37,6 @@ import heroes.equipments.warrior.WoodenSwordOfFury;
  * @author ABence
  */
 class Control implements IClick{
-	private static int NR_OF_HEROES = 1;
 	private GUI gui;
 	private GameState gs;
 	private ArrayList<Click> clicks_to_process;
@@ -159,12 +157,9 @@ class Control implements IClick{
 	}
 	
 	private void generateBoard(){
-		gs.turn = GameTurn.INITING_MAP;
 		gs.init_map();
-		//gs.set_starting_positions(NR_OF_HEROES);
 		gs.set_starting_positions(5,5);
-		gs.set_heroes_starting_positions();
-		gs.turn = GameTurn.PLAYER_CLIENT;		
+		gs.set_heroes_starting_positions();		
 	}
 
 	void setGUI(GUI g) {
@@ -256,11 +251,7 @@ class Control implements IClick{
 	}
 	
 	public void check_for_periodic_change(){
-		if(clicks_to_process.size()>1)
-			System.out.println("NR_OF_CLICKS AT BEFORE REFRESH "+clicks_to_process.size());
 		if(gs.check_and_refresh_if_dying()){
-			if(clicks_to_process.size()>1)
-				System.out.println("NR_OF_CLICKS AT REFRESH "+clicks_to_process.size());
 			refresh_board();
 		}
 	}
