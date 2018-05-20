@@ -33,7 +33,8 @@ import heroes.Hero.PlayerID;
 import heroes.equipments.Equipment;
 
 /**
- *
+ * A <tt>GUI</tt> osztály a megjelenítésért felelõs
+ * 
  * @author ABence
  */
 public class GUI extends JFrame implements IGameState, ComponentListener{
@@ -85,7 +86,11 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		click = c;
 	}
 	
-	
+	/**
+	 * A GUI osztály konstruktora. Létrehozza
+	 * 
+	 * @param c Control objektum
+	 */
 	GUI(Control c) {
 		super("Heroes");
 		
@@ -130,6 +135,9 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		this.addComponentListener(this);
 	}
 	
+	/**
+	 * Beállítja a játéktér határait.
+	 */
 	private void update_game_panel_bounds(){
 		gamePanel.setBounds(BOARD_OFFSET, BOARD_OFFSET, BOARD_WIDTH, BOARD_HEIGHT);		
 	}
@@ -138,21 +146,46 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		return new Color(col.getRed(), col.getGreen(), col.getBlue(), alpha);
 	}
 	
+	/**
+	 * Segédfüggvény a Gamepanel-en törétnõ rajzoláshoz
+	 * <p>
+	 * A <code>FIELD_SIZE</code> egy mezõ szélességét adja meg
+	 * @param x hanyadik mezõbe szeretnénk rajzolni x szerint
+	 * @return pixelben megadja, hogy az x-edik milyen távol van a játéktér szélétõl
+	 */
 	private int get_x_offset(int x){
 		return x*FIELD_SIZE;
 	}
 	
+	/**
+	 * Segédfüggvény a Gamepanel-en törétnõ rajzoláshoz
+	 * <p>
+	 * A <code>FIELD_SIZE</code> egy mezõ magasságát adja meg
+	 * @param y hanyadik mezõbe szeretnénk rajzolni y szerint
+	 * @return pixelben megadja, hogy az y-edik milyen távol van a játéktér szélétõl
+	 */
 	private int get_y_offset(int y){
 		return y*FIELD_SIZE;
 	}
 	
+	/**
+	 * Engedélyezi az új játék gomb megnyomását
+	 */
 	public void enable_new_game_button(){
 		menuItem_new_game.setEnabled(true);
 	}
 	
-
+	/**
+	 * A GUI menüjében történõ kattintásokat figyeli
+	 * 
+	 * @author javor
+	 *
+	 */
 	private class MenuListener implements ActionListener {
-
+		
+		/**
+		 * A menüelemekre törénõ kattintások esetén történõ beavatkozásokat végzi.
+		 */
 		public void actionPerformed(ActionEvent e) {
 			if (e.getActionCommand().equals("New Game")) {
 				gui_gs = new GameState();
@@ -177,16 +210,28 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		}
 	}
 	
-	
-	
+	/**
+	 * A játéktér. Tagfüggvényei felelõsek a minden, a játéktéren történõ dolog 
+	 * (harcos, lépési lehetõség, játék vége szöveg) kirajzolásáért
+	 * 
+	 * @author javor
+	 *
+	 */	
 	private class GamePanel extends JPanel implements MouseListener{
 
 		private static final long serialVersionUID = 1L;
 		
+		/**
+		 * A Gamepanel osztály konstruktora. Beállítja a kattintások figyelését.
+		 */
 		public GamePanel(){
 			this.addMouseListener(this);
 		}
 		
+		/**
+		 * Kirajzolja azokat a mezõket, ahová léphet hõs.
+		 * @param g {@link Graphics} objektum
+		 */
 		private void draw_valid_fields(Graphics g) {
 			for (int i = 0; i < TABLE_SIZE_X; i++) {
 				for (int j = 0; j < TABLE_SIZE_Y; j++) {
@@ -199,7 +244,12 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				}
 			}			
 		}
-
+		
+		/**
+		 * A függvény végzi a játékosok kezdõpozícióinak rajzolását
+		 * 
+		 * @param g {@link Graphics} objektum
+		 */
 		private void draw_starting_positions(Graphics g) {
 			List<Click> start_pos=gui_gs.start_pos;
 			if(start_pos!=null){
@@ -222,6 +272,12 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			}
 		}
 		
+		/**
+		 * Amennyiben egy karakter a felszerelésének megfelelõen
+		 * extra klépést tehet, a függvény kirajzolja az összes
+		 * lehetséges lépést
+		 * @param g {@link Graphics} objektum
+		 */
 		private void draw_all_steppable(Graphics g) {
 			for(Click c:gui_gs.extra_steps){
 				int off_x = get_x_offset(c.x);
@@ -232,6 +288,11 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			}	
 		}
 
+		/**
+		 * Felrajzolja a lépési lehetõséget, ha a játékos olyan mezõre kattint, 
+		 * ahová az adott karakter léphet
+		 * @param g {@link Graphics} objektum
+		 */
 		private void draw_steppable(Graphics g) {
 			Click st = gui_gs.wanna_step;
 			if(st!=null){
@@ -242,6 +303,14 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			}
 		}
 		
+		/**
+		 * A függvény a bemenõ stringet kiírja a játéktér közepére, 
+		 * figyelembe véve a \n sortörés karaktereket.
+		 * @param g {@link Graphics} objektum
+		 * @param text a kiírndó szöveg
+		 * @param width a játéktér szélessége
+		 * @param height a játéktér magassága
+		 */
 		private void drawStringCenter(Graphics g, String text, int width, int height){
 	    	FontMetrics metrics = g.getFontMetrics();
 			String[] txt_arr = text.split("\n");
@@ -251,6 +320,12 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 	            g.drawString(line, (width - metrics.stringWidth(line)) / 2, y += metrics.getHeight());
 	    }
 		
+		/**
+		 * A függvény megvizsgálja, hogy véget ért-e a játék,
+		 * ha igen, kiírja a játékosnak, hogy nyert vagy vesztett.
+		 * @param g {@link Graphics}
+		 * @return logikai érték, hogy a játék befejezõdött-e
+		 */
 		private boolean draw_end_game_text(Graphics g){
 			boolean did_i_win=false;
 			PlayerID winner = gui_gs.get_winner();
@@ -282,6 +357,14 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			return true;
 		}
 		
+		/**
+		 * A függvény háromszöget rajzol a mezõ szélére
+		 * @param g {@link Graphics}
+		 * @param x a mezõ x paramétere pixelben
+		 * @param y a mezõ y paramétere pixelben
+		 * @param size a mezõ méretének negyede
+		 * @param rot_clckwise_90 Megadja, hogy melyik sarokba kerüljön a háromszög
+		 */
 		private void draw_small_triangle(Graphics g, int x, int y, int size, int rot_clckwise_90){
 			Polygon p = new Polygon();
 			switch (rot_clckwise_90) {
@@ -316,6 +399,11 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			
 		}
 		
+		/**
+		 * A védekezési értéknek megfelelõ számû háromszög rajzolása a hõs mezõjének sarkaiba
+		 * @param g {@link Graphics}
+		 * @param h hõs
+		 */
 		protected void draw_defense(Graphics g, Hero h){
 			int off_x = get_x_offset(h.get_x());
 			int off_y = get_y_offset(h.get_y());			
@@ -333,12 +421,27 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 				break;
 			}
 		}
+		
+		/**
+		 * A mezõ közepére igazított kör rajzolása
+		 * @param g {@link Graphics}
+		 * @param x a mezõ középpontja pixelben <i>x</i> koordináta szerint
+		 * @param y a mezõ középpontja pixelben <i>y</i> koordináta szerint
+		 * @param r a kör átmérõje
+		 */
 		private void drawCenteredCircle(Graphics g, int x, int y, int r) {
 			  x = x-(r/2);
 			  y = y-(r/2);
 			  g.fillOval(x,y,r,r);
 			}
 		
+		/**
+		 * Hõs megrajzolása
+		 * @param g {@link Graphics}
+		 * @param h a hõs tíusa
+		 * @param off_x mezõ <i>x</i> koordinátája pixelben
+		 * @param off_y a mezõ <i>y</i> koordinátája pixelben
+		 */
 		private void draw_hero(Graphics g, HeroType h, int off_x, int off_y){
 			switch (h) {
 			case WARRIOR:
@@ -367,6 +470,10 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			g.drawString(Integer.toString(num), off_x+FIELD_SIZE/2-5, off_y+FIELD_SIZE/2+7);
 		}
 		
+		/**
+		 * Az összes hõs rajzolása
+		 * @param g {@link Graphics}
+		 */
 		private void draw_heroes(Graphics g){
 			for(Hero h : gui_gs.heroes){
 				if(h.get_health() % 6 >2){
@@ -410,6 +517,10 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			}
 		}
 		
+		/**
+		 * A következõ lépésre jogosult hõs köré sárga keret rajzolása
+		 * @param g {@link Graphics}
+		 */
 		private void draw_current_hero_mark(Graphics g){
 			Hero h = gui_gs.get_current_hero();
 			int off_x = get_x_offset(h.get_x());
@@ -419,6 +530,10 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			g.drawRect(off_x+1, off_y+1, FIELD_SIZE-3, FIELD_SIZE-3);
 		}
 		
+		/**
+		 * A függvény megrajzolja a játékteret a hõsökkl együtt
+		 * @param g {@link Graphics}
+		 */
 		@Override
 		public void paintComponent(Graphics g) {
 			g.setColor(col_bg);
@@ -464,7 +579,12 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			// TODO Auto-generated method stub
 			
 		}
-
+		
+		/**
+		 * A függvény megnézi, hogy a játékos hová kattintott. Ezt kiírja a konzolra, illetve, 
+		 * megnézi, hogy ez valós mezõ és nincs ott másik hõs
+		 * @param e Kattintás az egérrel
+		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
@@ -500,11 +620,18 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 			}
 		}
 	}
-
+	
+	/**
+	 * A függvény megvizsgálja, hogy az adott játkos a szerver-e
+	 * @return logikai érték, hogy az adott játékos-e a szerver
+	 */
 	private boolean am_i_the_server(){
 		return click==ctrl;
 	}
-
+	
+	/**
+	 * Újramétretezés esetén kiszámítja az ablak méretét
+	 */
 	private void calculate_window_sizes(){
 		int field_x =  (getWidth()-2*WINDOW_BORDER_OFFSET)/(TABLE_SIZE_X+1);
 		int field_y =  (getHeight()-WINDOW_BORDER_OFFSET-MENUBAR_OFFSET)/(TABLE_SIZE_Y+1);
@@ -521,7 +648,11 @@ public class GUI extends JFrame implements IGameState, ComponentListener{
 		WINDOW_HEIGHT=getHeight();
 		WINDOW_WIDTH=getWidth();
 	}
-
+	
+	/**
+	 * A függvény újrarajzolja a játékteret a jelenlei állapotnak megfelelõen
+	 * @param gs a játék jelenlegi állapotát tárolja
+	 */
 	@Override
 	public void onNewGameState(GameState gs) {
 		// TODO Auto-generated method stub

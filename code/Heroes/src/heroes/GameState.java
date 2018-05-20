@@ -416,7 +416,12 @@ public class GameState implements Serializable{
 		return false;		
 	}
 	
-	/*Return true if should step to new hero, because step was made*/
+	/**
+	 * Return true if should step to new hero, because step was made
+	 * @param x a mezõ <i>x</i> koordinátája
+	 * @param y a mezõ <i>y</i> koordinátája
+	 * @return logikai érték
+	 */
 	boolean check_if_stepable_and_step(int x, int y){
 		if(valid_field[x][y]){
 			Hero h = get_current_hero();

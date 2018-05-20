@@ -46,7 +46,7 @@ abstract class Network {
 		 * A létrejövõ dialogus ablak a paraméterben megadott GUI objektumot blokkolja,
 		 *  ezenfelül tartalmaz egy gombot a program leállítására.
 		 * 
-		 * @param g
+		 * @param g  {@link GUI} objektum
 		 */
 		public GUI_Blocker(GUI g) {
 			

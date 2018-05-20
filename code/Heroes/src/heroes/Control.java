@@ -33,7 +33,7 @@ import heroes.equipments.warrior.SwordOfRes;
 import heroes.equipments.warrior.WoodenSwordOfFury;
 
 /**
- *
+ * A  <tt>Control</tt> osztály a vezérlésért felelõs
  * @author ABence
  */
 class Control implements IClick{
